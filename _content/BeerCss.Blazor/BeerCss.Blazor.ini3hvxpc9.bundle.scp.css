@@ -1,0 +1,33 @@
+/* _content/BeerCss.Blazor/Components/AppBar.razor.rz.scp.css */
+.beer header nav button[b-ptgy5b1su8] {
+    order: -1;
+}
+
+.beer div.icon[b-ptgy5b1su8] {
+    position: relative;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.beer div.icon:has(+ button)[b-ptgy5b1su8] {
+    transform: translateX(-1.5rem);
+}
+
+.beer div.icon[b-ptgy5b1su8]  a {
+    position: absolute;
+    border-radius: 100%;
+    padding: 0.5rem;
+    transform: translateX(-2.5rem);
+    background: var(--surface);
+}
+
+.beer div.icon img[b-ptgy5b1su8] {
+    height: 4rem;
+    background: var(--surface-container-low);
+    border-radius: 100%;
+    transition: box-shadow 0.5s;
+}
+
+.beer div.icon img:hover[b-ptgy5b1su8] {
+    box-shadow: var(--elevate2);
+}

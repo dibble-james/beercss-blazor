@@ -1,0 +1,488 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vogen.SharedTypes</name>
+    </assembly>
+    <members>
+        <member name="T:Vogen.BsonSerializerAttribute`1">
+            <summary>
+            Represent a marker for BSON generation.
+            </summary>
+            <typeparam name="T">The type of the value object.</typeparam>
+        </member>
+        <member name="F:Vogen.ComparisonGeneration.Default">
+            <summary>
+            Use the default, which is <see cref="F:Vogen.ComparisonGeneration.UseUnderlying"/>. This entry generally isn't used but is present
+            to signify a default value which has not been specified in the attributes. 
+            </summary>
+        </member>
+        <member name="F:Vogen.ComparisonGeneration.Omit">
+            <summary>
+            Omits the IComparable interface and implementation. Useful for opaque types such as tokens or IDs where comparison
+            doesn't make sense.
+            </summary>
+        </member>
+        <member name="F:Vogen.ComparisonGeneration.UseUnderlying">
+            <summary>
+            Uses the default IComparable from the underlying type.
+            </summary>
+        </member>
+        <member name="T:Vogen.Conversions">
+            <summary>
+            Converters used to convert/serialize/deserialize Value Objects
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.None">
+            <summary>
+            Don't create any converters for the value object
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.Default">
+            <summary>
+            Use the default converters for the value object.
+            This will be the value provided in the <see cref="T:Vogen.ValueObjectAttribute"/>, which falls back to
+            <see cref="F:Vogen.Conversions.TypeConverter"/> and <see cref="F:Vogen.Conversions.SystemTextJson"/>
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.TypeConverter">
+            <summary>
+            Creates a <see cref="F:Vogen.Conversions.TypeConverter"/> for converting from the value object to and from a string
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.NewtonsoftJson">
+            <summary>
+            Creates a Newtonsoft.Json.JsonConverter for serializing the value object to its primitive value
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.SystemTextJson">
+            <summary>
+            Creates a System.Text.Json.Serialization.JsonConverter for serializing the value object to its primitive value
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.EfCoreValueConverter">
+            <summary>
+            Creates an EF Core Value Converter for extracting the primitive value
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.DapperTypeHandler">
+            <summary>
+            Creates a Dapper TypeHandler for converting to and from the type
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.LinqToDbValueConverter">
+            <summary>
+            Creates a LinqToDb ValueConverter for converting to and from the type
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.ServiceStackDotText">
+            <summary>
+            Sets the SerializeFn and DeSerializeFn members in JsConfig in a static constructor.
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.Bson">
+            <summary>
+            Creates a BSON serializer for each value object.
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.Orleans">
+            <summary>
+            Creates and registers a codec and copier for Microsoft Orleans.
+            This feature requires .NET 8 and C#12 and cannot be polly-filled.
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.XmlSerializable">
+            <summary>
+            Generates implementation of IXmlSerializable.
+            </summary>
+        </member>
+        <member name="F:Vogen.Conversions.MessagePack">
+            <summary>
+            Generates implementation of IMessagePackFormatter.
+            </summary>
+        </member>
+        <member name="T:Vogen.Customizations">
+            <summary>
+            Customization flags. For simple binary choices.
+            More complex configuration options are specified as parameters in the <see cref="T:Vogen.VogenDefaultsAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:Vogen.Customizations.None">
+            <summary>
+            No customizations.
+            </summary>
+        </member>
+        <member name="F:Vogen.Customizations.TreatNumberAsStringInSystemTextJson">
+            <summary>
+            When serializing and deserializing an underlying primitive that would normally be read or written as a number in System.Text.Json,
+            instead, treat the underlying primitive as a culture invariant string. This gets around the issue of
+            JavaScript losing precision on very large numbers. See <see href="https://github.com/SteveDunn/Vogen/issues/165"/>
+            for more information.
+            The preferred method, on .NET 5 or higher, is to use `JsonNumberHandling` in `JsonSerializerOptions`.
+            </summary>
+        </member>
+        <member name="F:Vogen.Customizations.AddFactoryMethodForGuids">
+            <summary>
+            For GUIDs, add a `FromNewGuid()` factory method, which is just `public static MyVo FromNewGuid() => From(Guid.NewGuid());`
+            </summary>
+        </member>
+        <member name="F:Vogen.Customizations.GenerateLinqPadToDump">
+            <summary>
+            Generate ToDump for LinqPad
+            </summary>
+        </member>
+        <member name="T:Vogen.DebuggerAttributeGeneration">
+            <summary>
+            Controls what debugger attributes are generated. Useful if you want to debug in Rider as that doesn't yet show
+            all of the debugger attributes that Visual Studio can.
+            </summary>
+        </member>
+        <member name="F:Vogen.DebuggerAttributeGeneration.Default">
+            <summary>
+            Decided at compile team based on whether or not the <see cref="T:Vogen.VogenDefaultsAttribute"/> has this flag set.
+            </summary>
+        </member>
+        <member name="F:Vogen.DebuggerAttributeGeneration.Basic">
+            <summary>
+            Just create the basic debug attributes - Rider friendly as Rider doesn't show some of the
+            debugger attributes that Visual Studio shows.
+            </summary>
+        </member>
+        <member name="F:Vogen.DebuggerAttributeGeneration.Full">
+            <summary>
+            Creates the full debug attributes, including debugger type proxies. These attributes don't work well in the
+            Rider debugger, so if you use Rider and want to debug, then use <see cref="F:Vogen.DebuggerAttributeGeneration.Basic"/> which will
+            just generate ToString.
+            </summary>
+        </member>
+        <member name="F:Vogen.DeserializationStrictness.AllowAnything">
+            <summary>
+            Allows anything to be deserialized into your Value Object.
+            </summary>
+        </member>
+        <member name="F:Vogen.DeserializationStrictness.AllowKnownInstances">
+            <summary>
+            If your Value Object has 'Instances', then those are considered valid during deserialization.
+            </summary>
+        </member>
+        <member name="F:Vogen.DeserializationStrictness.RunMyValidationMethod">
+            <summary>
+            If your Value Object has a Validate method, it will be called to validate the incoming value during deserialization.
+            </summary>
+        </member>
+        <member name="F:Vogen.DeserializationStrictness.DisallowNulls">
+            <summary>
+            System.Text.Json only for now. By default, System.Text.Json allows nulls for reference types.
+            If you want to disallow this behaviour for value objects, then set this flag. 
+            </summary>
+        </member>
+        <member name="F:Vogen.DeserializationStrictness.AllowValidAndKnownInstances">
+            <summary>
+            If your Value Object has 'Instances', then those are considered valid during deserialization.
+            If the incoming value doesn't match any known instance, and if your Value Object has a Validate method, it will
+            be called to validate the incoming value during deserialization. 
+            </summary>
+        </member>
+        <member name="T:Vogen.MessagePackAttribute`1">
+            <summary>
+            Represent a marker for MessagePack generation.
+            </summary>
+            <typeparam name="T">The type of the value object.</typeparam>
+        </member>
+        <member name="T:Vogen.OpenApiSchemaCustomizations">
+            <summary>
+            Controls schema customization.
+            </summary>
+        </member>
+        <member name="F:Vogen.OpenApiSchemaCustomizations.Omit">
+            <summary>
+            No customization.
+            </summary>
+        </member>
+        <member name="F:Vogen.OpenApiSchemaCustomizations.GenerateSwashbuckleSchemaFilter">
+            <summary>
+            Generate a schema filter.
+            If Swashbuckle.AspNetCore.SwaggerGen is not referenced, nothing will be generated.
+            </summary>
+        </member>
+        <member name="F:Vogen.OpenApiSchemaCustomizations.GenerateSwashbuckleMappingExtensionMethod">
+            <summary>
+            Generate extension method to map types with SwaggerGenOptions.
+            If Swashbuckle.AspNetCore.SwaggerGen is not referenced, nothing will be generated.
+            </summary>
+        </member>
+        <member name="F:Vogen.OpenApiSchemaCustomizations.GenerateOpenApiMappingExtensionMethod">
+            <summary>
+            Generate extension method to map types with Microsoft.AspNetCore.OpenApi.OpenApiOptions.
+            If Microsoft.AspNetCore.OpenApi is not referenced, nothing will be generated.
+            </summary>
+        </member>
+        <member name="T:Vogen.PrimitiveEqualityGeneration">
+            <summary>
+            Defines if equality operators to the underlying primitives are generated.
+            </summary>
+        </member>
+        <member name="F:Vogen.PrimitiveEqualityGeneration.Omit">
+            <summary>
+            Do not generate.
+            </summary>
+        </member>
+        <member name="F:Vogen.PrimitiveEqualityGeneration.GenerateOperators">
+            <summary>
+            Generate equals operators for primitives.
+            </summary>
+        </member>
+        <member name="F:Vogen.PrimitiveEqualityGeneration.GenerateMethods">
+            <summary>
+            Generate equals methods for primitives.
+            </summary>
+        </member>
+        <member name="F:Vogen.PrimitiveEqualityGeneration.GenerateOperatorsAndMethods">
+            <summary>
+            Generate both operators and methods.
+            </summary>
+        </member>
+        <member name="T:Vogen.StaticAbstractsGeneration">
+            <summary>
+            Defines if static abstract interfaces should be generated.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.Omit">
+            <summary>
+            Do not generate the interface definition, nor make the value objects derive implement the interface.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.ExplicitCastFromPrimitive">
+            <summary>
+            Generate the explicit casting operators from primitives.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.ExplicitCastToPrimitive">
+            <summary>
+            Generate the explicit casting operators to primitives.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.ImplicitCastFromPrimitive">
+            <summary>
+            Generate the implicit casting operators from primitives.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.ImplicitCastToPrimitive">
+            <summary>
+            Generate the implicit casting operators to primitives.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.EqualsOperators">
+            <summary>
+            Generate the equals operators.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.FactoryMethods">
+            <summary>
+            Generate the factory methods (From/TryFrom).
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.InstanceMethodsAndProperties">
+            <summary>
+            Generate the instance methods, e.g. Value and IsInitialized
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.ValueObjectsDeriveFromTheInterface">
+            <summary>
+            Value objects that are generated derive from `: IVogen`. Use just this flag if you have several projects and only wish to
+            generate the definition in one of them, or if you want to define it yourself.
+            </summary>
+        </member>
+        <member name="F:Vogen.StaticAbstractsGeneration.MostCommon">
+            <summary>
+            The most common usage; generates the definition, containing equals, explicit casts, and factory methods, and
+            make value objects derive from it.
+            </summary>
+        </member>
+        <member name="T:Vogen.SystemTextJsonConverterFactoryGeneration">
+            <summary>
+            Defines if a JSON converter 'factory' is generated containing value objects with System.Text.Json converters.
+            These factories can be used in various scenarios with System.Text.Json, including source-generation.
+            </summary>
+        </member>
+        <member name="F:Vogen.SystemTextJsonConverterFactoryGeneration.Omit">
+            <summary>
+            Do not generate the factory.
+            </summary>
+        </member>
+        <member name="F:Vogen.SystemTextJsonConverterFactoryGeneration.Generate">
+            <summary>
+            Generate the factory.
+            </summary>
+        </member>
+        <member name="P:Vogen.Validation.Data">
+            <summary>
+            Contains data related to validation.
+            </summary>
+        </member>
+        <member name="M:Vogen.Validation.WithData(System.Object,System.Object)">
+            <summary>
+            Adds the specified data to the validation.
+            This data will be copied to the Data property of the thrown Exception.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns>Validation.</returns>
+        </member>
+        <member name="T:Vogen.ValueObjectAttribute`1">
+            <inheritdoc/>
+        </member>
+        <member name="M:Vogen.ValueObjectAttribute`1.#ctor(Vogen.Conversions,System.Type,Vogen.Customizations,Vogen.DeserializationStrictness,Vogen.DebuggerAttributeGeneration,Vogen.ComparisonGeneration,Vogen.StringComparersGeneration,Vogen.CastOperator,Vogen.CastOperator,Vogen.ParsableForStrings,Vogen.ParsableForPrimitives,Vogen.TryFromGeneration,Vogen.IsInitializedMethodGeneration,Vogen.PrimitiveEqualityGeneration)">
+            <summary>
+            Configures aspects of this individual value object.
+            </summary>
+            <param name="conversions">Specifies what conversion code is generated - defaults to <see cref="F:Vogen.Conversions.Default"/> which generates type converters and a converter to handle serialization using System.Text.Json</param>
+            <param name="throws">Specifies the type of exception thrown when validation fails—defaults to <see cref="T:Vogen.ValueObjectValidationException"/>.</param>
+            <param name="customizations">Simple customization switches—defaults to <see cref="F:Vogen.Customizations.None"/>.</param>
+            <param name="deserializationStrictness">Specifies how strict deserialization is, e.g. should your Validate method be called, or should pre-defined instances that otherwise invalid be allowed - defaults to <see cref="F:Vogen.DeserializationStrictness.AllowValidAndKnownInstances"/>.</param>
+            <param name="debuggerAttributes">Specifies the level that debug attributes are written as some IDEs don't support all of them, e.g., Rider - defaults to <see cref="F:Vogen.DebuggerAttributeGeneration.Full"/> which generates DebuggerDisplay and a debugger proxy type for IDEs that support them</param>
+            <param name="comparison">Species which comparison code is generated—defaults to <see cref="F:Vogen.ComparisonGeneration.UseUnderlying"/> which hoists any IComparable implementations from the primitive.</param>
+            <param name="stringComparers">Specifies which string comparison code is generated—defaults to <see cref="F:Vogen.StringComparersGeneration.Omit"/> which doesn't generate anything related to string comparison.</param>
+            <param name="toPrimitiveCasting">Controls how cast operators are generated for casting from the Value Object to the primitive.
+            Options are implicit or explicit or none.  Explicit is preferred over implicit if you really need them, but isn't recommended.
+            See <see href="https://github.com/SteveDunn/Vogen/wiki/Casting"/> for more information.</param>
+            <param name="fromPrimitiveCasting">Controls how cast operators are generated for casting from the primitive to the Value Object.
+            Options are implicit or explicit or none.  Explicit is preferred over implicit if you really need them, but isn't recommended.
+            See <see href="https://github.com/SteveDunn/Vogen/wiki/Casting"/> for more information.
+            </param>
+            <param name="parsableForStrings">Specifies what is generated for IParsable types for strings - defaults to <see cref="F:Vogen.ParsableForStrings.GenerateMethodsAndInterface"/>.</param>
+            <param name="parsableForPrimitives">Specifies what is generated for Parse and TryParse methods - defaults to <see cref="F:Vogen.ParsableForPrimitives.HoistMethodsAndInterfaces"/>.</param>
+            <param name="tryFromGeneration">Specifies what to write for TryFrom methods—defaults to <see cref="F:Vogen.TryFromGeneration.GenerateBoolAndErrorOrMethods"/>.</param>
+            <param name="isInitializedMethodGeneration">Specifies whether to generate an IsInitialized() method - defaults to <see cref="F:Vogen.IsInitializedMethodGeneration.Generate"/>.</param>
+            <param name="primitiveEqualityGeneration">
+            Specifies whether to generate primitive comparison operators, allowing this type to be compared for equality to the primitive.
+            Defaults to <see cref="F:Vogen.PrimitiveEqualityGeneration.GenerateOperatorsAndMethods"/>
+            <example>
+            <para>
+            var vo = MyInt.From(123);
+            </para>
+            <para>
+            bool same = vo == 123;
+            </para>
+            </example>
+            </param>
+        </member>
+        <member name="T:Vogen.ValueObjectAttribute">
+            <summary>
+            Marks a type as a Value Object. The type that this is applied to should be partial so that the
+            source generator can augment it with equality, creation barriers, and any conversions.
+            </summary>
+        </member>
+        <member name="M:Vogen.ValueObjectAttribute.#ctor(System.Type,Vogen.Conversions,System.Type,Vogen.Customizations,Vogen.DeserializationStrictness,Vogen.DebuggerAttributeGeneration,Vogen.ComparisonGeneration,Vogen.StringComparersGeneration,Vogen.CastOperator,Vogen.CastOperator,Vogen.ParsableForStrings,Vogen.ParsableForPrimitives,Vogen.TryFromGeneration,Vogen.IsInitializedMethodGeneration,Vogen.PrimitiveEqualityGeneration)">
+            <summary>
+            Configures aspects of this individual value object.
+            </summary>
+            <param name="underlyingType">The type of the primitive that is being wrapped—defaults to int.</param>
+            <param name="conversions">Specifies what conversion code is generated - defaults to <see cref="F:Vogen.Conversions.Default"/> which generates type converters and a converter to handle serialization using System.Text.Json</param>
+            <param name="throws">Specifies the type of exception thrown when validation fails—defaults to <see cref="T:Vogen.ValueObjectValidationException"/>.</param>
+            <param name="customizations">Simple customization switches—defaults to <see cref="F:Vogen.Customizations.None"/>.</param>
+            <param name="deserializationStrictness">Specifies how strict deserialization is, e.g. should your Validate method be called, or should pre-defined instances that otherwise invalid be allowed - defaults to <see cref="F:Vogen.DeserializationStrictness.AllowValidAndKnownInstances"/>.</param>
+            <param name="debuggerAttributes">Specifies the level that debug attributes are written as some IDEs don't support all of them, e.g., Rider - defaults to <see cref="F:Vogen.DebuggerAttributeGeneration.Full"/> which generates DebuggerDisplay and a debugger proxy type for IDEs that support them</param>
+            <param name="comparison">Species which comparison code is generated—defaults to <see cref="F:Vogen.ComparisonGeneration.UseUnderlying"/> which hoists any IComparable implementations from the primitive.</param>
+            <param name="stringComparers">Specifies which string comparison code is generated—defaults to <see cref="F:Vogen.StringComparersGeneration.Omit"/> which doesn't generate anything related to string comparison.</param>
+            <param name="toPrimitiveCasting">Specifies the type of casting from wrapper to primitive - defaults to <see cref="F:Vogen.CastOperator.Explicit"/>.</param>
+            <param name="fromPrimitiveCasting">Specifies the type of casting from primitive to wrapper - default to <see cref="F:Vogen.CastOperator.Explicit"/>.</param>
+            <param name="parsableForStrings">Specifies what is generated for IParsable types for strings - defaults to <see cref="F:Vogen.ParsableForStrings.GenerateMethodsAndInterface"/>.</param>
+            <param name="parsableForPrimitives">Specifies what is generated for Parse and TryParse methods - defaults to <see cref="F:Vogen.ParsableForPrimitives.HoistMethodsAndInterfaces"/>.</param>
+            <param name="tryFromGeneration">Specifies what to write for TryFrom methods—defaults to <see cref="F:Vogen.TryFromGeneration.GenerateBoolAndErrorOrMethods"/>.</param>
+            <param name="isInitializedMethodGeneration">Specifies whether to generate an IsInitialized() method - defaults to <see cref="F:Vogen.IsInitializedMethodGeneration.Generate"/>.</param>
+            <param name="primitiveEqualityGeneration">
+            Specifies whether to generate primitive comparison operators, allowing this type to be compared for equality to the primitive.
+            Defaults to <see cref="F:Vogen.PrimitiveEqualityGeneration.GenerateOperatorsAndMethods"/>
+            <example>
+            <para>
+            var vo = MyInt.From(123);
+            </para>
+            <para>
+            bool same = vo == 123;
+            </para>
+            </example>
+            </param>
+        </member>
+        <member name="T:Vogen.ValueObjectOrError`1">
+            <summary>
+            Represents a value object or an error.
+            Returned by the generated TryFrom method, and allows
+            instances to be checked without need to catch and inspect
+            exceptions.
+            </summary>
+            <typeparam name="T">The type of the wrapper.</typeparam>
+        </member>
+        <member name="M:Vogen.ValueObjectOrError`1.#ctor(`0)">
+            <summary>
+            Creates a new instance representing a successful result
+            containing the supplied value object.
+            </summary>
+            <param name="valueObject">The value object</param>
+        </member>
+        <member name="M:Vogen.ValueObjectOrError`1.#ctor(Vogen.Validation)">
+            <summary>
+            Creates a new instance representing a failure.
+            </summary>
+            <param name="error">The <see cref="T:Vogen.Validation"/> object representing the error.</param>
+        </member>
+        <member name="P:Vogen.ValueObjectOrError`1.IsSuccess">
+            <summary>
+            Determines whether the operation represented by the current instance is successful.
+            </summary>
+            <value>
+            <c>true</c> if the operation is successful; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Vogen.ValueObjectOrError`1.Error">
+            <summary>
+            Returns the error, or if successful, a <see cref="T:Vogen.Validation"/> representing 'OK'.
+            </summary>
+        </member>
+        <member name="P:Vogen.ValueObjectOrError`1.ValueObject">
+            <summary>
+            Returns the wrapper, or throws an exception if the result failed.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Throw when this type holds an error.</exception>
+        </member>
+        <member name="M:Vogen.VogenDefaultsAttribute.#ctor(System.Type,Vogen.Conversions,System.Type,Vogen.Customizations,Vogen.DeserializationStrictness,Vogen.DebuggerAttributeGeneration,Vogen.CastOperator,Vogen.CastOperator,System.Boolean,Vogen.ParsableForStrings,Vogen.ParsableForPrimitives,Vogen.TryFromGeneration,Vogen.IsInitializedMethodGeneration,Vogen.SystemTextJsonConverterFactoryGeneration,Vogen.StaticAbstractsGeneration,Vogen.OpenApiSchemaCustomizations,System.Boolean,Vogen.PrimitiveEqualityGeneration)">
+            <summary>
+            Creates a new instance of a type that represents the default
+            values used for value object generation.
+            </summary>
+            <param name="underlyingType">The type of the primitive that is being wrapped—defaults to int.</param>
+            <param name="conversions">Specifies what conversion code is generated - defaults to <see cref="F:Vogen.Conversions.Default"/> which generates type converters and a converter to handle serialization using System.Text.Json</param>
+            <param name="throws">Specifies the type of exception thrown when validation fails—defaults to <see cref="T:Vogen.ValueObjectValidationException"/>.</param>
+            <param name="customizations">Simple customization switches—defaults to <see cref="F:Vogen.Customizations.None"/>.</param>
+            <param name="deserializationStrictness">Specifies how strict deserialization is, e.g. should your Validate method be called, or should pre-defined instances that otherwise invalid be allowed - defaults to <see cref="F:Vogen.DeserializationStrictness.AllowValidAndKnownInstances"/>.</param>
+            <param name="debuggerAttributes">Specifies the level that debug attributes are written as some IDEs don't support all of them, e.g., Rider - defaults to <see cref="F:Vogen.DebuggerAttributeGeneration.Full"/> which generates DebuggerDisplay and a debugger proxy type for IDEs that support them</param>
+            <param name="toPrimitiveCasting">Controls how cast operators are generated for casting from the Value Object to the primitive.
+            Options are implicit or explicit or none.  Explicit is preferred over implicit if you really need them, but isn't recommended.
+            See <see href="https://github.com/SteveDunn/Vogen/wiki/Casting"/> for more information.</param>
+            <param name="fromPrimitiveCasting">Controls how cast operators are generated for casting from the primitive to the Value Object.
+            Options are implicit or explicit or none.  Explicit is preferred over implicit if you really need them, but isn't recommended.
+            See &lt;see href="https://github.com/SteveDunn/Vogen/wiki/Casting"/&gt; for more information.</param>
+            <param name="disableStackTraceRecordingInDebug">disables stack trace recording; in Debug builds, a stack trace is recorded and is
+            thrown in the exception when something is created in an uninitialized state, e.g. after deserialization</param>
+            <param name="parsableForStrings">Specifies what is generated for IParsable types for strings - defaults to <see cref="F:Vogen.ParsableForStrings.GenerateMethodsAndInterface"/>.</param>
+            <param name="parsableForPrimitives">Specifies what is generated for Parse and TryParse methods - defaults to <see cref="F:Vogen.ParsableForPrimitives.HoistMethodsAndInterfaces"/>.</param>
+            <param name="tryFromGeneration">Specifies what to write for TryFrom methods—defaults to <see cref="F:Vogen.TryFromGeneration.GenerateBoolAndErrorOrMethods"/>.</param>
+            <param name="isInitializedMethodGeneration">Specifies whether to generate an IsInitialized() method - defaults to <see cref="F:Vogen.IsInitializedMethodGeneration.Generate"/>.</param>
+            <param name="primitiveEqualityGeneration">
+            Specifies whether to generate primitive comparison operators, allowing this type to be compared for equality to the primitive.
+            Defaults to <see cref="F:Vogen.PrimitiveEqualityGeneration.GenerateOperatorsAndMethods"/>
+            <example>
+            <para>
+            var vo = MyInt.From(123);
+            </para>
+            <para>
+            bool same = vo == 123;
+            </para>
+            </example>
+            </param>
+            <param name="systemTextJsonConverterFactoryGeneration">Controls the generation of the type factory for System.Text.Json.</param>
+            <param name="staticAbstractsGeneration">Controls the generation of static abstract interfaces.</param>
+            <param name="openApiSchemaCustomizations">Controls the generation of a Swashbuckle schema filter for OpenAPI.</param>
+            <param name="explicitlySpecifyTypeInValueObject">Every ValueObject attribute must explicitly specify the type of the primitive.</param>
+        </member>
+    </members>
+</doc>
