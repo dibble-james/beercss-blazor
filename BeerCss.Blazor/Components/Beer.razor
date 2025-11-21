@@ -15,7 +15,7 @@
     public bool NoPadding { get; set; }
 
     [Parameter]
-    public BeerTheme Theme { get; set; } = new();
+    public BeerTheme Theme { get; set; } = BeerTheme.Light;
 
     private CssBuilder CssClass => new CssBuilder()
         .AddClass("responsive", Responsive)

@@ -4,43 +4,43 @@ using System.Text;
 
 public class BeerTheme
 {
-    public string Primary { get; set; } = "#cfbcff";
-    public string OnPrimary { get; set; } = "#381e72";
-    public string PrimaryContainer { get; set; } = "#4f378a";
-    public string OnPrimaryContainer { get; set; } = "#e9ddff";
-    public string Secondary { get; set; } = "#cbc2db";
-    public string OnSecondary { get; set; } = "#332d41";
-    public string SecondaryContainer { get; set; } = "#4a4458";
-    public string OnSecondaryContainer { get; set; } = "#e8def8";
-    public string Tertiary { get; set; } = "#efb8c8";
-    public string OnTertiary { get; set; } = "#4a2532";
-    public string TertiaryContainer { get; set; } = "#633b48";
-    public string OnTertiaryContainer { get; set; } = "#ffd9e3";
-    public string Error { get; set; } = "#ffb4ab";
-    public string OnError { get; set; } = "#690005";
-    public string ErrorContainer { get; set; } = "#93000a";
-    public string OnErrorContainer { get; set; } = "#ffb4ab";
-    public string Background { get; set; } = "#1c1b1e";
-    public string OnBackground { get; set; } = "#e6e1e6";
-    public string Surface { get; set; } = "#141316";
-    public string OnSurface { get; set; } = "#e6e1e6";
-    public string SurfaceVariant { get; set; } = "#49454e";
-    public string OnSurfaceVariant { get; set; } = "#cac4cf";
-    public string Outline { get; set; } = "#948f99";
-    public string OutlineVariant { get; set; } = "#49454e";
-    public string Shadow { get; set; } = "#000000";
-    public string Scrim { get; set; } = "#000000";
-    public string InverseSurface { get; set; } = "#e6e1e6";
-    public string InverseOnSurface { get; set; } = "#313033";
-    public string InversePrimary { get; set; } = "#6750a4";
-    public string SurfaceDim { get; set; } = "#141316";
-    public string SurfaceBright { get; set; } = "#3a383c";
-    public string SurfaceContainerLowest { get; set; } = "#0f0e11";
-    public string SurfaceContainerLow { get; set; } = "#1c1b1e";
-    public string SurfaceContainer { get; set; } = "#201f22";
-    public string SurfaceContainerHigh { get; set; } = "#2b292d";
-    public string SurfaceContainerHighest { get; set; } = "#363438";
-    public string Font { get; set; } = @"Inter, Roboto, ""Helvetica Neue"", ""Arial Nova"", ""Nimbus Sans"", Noto Sans, Arial, sans-serif";
+    public required string Primary { get; init; }
+    public required string OnPrimary { get; init; }
+    public required string PrimaryContainer { get; init; }
+    public required string OnPrimaryContainer { get; init; }
+    public required string Secondary { get; init; }
+    public required string OnSecondary { get; init; }
+    public required string SecondaryContainer { get; init; }
+    public required string OnSecondaryContainer { get; init; }
+    public required string Tertiary { get; init; }
+    public required string OnTertiary { get; init; }
+    public required string TertiaryContainer { get; init; }
+    public required string OnTertiaryContainer { get; init; }
+    public required string Error { get; init; }
+    public required string OnError { get; init; }
+    public required string ErrorContainer { get; init; }
+    public required string OnErrorContainer { get; init; }
+    public required string Background { get; init; }
+    public required string OnBackground { get; init; }
+    public required string Surface { get; init; }
+    public required string OnSurface { get; init; }
+    public required string SurfaceVariant { get; init; }
+    public required string OnSurfaceVariant { get; init; }
+    public required string Outline { get; init; }
+    public required string OutlineVariant { get; init; }
+    public required string Shadow { get; init; }
+    public required string Scrim { get; init; }
+    public required string InverseSurface { get; init; }
+    public required string InverseOnSurface { get; init; }
+    public required string InversePrimary { get; init; }
+    public required string SurfaceDim { get; init; }
+    public required string SurfaceBright { get; init; }
+    public required string SurfaceContainerLowest { get; init; }
+    public required string SurfaceContainerLow { get; init; }
+    public required string SurfaceContainer { get; init; }
+    public required string SurfaceContainerHigh { get; init; }
+    public required string SurfaceContainerHighest { get; init; }
+    public string Font { get; init; } = @"Inter, Roboto, ""Helvetica Neue"", ""Arial Nova"", ""Nimbus Sans"", Noto Sans, Arial, sans-serif";
 
     public string GetTheme()
     {
@@ -88,4 +88,84 @@ public class BeerTheme
 
         return theme.ToString();
     }
+
+    public static BeerTheme Dark = new()
+    {
+        Primary = "#cfbcff",
+        OnPrimary = "#381e72",
+        PrimaryContainer = "#4f378a",
+        OnPrimaryContainer = "#e9ddff",
+        Secondary = "#cbc2db",
+        OnSecondary = "#332d41",
+        SecondaryContainer = "#4a4458",
+        OnSecondaryContainer = "#e8def8",
+        Tertiary = "#efb8c8",
+        OnTertiary = "#4a2532",
+        TertiaryContainer = "#633b48",
+        OnTertiaryContainer = "#ffd9e3",
+        Error = "#ffb4ab",
+        OnError = "#690005",
+        ErrorContainer = "#93000a",
+        OnErrorContainer = "#ffb4ab",
+        Background = "#1c1b1e",
+        OnBackground = "#e6e1e6",
+        Surface = "#141316",
+        OnSurface = "#e6e1e6",
+        SurfaceVariant = "#49454e",
+        OnSurfaceVariant = "#cac4cf",
+        Outline = "#948f99",
+        OutlineVariant = "#49454e",
+        Shadow = "#000000",
+        Scrim = "#000000",
+        InverseSurface = "#e6e1e6",
+        InverseOnSurface = "#313033",
+        InversePrimary = "#6750a4",
+        SurfaceDim = "#141316",
+        SurfaceBright = "#3a383c",
+        SurfaceContainerLowest = "#0f0e11",
+        SurfaceContainerLow = "#1c1b1e",
+        SurfaceContainer = "#201f22",
+        SurfaceContainerHigh = "#2b292d",
+        SurfaceContainerHighest = "#363438",
+    };
+
+    public static BeerTheme Light = new()
+    {
+        Primary = "#6750a4",
+        OnPrimary = "#ffffff",
+        PrimaryContainer = "#e9ddff",
+        OnPrimaryContainer = "#22005d",
+        Secondary = "#625b71",
+        OnSecondary = "#ffffff",
+        SecondaryContainer = "#e8def8",
+        OnSecondaryContainer = "#1e192b",
+        Tertiary = "#7e5260",
+        OnTertiary = "#ffffff",
+        TertiaryContainer = "#ffd9e3",
+        OnTertiaryContainer = "#31101d",
+        Error = "#ba1a1a",
+        OnError = "#ffffff",
+        ErrorContainer = "#ffdad6",
+        OnErrorContainer = "#410002",
+        Background = "#fffbff",
+        OnBackground = "#1c1b1e",
+        Surface = "#fdf8fd",
+        OnSurface = "#1c1b1e",
+        SurfaceVariant = "#e7e0eb",
+        OnSurfaceVariant = "#49454e",
+        Outline = "#7a757f",
+        OutlineVariant = "#cac4cf",
+        Shadow = "#000000",
+        Scrim = "#000000",
+        InverseSurface = "#313033",
+        InverseOnSurface = "#f4eff4",
+        InversePrimary = "#cfbcff",
+        SurfaceDim = "#ddd8dd",
+        SurfaceBright = "#fdf8fd",
+        SurfaceContainerLowest = "#ffffff",
+        SurfaceContainerLow = "#f7f2f7",
+        SurfaceContainer = "#f2ecf1",
+        SurfaceContainerHigh = "#ece7eb",
+        SurfaceContainerHighest = "#e6e1e6",
+    };
 }

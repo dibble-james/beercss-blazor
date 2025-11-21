@@ -1,0 +1,11 @@
+@attribute [Stories("Components/Snackbar")]
+
+<Stories TComponent="Snackbar">
+    <Story Name="Default">
+        <Template>
+            <SnackbarProvider>
+                <Snackbar @attributes="context.Args" />
+            </SnackbarProvider>
+        </Template>
+    </Story>
+</Stories>
