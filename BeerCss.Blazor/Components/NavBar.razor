@@ -1,0 +1,27 @@
+@code {
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    private bool Open { get; set; } = false;
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("max", Open);
+}
+
+<nav class="m l left @CssClass">
+  <header>
+    <button class="extra circle transparent" @onclick="() => Open = !Open">
+      <i>
+        @(Open ? "menu_open" : "menu")
+      </i>
+    </button>
+    @Header
+  </header>
+  @ChildContent
+</nav>
+<nav class="s bottom">
+  @ChildContent
+</nav>

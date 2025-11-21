@@ -1,0 +1,11 @@
+@attribute [Stories("Components/FileField")]
+
+<Stories TComponent="FileField">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+
+    <Story Name="Default">
+        <Template>
+            <FileField @attributes="context.Args" />
+        </Template>
+    </Story>
+</Stories>

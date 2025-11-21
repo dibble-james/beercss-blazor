@@ -1,0 +1,25 @@
+﻿@code {
+    [Parameter]
+    public VerticalPosition Vertical { get; set; }
+
+    [Parameter]
+    public HorizontalPosition Horizontal { get; set; }
+
+    [Parameter]
+    public bool Padding { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass($"{Vertical.ToString().ToLower()}-align")
+        .AddClass($"{Horizontal.ToString().ToLower()}-align")
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<div @attributes="AdditionalAttributes" class="@CssClass">
+    @ChildContent
+</div>

@@ -1,0 +1,87 @@
+@using Microsoft.AspNetCore.Components.Routing
+@code {
+    [Parameter]
+    public bool NoPadding { get; set; }
+
+    [Parameter]
+    public bool Fill { get; set; }
+
+    [Parameter]
+    public bool Round { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool HeaderResponsive { get; set; }
+
+    [Parameter]
+    public Color Color { get; set; } = Color.Default;
+
+    [Parameter]
+    public RenderFragment? Title { get; set; }
+
+    [Parameter, EditorRequired]
+    public required RenderFragment Content { get; set; }
+
+    [Parameter]
+    public string? ContentCss { get; set; }
+
+    [Parameter]
+    public RenderFragment? Nav { get; set; }
+
+    [Parameter]
+    public string? NavCss { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("fill", Fill)
+        .AddClass("round", Round)
+        .AddClass("border", Border)
+        .AddClass("no-padding", NoPadding)
+        .AddClass("clickable", OnClick.HasDelegate)
+        .AddClass(Color.ToCssClass())
+        .AddClassFromAttributes(AdditionalAttributes);
+
+    private CssBuilder ContentCssClass => new CssBuilder()
+        .AddClass("row")
+        .AddClass(ContentCss);
+}
+
+<article @attributes="AdditionalAttributes" class="@CssClass" @onclick="OnClick">
+    @if (HeaderResponsive)
+    {
+        @Header
+        @if (Title is not null)
+        {
+            <h5>@Title</h5>
+        }
+        @Content
+    }
+    else
+    {
+        <div class="@ContentCssClass">
+            @Header
+            <div class="max">
+                @if (Title is not null)
+                {
+                    <h5>@Title</h5>
+                }
+                @Content
+            </div>
+        </div>
+    }
+    
+    @if (Nav is not null)
+    {
+        <nav class="@NavCss">@Nav</nav>
+    }
+</article>

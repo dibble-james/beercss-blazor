@@ -1,0 +1,21 @@
+@attribute [Stories("Components/Progress")]
+
+<Stories TComponent="Progress">
+    <Story Name="Default">
+        <Template>
+            <Progress @attributes="context.Args" />
+        </Template>
+    </Story>
+
+    <Story Name="Circle">
+        <Template>
+            <Progress Circle />
+        </Template>
+    </Story>
+
+    <Story Name="30%">
+        <Template>
+            <Progress ProgressPercentage="30" />
+        </Template>
+    </Story>
+</Stories>

@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Components.Routing
+@inject NavigationManager Navigation
+@code {
+  [Parameter(CaptureUnmatchedValues = true)]
+  public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+  [Parameter]
+  public string? Headline { get; set; }
+
+  [Parameter]
+  public string? BackUri { get; set; }
+
+  [Parameter]
+  public string? IconUri { get; set; }
+
+  private CssBuilder CssClass => new CssBuilder()
+  .AddClass("primary-container")
+  .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<header class="@CssClass" @attributes="AdditionalAttributes">
+  <nav>
+    @if (IconUri is not null)
+    {
+      <div class="icon">
+        <NavLink Href="/">
+          <img src="@IconUri" alt="@Headline" />
+        </NavLink>
+      </div>
+    }
+
+    @if (BackUri is not null)
+    {
+      <button class="circle transparent" @onclick="@(() => Navigation.NavigateTo(BackUri))">
+        <i>arrow_back</i>
+      </button>
+    }
+
+    @if (Headline is not null)
+    {
+      <h6 class="max center-align">
+        <NavLink Href="/">@Headline</NavLink>
+      </h6>
+    }
+  </nav>
+</header>

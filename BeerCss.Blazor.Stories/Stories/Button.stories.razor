@@ -1,0 +1,29 @@
+@attribute [Stories("Components/Button")]
+
+<Stories TComponent="Button">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+    <ArgType For="_ => _.Elevation" Control="ControlType.Select" DefaultValue="Elevation.NoElevate" />
+    <ArgType For="_ => _.Color" Control="ControlType.Select" DefaultValue="Color.Default" />
+
+    <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_childContent" />
+        </Arguments>
+        <Template>
+            <Button @attributes="context.Args"></Button>
+        </Template>
+    </Story>
+    <Story Name="Responsive">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_childContent" />
+        </Arguments>
+        <Template>
+            <Button Responsive @attributes="context.Args"></Button>
+        </Template>
+    </Story>
+</Stories>
+
+@code
+{
+    RenderFragment _childContent = @<text>I am button</text>;
+}

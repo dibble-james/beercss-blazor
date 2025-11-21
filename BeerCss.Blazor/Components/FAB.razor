@@ -1,0 +1,52 @@
+﻿@inject NavigationManager Navigation
+
+@code {
+    [Parameter]
+    public VerticalPosition Vertical { get; set; }
+
+    [Parameter]
+    public HorizontalPosition Horizontal { get; set; }
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public List<MenuItem> Menu { get; set; } = [];
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    public abstract record MenuItem(string Text);
+    public record LinkMenuItem(string Text, string? Href) : MenuItem(Text);
+    public record ActionMenuItem(string Text, Action OnClick) : MenuItem(Text);
+}
+
+<Position Horizontal="@Horizontal" Vertical="@Vertical" Padding Fixed @attributes="AdditionalAttributes">
+    @if (Menu.Any())
+    {
+        <nav class="min active">
+            @ChildContent
+            <menu class="top transparent no-wrap left right-align">
+                @foreach (var menuItem in Menu)
+                {
+                    <li>
+                        @{
+                            RenderFragment item = menuItem switch
+                            {
+                                LinkMenuItem link => @<Button Fill @onclick="@(() => Navigation.NavigateTo(link.Href ?? Navigation.Uri, false))">@menuItem.Text</Button>,
+                                ActionMenuItem action => @<Button Fill @onclick="@action.OnClick">@menuItem.Text</Button>,
+                                _ => null!
+                            };
+                        }
+
+                        @item
+                    </li>
+                }
+            </menu>
+        </nav>
+    }
+    else
+    {
+        @ChildContent
+    }
+</Position>

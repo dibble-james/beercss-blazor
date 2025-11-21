@@ -1,0 +1,26 @@
+@using Microsoft.AspNetCore.Components.Routing
+@code {
+    [Parameter]
+    public bool Circle { get; set; }
+
+    [Parameter]
+    public int? ProgressPercentage { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private int? ProgressPercentageValue
+        => ProgressPercentage.HasValue 
+        ? (int)(ProgressPercentage * 0.01m)
+        : null;
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("circle", Circle)
+        .AddClass(Size.ToCssClass())
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<progress value="@ProgressPercentage" @attributes="AdditionalAttributes" class="@CssClass" max="100"></progress>

@@ -1,0 +1,35 @@
+@code {
+  [Parameter]
+  public bool Docked { get; set; }
+
+  [Parameter]
+  public bool Floating { get; set; }
+
+  [Parameter, EditorRequired]
+  public required RenderFragment ChildContent { get; set; }
+
+  [Parameter(CaptureUnmatchedValues = true)]
+  public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+  private CssBuilder CssClass => new CssBuilder()
+  .AddClass("toolbar")
+  .AddClass("max", Docked)
+  .AddClassFromAttributes(AdditionalAttributes);
+}
+
+@if (Floating)
+{  
+  <Position Horizontal="@HorizontalPosition.Center" Vertical="@VerticalPosition.Bottom" Padding Fixed>
+    <nav class="center-align tiny-space">
+      <nav @attributes="AdditionalAttributes" class="@CssClass">
+        @ChildContent
+      </nav>
+    </nav>
+  </Position>
+}
+else
+{
+  <nav @attributes="AdditionalAttributes" class="@CssClass">
+    @ChildContent
+  </nav>
+}

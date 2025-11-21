@@ -1,0 +1,32 @@
+.beer header nav button {
+    order: -1;
+}
+
+.beer div.icon {
+    position: relative;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.beer div.icon:has(+ button) {
+    transform: translateX(-1.5rem);
+}
+
+.beer div.icon ::deep a {
+    position: absolute;
+    border-radius: 100%;
+    padding: 0.5rem;
+    transform: translateX(-2.5rem);
+    background: var(--surface);
+}
+
+.beer div.icon img {
+    height: 4rem;
+    background: var(--surface-container-low);
+    border-radius: 100%;
+    transition: box-shadow 0.5s;
+}
+
+.beer div.icon img:hover {
+    box-shadow: var(--elevate2);
+}

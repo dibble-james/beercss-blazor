@@ -1,0 +1,19 @@
+@code {
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Direction Direction { get; set; }
+
+    [Parameter]
+    public bool IsActive { get; set; } = true;
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("page")
+        .AddClass("active", IsActive)
+        .AddClass(Direction.ToCssClass());
+}
+
+<div class="@CssClass">
+    @ChildContent
+</div>

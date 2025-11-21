@@ -1,0 +1,91 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Diagnostics.CodeAnalysis
+@using BeerCss.Blazor.Common
+
+@inherits Microsoft.AspNetCore.Components.Forms.InputFile
+    
+@code {
+    [Parameter]
+    public bool Submit { get; set; }
+
+    [Parameter]
+    public bool Fill { get; set; }
+
+    [Parameter]
+    public bool Round { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Medium;
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string? HelpText { get; set; }
+
+    [Parameter]
+    public bool InProgress { get; set; }
+
+    [Parameter]
+    public RenderFragment? Prefix { get; set; }
+    
+    [Parameter]
+    public RenderFragment? Suffix { get; set; }
+
+    [Parameter]
+    public EventCallback<InputFileChangeEventArgs>? OnFileChanged { get; set; }
+
+    public string? FileName { get; set; }
+
+    protected override void OnInitialized()
+    {
+        this.OnChange = new EventCallback<InputFileChangeEventArgs>(
+            this,
+            async (InputFileChangeEventArgs newFile) =>
+            {
+                FileName = newFile.File.Name;
+                await (OnFileChanged?.InvokeAsync(newFile) ?? Task.CompletedTask);
+            });
+    }
+
+    private CssBuilder RealCssClass => new CssBuilder()
+        .AddClass("field")
+        .AddClass("fill", Fill)
+        .AddClass("round", Round)
+        .AddClass("border", Border)
+        .AddClass("prefix", Prefix is not null)
+        .AddClass("suffix", Suffix is not null)
+        .AddClass("label", Label is not null)
+        .AddClass(Size.ToCssClass())
+        .AddClassFromAttributes(AdditionalAttributes?.AsReadOnly());
+
+    private RenderFragment RenderInput() => (builder) => base.BuildRenderTree(builder);
+}
+
+<div class="@RealCssClass">
+    @if (InProgress)
+    {
+        <Progress Circle />
+    }
+    else if(Prefix is not null)
+    {
+        @Prefix
+    }
+    @RenderInput()
+    <InputText @bind-Value="FileName" />
+    @if (Label is not null)
+    {
+        <label>@Label</label>
+    }
+    @if (HelpText is not null)
+    {
+        <span class="helper">@HelpText</span>
+    }
+    @if (Suffix is not null)
+    {
+        @Suffix
+    }
+</div>

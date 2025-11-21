@@ -1,0 +1,39 @@
+@code {
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; init; }
+
+    [Parameter]
+    public RenderFragment? NavBar { get; set; }
+
+    [Parameter]
+    public RenderFragment? AppBar { get; set; }
+
+    [Parameter]
+    public bool Responsive { get; set; }
+
+    [Parameter]
+    public bool NoPadding { get; set; }
+
+    [Parameter]
+    public BeerTheme Theme { get; set; } = new();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("responsive", Responsive)
+        .AddClass("no-padding", NoPadding);
+}
+
+<HeadContent>
+    <style>
+        @Theme.GetTheme()
+    </style>
+</HeadContent>
+
+<CascadingValue Value="Theme">
+    <div class="beer" style="overflow: clip">
+        @NavBar
+        @AppBar
+        <main class="@CssClass">
+            @ChildContent
+        </main>
+    </div>
+</CascadingValue>

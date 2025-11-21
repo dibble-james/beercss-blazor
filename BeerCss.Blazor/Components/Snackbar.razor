@@ -1,0 +1,38 @@
+@code {
+    [Parameter]
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Color Color { get; set; } = Color.Default;
+
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+
+    [CascadingParameter]
+    public SnackbarProvider? Provider { get; set; }
+
+    private bool IsOpen { get; set; } = true;
+
+    public async Task Close()
+    {
+        await this.InvokeAsync(() => this.IsOpen = false);
+        await Task.Delay(TimeSpan.FromSeconds(1));
+        await (Provider?.RemoveSnackbar(this) ?? Task.CompletedTask);
+    }        
+
+    public CssBuilder CssClass => new CssBuilder()
+        .AddClass("active", IsOpen)
+        .AddClass("snackbar")
+        .AddClass(Color.ToCssClass());
+
+    protected async override Task OnAfterRenderAsync(bool isFirstRender)
+    {
+        if (isFirstRender)
+        {
+            await (Provider?.AddSnackbar(this) ?? Task.CompletedTask);
+        }
+    }
+}

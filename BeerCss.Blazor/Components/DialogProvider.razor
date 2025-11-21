@@ -1,0 +1,38 @@
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public void AddDialog(Dialog dialog)
+    {
+        Dialogs.Add(dialog);
+        this.StateHasChanged();
+    }
+
+    public void RemoveDialog(Dialog dialog)
+    {
+        Dialogs.Remove(dialog);
+        this.StateHasChanged();
+    }
+
+    private List<Dialog> Dialogs { get; } = new();
+}
+
+@if (Dialogs.Any())
+{
+    <div class="overlay active"></div>
+}
+
+@foreach(var dialog in Dialogs)
+{
+    <dialog @attributes="@dialog.AdditionalAttributes" class="@dialog.CssClass">
+        <h5 class="large-space">@dialog.Title</h5>
+        <div>@dialog.Content</div>
+        <nav class="right-align">
+            @dialog.Nav
+        </nav>
+    </dialog>
+}
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>

@@ -1,0 +1,37 @@
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public async Task AddSnackbar(Snackbar snackbar)
+    {
+        Snackbars.Add(snackbar);
+        this.StateHasChanged();
+        await Task.Delay(snackbar.Timeout);
+        await snackbar.Close();
+        this.StateHasChanged();
+    }
+
+    public async Task RemoveSnackbar(Snackbar snackbar)
+    => await this.InvokeAsync(() => Snackbars.Remove(snackbar));
+
+    private List<Snackbar> Snackbars { get; } = new();
+}
+
+@foreach (var snackbar in Snackbars)
+{
+    <div class="@snackbar.CssClass" @onclick="() => snackbar.Close()">
+        @if (snackbar.Actions is null)
+        {
+            @snackbar.ChildContent
+        }
+        else
+        {
+            <div class="max">@snackbar.ChildContent</div>
+            @snackbar.Actions
+        }
+    </div>
+}
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>

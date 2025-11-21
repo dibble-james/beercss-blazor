@@ -1,0 +1,16 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "jsdelivr",
+      "library": "beercss@3.12.11",
+      "destination": "wwwroot/beer",
+      "files": [
+        "dist/cdn/beer.scoped.min.css",
+        "dist/cdn/beer.min.js",
+        "dist/cdn/material-symbols-outlined.woff2"
+      ]
+    }
+  ]
+}
