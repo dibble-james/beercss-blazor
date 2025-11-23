@@ -1,0 +1,17 @@
+@attribute [Stories("Components/Inputs/Date")]
+
+<Stories TComponent="DateField<DateOnly>">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <DateField TValue="DateOnly" @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    DateOnly _value = DateOnly.FromDateTime(DateTime.Now);
+}

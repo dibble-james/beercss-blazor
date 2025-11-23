@@ -1,0 +1,17 @@
+@attribute [Stories("Components/Inputs/File")]
+
+<Stories TComponent="FileField">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <FileField @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    string? _value = null;
+}

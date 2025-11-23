@@ -1,0 +1,23 @@
+@attribute [Stories("Components/Inputs/Select")]
+
+<Stories TComponent="SelectField<string>">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <SelectField TValue="string" @attributes="context.Args" @bind-Value="_value">
+                    <option value="val1">Value 1</option>
+                    <option value="val2">Value 2</option>
+                    <option value="val3">Value 3</option>
+                    <option value="val4">Value 4</option>
+                    <option value="val5">Value 5</option>
+                </SelectField>
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    string? _value = null;
+}

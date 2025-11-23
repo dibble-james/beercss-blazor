@@ -1,0 +1,17 @@
+@attribute [Stories("Components/Inputs/Number")]
+
+<Stories TComponent="NumberField<int>">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <NumberField TValue="int" @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    int _value = 10;
+}

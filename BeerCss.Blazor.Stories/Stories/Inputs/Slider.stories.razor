@@ -1,0 +1,21 @@
+@attribute [Stories("Components/Inputs/Slider")]
+
+<Stories TComponent="Slider<int>">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+
+    <Story Name="Default">
+        <Arguments>
+            <Arg For="_ => _.Min" Value="1" />
+            <Arg For="_ => _.Max" Value="100" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Slider T="int" @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    int _value = 10;
+}

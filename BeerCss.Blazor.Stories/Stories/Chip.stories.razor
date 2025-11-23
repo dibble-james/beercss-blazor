@@ -2,8 +2,36 @@
 
 <Stories TComponent="Chip">
     <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_childContent" />
+        </Arguments>
+        <Template>
+            <Chip @attributes="context.Args" />
+        </Template>
+    </Story>
+    <Story Name="Suffix">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_childContent" />
+            <Arg For="x => x.Suffix" Value="_suffix" />
+        </Arguments>
+        <Template>
+            <Chip @attributes="context.Args" />
+        </Template>
+    </Story>
+    <Story Name="Prefix">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_childContent" />
+            <Arg For="x => x.Prefix" Value="_prefix" />
+        </Arguments>
         <Template>
             <Chip @attributes="context.Args" />
         </Template>
     </Story>
 </Stories>
+
+@code
+{
+    RenderFragment _childContent = @<text>Input</text>;
+    string _suffix = "close";
+    string _prefix = "done";
+}

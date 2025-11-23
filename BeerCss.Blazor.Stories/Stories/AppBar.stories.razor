@@ -2,8 +2,17 @@
 
 <Stories TComponent="AppBar">
     <Story Name="Default">
+        <Arguments>
+            <Arg For="_ => _.Headline" Value="_headline" />
+            <Arg For="_ => _.IconUri" Value="_iconUrl" />
+        </Arguments>
         <Template>
             <AppBar @attributes="context.Args" />
         </Template>
     </Story>
 </Stories>
+
+@code {
+    string _headline = "MyApp";
+    string _iconUrl = "https://www.beercss.com/favicon.png";
+}
