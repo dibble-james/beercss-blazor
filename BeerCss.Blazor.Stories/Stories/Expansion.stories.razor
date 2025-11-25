@@ -2,8 +2,17 @@
 
 <Stories TComponent="Expansion">
     <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.Title" Value="_title" />
+            <Arg For="x => x.Content" Value="_content" />
+        </Arguments>
         <Template>
             <Expansion @attributes="context.Args" />
         </Template>
     </Story>
 </Stories>
+
+@code {
+    RenderFragment _title = @<text>Click me</text>;
+    RenderFragment _content = @<text>I was hidden, now you see me</text>;
+}

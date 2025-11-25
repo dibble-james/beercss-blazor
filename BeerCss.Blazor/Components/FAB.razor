@@ -16,6 +16,14 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
+    private CssBuilder MenuCssClass => new CssBuilder()
+        .AddClass("transparent no-wrap")
+        .AddClass("top", Vertical == VerticalPosition.Bottom)
+        .AddClass("bottom", Vertical != VerticalPosition.Bottom)
+        .AddClass("left", Horizontal == HorizontalPosition.Right)
+        .AddClass("right-align", Horizontal == HorizontalPosition.Right)
+        .AddClass("right", Horizontal != HorizontalPosition.Right);
+
     public abstract record MenuItem(string Text);
     public record LinkMenuItem(string Text, string? Href) : MenuItem(Text);
     public record ActionMenuItem(string Text, Action OnClick) : MenuItem(Text);
@@ -26,7 +34,7 @@
     {
         <nav class="min active">
             @ChildContent
-            <menu class="top transparent no-wrap left right-align">
+            <menu class="@MenuCssClass">
                 @foreach (var menuItem in Menu)
                 {
                     <li>
