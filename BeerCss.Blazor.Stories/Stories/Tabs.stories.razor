@@ -3,9 +3,20 @@
 <Stories TComponent="Tabs">
     <Story Name="Default">
         <Template>
-            <SnackbarProvider>
-                <Tabs @attributes="context.Args" />
-            </SnackbarProvider>
+            <Tabs @attributes="context.Args">
+                <Tab>
+                    <Title>Tab 1</Title>
+                    <Content>Tab 1</Content>
+                </Tab>
+                <Tab>
+                    <Title>Tab 2</Title>
+                    <Content>Tab 2 Content</Content>
+                </Tab>
+                <Tab>
+                    <Title>Tab 3</Title>
+                    <Content>Tab 3 Content</Content>
+                </Tab>
+            </Tabs>
         </Template>
     </Story>
 </Stories>

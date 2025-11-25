@@ -4,7 +4,12 @@
     <Story Name="Default">
         <Template>
             <SnackbarProvider>
-                <Toolbar @attributes="context.Args" />
+                <Toolbar @attributes="context.Args">
+                    <Button><i>home</i></Button>
+                    <Button><i>edit</i></Button>
+                    <Button><i>upload</i></Button>
+                    <Button><i>download</i></Button>
+                </Toolbar>
             </SnackbarProvider>
         </Template>
     </Story>

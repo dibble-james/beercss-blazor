@@ -2,9 +2,19 @@
 
 <Stories TComponent="Menu">
     <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_content" />
+        </Arguments>
         <Template>
-            <Menu @attributes="context.Args" />
-            <Menu @attributes="context.Args" />
+            <Menu @attributes="context.Args" MenuItems="@([
+                                    new Menu.MenuItem("Link", "/"),
+                                    new Menu.MenuItem("Another link", "/"),
+                                    new Menu.MenuItem("Yes another link", "/"),
+                                ])" />
         </Template>
     </Story>
 </Stories>
+
+@code {
+    RenderFragment _content = @<text>Menu</text>;
+}

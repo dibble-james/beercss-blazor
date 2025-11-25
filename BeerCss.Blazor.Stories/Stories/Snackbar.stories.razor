@@ -2,6 +2,10 @@
 
 <Stories TComponent="Snackbar">
     <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.ChildContent" Value="_content" />
+            <Arg For="x => x.Timeout" Value="_timeout" />
+        </Arguments>
         <Template>
             <SnackbarProvider>
                 <Snackbar @attributes="context.Args" />
@@ -9,3 +13,8 @@
         </Template>
     </Story>
 </Stories>
+
+@code {
+    RenderFragment _content = @<text>Mmmm... Snacks...</text>;
+    TimeSpan _timeout = TimeSpan.FromHours(1);
+}

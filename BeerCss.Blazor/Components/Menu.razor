@@ -22,6 +22,12 @@
 
     [Parameter]
     public bool Disabled { get; set; }
+
+    [Parameter]
+    public VerticalPosition Vertical { get; set; }
+
+    [Parameter]
+    public HorizontalPosition Horizontal { get; set; }
     
     [Parameter, EditorRequired]
     public required RenderFragment ChildContent { get; set; }
@@ -44,6 +50,14 @@
         .AddClass(Color.ToCssClass())
         .AddClassFromAttributes(AdditionalAttributes);
 
+    private CssBuilder MenuCssClass => new CssBuilder()
+        .AddClass("transparent no-wrap")        
+        .AddClass("top", Vertical == VerticalPosition.Top)
+        .AddClass("bottom", Vertical == VerticalPosition.Top)
+        .AddClass("left", Horizontal == HorizontalPosition.Left)
+        .AddClass("right-align", Horizontal == HorizontalPosition.Right)
+        .AddClass("right", Horizontal == HorizontalPosition.Right);
+
     private Dictionary<string, object> Attributes() 
     {
         Dictionary<string, object> attributes = new(AdditionalAttributes);
@@ -60,8 +74,8 @@
 <button @attributes="Attributes()" class="@CssClass">
     <nav class="min active">
         @ChildContent
-        <menu class="top transparent no-wrap left right-align">
-            @foreach (var menuItem in MenuItems)
+        <menu class="@MenuCssClass">
+            @foreach (MenuItem menuItem in MenuItems)
             {
                 <li>
                     <Button Fill @onclick="@(() => Navigation.NavigateTo(menuItem.Href ?? Navigation.Uri, false))">@menuItem.Text</Button>

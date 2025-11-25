@@ -13,7 +13,7 @@
 
     [Parameter]
     public bool Pills { get; set; }
-    
+
     [Parameter]
     public Size? Size { get; set; }
 
@@ -35,8 +35,8 @@
     }
 
     private CssBuilder TabsCssClass => new CssBuilder()
-        .AddClass(Pills ? "tabbed" : "tabs")
-        .AddClass(Size?.ToCssClass());
+    .AddClass(Pills ? "tabbed" : "tabs")
+    .AddClass(Size?.ToCssClass());
 
     private List<Tab> TabCollection { get; } = new();
 
@@ -65,14 +65,29 @@
     @ChildContent
 
     <div @attributes="AdditionalAttributes">
-        <nav class="@TabsCssClass">
-            @foreach (var tab in TabCollection)
-            {
-                <a @onclick="() => SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
-                    @tab.Title
-                </a>
-            }
-        </nav>
+        @if (Pills)
+        {
+            <nav class="@TabsCssClass">
+                @foreach (var tab in TabCollection)
+                {
+                    <a @onclick="() => SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
+                        @tab.Title
+                    </a>
+                }
+            </nav>
+
+        }
+        else
+        {
+            <div class="@TabsCssClass">
+                @foreach (var tab in TabCollection)
+                {
+                    <a @onclick="() => SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
+                        @tab.Title
+                    </a>
+                }
+            </div>
+        }
 
         @foreach (var tab in TabCollection)
         {
