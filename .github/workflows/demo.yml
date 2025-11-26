@@ -30,6 +30,7 @@ jobs:
       - name: Update for GH Pages
         run: |
           sed -i 's/<base href="\/" \/>/<base href="\/beercss-blazor\/" \/>/g' publish/wwwroot/index.html
+          sed -i 's/<base href="\/" \/>/<base href="\/beercss-blazor\/" \/>/g' publish/wwwroot/iframe.html
           cp publish/wwwroot/index.html publish/wwwroot/404.html
           touch publish/wwwroot/.nojekyll
       - name: Publish to GitHub Pages
