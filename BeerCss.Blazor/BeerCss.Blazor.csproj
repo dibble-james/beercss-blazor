@@ -8,6 +8,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>CS1591</NoWarn>
 		<PackageId>BeerCss.Blazor</PackageId>
+		<PackageIcon>logo.png</PackageIcon>
 		<Authors>James Dibble</Authors>
 		<RepositoryUrl>https://github.com/dibble-james/beercss-blazor</RepositoryUrl>
 		<PackageTags>blazor MUI3 components</PackageTags>
@@ -20,6 +21,7 @@
   <ItemGroup>
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
 		<None Include="..\LICENSE" Pack="true" PackagePath="\" />
+		<None Include="logo.png" Pack="true" PackagePath="\"/>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
