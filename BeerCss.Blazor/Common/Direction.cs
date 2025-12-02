@@ -2,6 +2,7 @@ namespace BeerCss.Blazor.Common;
 
 public enum Direction
 {
+    Default,
     Left,
     Right,
     Top,

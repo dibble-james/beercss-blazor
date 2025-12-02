@@ -1,9 +1,27 @@
 @attribute [Stories("Components/Tabs")]
 
 <Stories TComponent="Tabs">
-    <Story Name="Default">
+    <Story Name="Tabbed">
         <Template>
             <Tabs @attributes="context.Args" OnTabChanged=@(() => Console.WriteLine("Switched tab"))>
+                <Tab>
+                    <Title>Tab 1</Title>
+                    <Content>Tab 1</Content>
+                </Tab>
+                <Tab Active="true">
+                    <Title>Tab 2</Title>
+                    <Content>Tab 2 Content</Content>
+                </Tab>
+                <Tab>
+                    <Title>Tab 3</Title>
+                    <Content>Tab 3 Content</Content>
+                </Tab>
+            </Tabs>
+        </Template>
+    </Story>
+    <Story Name="Pills">
+        <Template>
+            <Tabs Pills @attributes="context.Args" OnTabChanged=@(() => Console.WriteLine("Switched tab"))>
                 <Tab>
                     <Title>Tab 1</Title>
                     <Content>Tab 1</Content>
