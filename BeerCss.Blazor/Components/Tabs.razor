@@ -6,9 +6,6 @@
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
     [Parameter]
-    public string? ActiveTab { get; set; }
-
-    [Parameter]
     public EventCallback<Tab?> OnTabChanged { get; set; }
 
     [Parameter]
@@ -17,60 +14,43 @@
     [Parameter]
     public Size? Size { get; set; }
 
+    [Parameter]
+    public Direction Direction { get; set; }
+
     public async Task AddTab(Tab tab)
     {
         TabCollection.Add(tab);
-
-        if (TabCollection.Count == 1 || tab.TabId == ActiveTab)
-        {
-            await SetActiveTab(tab);
-        }
-
-        this.StateHasChanged();
+        tab.IsActive = tab.Active;
+        await InvokeAsync(StateHasChanged);
     }
 
-    protected async override Task OnParametersSetAsync()
+    private async Task SetActiveTab(Tab tab)
     {
-        await SetActiveTab(TabCollection.FirstOrDefault(t => t.TabId == ActiveTab));
-    }
-
-    private CssBuilder TabsCssClass => new CssBuilder()
-    .AddClass(Pills ? "tabbed" : "tabs")
-    .AddClass(Size?.ToCssClass());
-
-    private List<Tab> TabCollection { get; } = new();
-
-    private async Task SetActiveTab(Tab? tab)
-    {
-        if (tab?.IsActive ?? false)
+        if (tab.IsActive)
         {
             return;
         }
 
         TabCollection.ForEach(t => t.IsActive = false);
-        if (tab is not null)
-        {
-            tab.IsActive = true;
-        }
+        tab.IsActive = true;
 
-        if (OnTabChanged.HasDelegate)
-        {
-            await OnTabChanged.InvokeAsync(tab);
-            return;
-        }
+        await OnTabChanged.InvokeAsync(tab);
     }
+
+    private CssBuilder TabsCssClass => new CssBuilder().AddClass(Pills ? "tabbed" : "tabs").AddClass(Size?.ToCssClass());
+
+    private List<Tab> TabCollection { get; } = new();
 }
 
 <CascadingValue Value="this">
     @ChildContent
-
     <div @attributes="AdditionalAttributes">
         @if (Pills)
         {
             <nav class="@TabsCssClass">
                 @foreach (var tab in TabCollection)
                 {
-                    <a @onclick="() => SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
+                    <a @onclick="async () => await SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
                         @tab.Title
                     </a>
                 }
@@ -82,7 +62,7 @@
             <div class="@TabsCssClass">
                 @foreach (var tab in TabCollection)
                 {
-                    <a @onclick="() => SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
+                    <a @onclick="async () => await SetActiveTab(tab)" class=@(tab.IsActive ? "active" : "")>
                         @tab.Title
                     </a>
                 }

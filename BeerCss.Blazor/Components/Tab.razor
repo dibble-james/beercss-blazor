@@ -6,9 +6,7 @@
     public required RenderFragment Content { get; set; }
 
     [Parameter]
-    public string? TabId { get; set; }
-
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
 
     [CascadingParameter]
     public required Tabs Parent { get; set; }
@@ -16,15 +14,28 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
+    internal bool IsActive
+    { 
+        get;
+        set
+        {
+            field = value;
+            StateHasChanged();
+        }
+    }
+
     public CssBuilder CssClass => new CssBuilder()
         .AddClass("page")
-        .AddClass("left")
+        .AddClass(Parent.Direction.ToCssClass())
         .AddClass("padding")
         .AddClass("active", IsActive)
         .AddClassFromAttributes(AdditionalAttributes);
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await Parent.AddTab(this);
+        if (firstRender)
+        {
+            await Parent.AddTab(this);
+        }
     }
 }
