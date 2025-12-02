@@ -1,0 +1,56 @@
+@attribute [Stories("Components/Inputs/Switch")]
+
+<Stories TComponent="Switch">
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Switch @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Icon">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Switch @attributes="context.Args" @bind-Value="_value">
+                    <ToggleIcon><i>wifi</i></ToggleIcon>
+                </Switch>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Field">
+        <Arguments>
+            <Arg For="_ => _.HelpText" Value="_helpText" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Switch @attributes="context.Args" @bind-Value="_value">
+                    <Label>
+                        <h6>Title</h6>
+                        <div>Some text here</div>
+                    </Label>
+                </Switch>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Field with ToggleIcon">
+        <Arguments>
+            <Arg For="_ => _.HelpText" Value="_helpText" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Switch @attributes="context.Args" @bind-Value="_value">
+                    <ToggleIcon><i>dark_mode</i></ToggleIcon>
+                    <Label>
+                        <h6>Title</h6>
+                        <div>Some text here</div>
+                    </Label>
+                </Switch>
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    bool _value = false;
+    string _helpText = "Help me!";
+}
