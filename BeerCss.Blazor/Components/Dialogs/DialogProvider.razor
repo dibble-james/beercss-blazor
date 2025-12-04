@@ -2,16 +2,16 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    public void AddDialog(Dialog dialog)
+    public async Task AddDialog(Dialog dialog)
     {
         Dialogs.Add(dialog);
-        this.StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
 
-    public void RemoveDialog(Dialog dialog)
+    public async Task RemoveDialog(Dialog dialog)
     {
         Dialogs.Remove(dialog);
-        this.StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
 
     private List<Dialog> Dialogs { get; } = new();
@@ -22,14 +22,20 @@
     <div class="overlay active"></div>
 }
 
-@foreach(var dialog in Dialogs)
+@foreach (var dialog in Dialogs)
 {
     <dialog @attributes="@dialog.AdditionalAttributes" class="@dialog.CssClass">
-        <h5 class="large-space">@dialog.Title</h5>
+        @if (dialog is IHaveTitle title)
+        {
+            <h5 class="large-space">@title.Title</h5>
+        }
         <div>@dialog.Content</div>
-        <nav class="right-align">
-            @dialog.Nav
-        </nav>
+        @if (dialog is IHaveNav nav)
+        {
+            <nav class="right-align">
+                @nav.Nav
+            </nav>
+        }
     </dialog>
 }
 

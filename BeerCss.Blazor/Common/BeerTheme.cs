@@ -1,5 +1,6 @@
 namespace BeerCss.Blazor.Common;
 
+using System.Globalization;
 using System.Text;
 
 public class BeerTheme
@@ -47,49 +48,49 @@ public class BeerTheme
         var theme = new StringBuilder();
 
         theme.AppendLine(":root {");
-        theme.AppendLine($"--primary: {Primary};");
-        theme.AppendLine($"--on-primary: {OnPrimary};");
-        theme.AppendLine($"--primary-container: {PrimaryContainer};");
-        theme.AppendLine($"--on-primary-container: {OnPrimaryContainer};");
-        theme.AppendLine($"--secondary: {Secondary};");
-        theme.AppendLine($"--on-secondary: {OnSecondary};");
-        theme.AppendLine($"--secondary-container: {SecondaryContainer};");
-        theme.AppendLine($"--on-secondary-container: {OnSecondaryContainer};");
-        theme.AppendLine($"--tertiary: {Tertiary};");
-        theme.AppendLine($"--on-tertiary: {OnTertiary};");
-        theme.AppendLine($"--tertiary-container: {TertiaryContainer};");
-        theme.AppendLine($"--on-tertiary-container: {OnTertiaryContainer};");
-        theme.AppendLine($"--error: {Error};");
-        theme.AppendLine($"--on-error: {OnError};");
-        theme.AppendLine($"--error-container: {ErrorContainer};");
-        theme.AppendLine($"--on-error-container: {OnErrorContainer};");
-        theme.AppendLine($"--background: {Background};");
-        theme.AppendLine($"--on-background: {OnBackground};");
-        theme.AppendLine($"--surface: {Surface};");
-        theme.AppendLine($"--on-surface: {OnSurface};");
-        theme.AppendLine($"--surface-variant: {SurfaceVariant};");
-        theme.AppendLine($"--on-surface-variant: {OnSurfaceVariant};");
-        theme.AppendLine($"--outline: {Outline};");
-        theme.AppendLine($"--outline-variant: {OutlineVariant};");
-        theme.AppendLine($"--shadow: {Shadow};");
-        theme.AppendLine($"--scrim: {Scrim};");
-        theme.AppendLine($"--inverse-surface: {InverseSurface};");
-        theme.AppendLine($"--inverse-on-surface: {InverseOnSurface};");
-        theme.AppendLine($"--inverse-primary: {InversePrimary};");
-        theme.AppendLine($"--surface-dim: {SurfaceDim};");
-        theme.AppendLine($"--surface-bright: {SurfaceBright};");
-        theme.AppendLine($"--surface-container-lowest: {SurfaceContainerLowest};");
-        theme.AppendLine($"--surface-container-low: {SurfaceContainerLow};");
-        theme.AppendLine($"--surface-container: {SurfaceContainer};");
-        theme.AppendLine($"--surface-container-high: {SurfaceContainerHigh};");
-        theme.AppendLine($"--surface-container-highest: {SurfaceContainerHighest};");
-        theme.AppendLine($"--font: {Font};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--primary: {this.Primary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-primary: {this.OnPrimary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--primary-container: {this.PrimaryContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-primary-container: {this.OnPrimaryContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--secondary: {this.Secondary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-secondary: {this.OnSecondary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--secondary-container: {this.SecondaryContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-secondary-container: {this.OnSecondaryContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--tertiary: {this.Tertiary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-tertiary: {this.OnTertiary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--tertiary-container: {this.TertiaryContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-tertiary-container: {this.OnTertiaryContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--error: {this.Error};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-error: {this.OnError};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--error-container: {this.ErrorContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-error-container: {this.OnErrorContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--background: {this.Background};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-background: {this.OnBackground};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface: {this.Surface};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-surface: {this.OnSurface};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-variant: {this.SurfaceVariant};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--on-surface-variant: {this.OnSurfaceVariant};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--outline: {this.Outline};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--outline-variant: {this.OutlineVariant};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--shadow: {this.Shadow};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--scrim: {this.Scrim};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--inverse-surface: {this.InverseSurface};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--inverse-on-surface: {this.InverseOnSurface};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--inverse-primary: {this.InversePrimary};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-dim: {this.SurfaceDim};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-bright: {this.SurfaceBright};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container-lowest: {this.SurfaceContainerLowest};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container-low: {this.SurfaceContainerLow};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container: {this.SurfaceContainer};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container-high: {this.SurfaceContainerHigh};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container-highest: {this.SurfaceContainerHighest};");
+        theme.AppendLine(CultureInfo.InvariantCulture, $"--font: {this.Font};");
         theme.AppendLine("}");
 
         return theme.ToString();
     }
 
-    public static BeerTheme Dark = new()
+    public static readonly BeerTheme Dark = new()
     {
         Primary = "#cfbcff",
         OnPrimary = "#381e72",
@@ -129,7 +130,7 @@ public class BeerTheme
         SurfaceContainerHighest = "#363438",
     };
 
-    public static BeerTheme Light = new()
+    public static readonly BeerTheme Light = new()
     {
         Primary = "#6750a4",
         OnPrimary = "#ffffff",

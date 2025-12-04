@@ -1,0 +1,21 @@
+@using BeerCss.Blazor.Components.Dialogs
+@attribute [Stories("Components/Dialogs/Sheet")]
+
+<Stories TComponent="Sheet">
+    <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.Open" Value="_open" />
+            <Arg For="x => x.Content" Value="_content" />
+        </Arguments>
+        <Template>
+            <DialogProvider>
+                <Sheet @attributes="context.Args" />
+            </DialogProvider>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    bool _open = true;
+    RenderFragment _content = @<text>I am dialog content</text>;
+}

@@ -1,6 +1,7 @@
-@attribute [Stories("Components/Dialog")]
+@using BeerCss.Blazor.Components.Dialogs
+@attribute [Stories("Components/Dialogs/Default")]
 
-<Stories TComponent="Dialog">
+<Stories TComponent="Default">
     <Story Name="Default">
         <Arguments>
             <Arg For="x => x.Open" Value="_open" />
@@ -10,7 +11,7 @@
         </Arguments>
         <Template>
             <DialogProvider>
-                <Dialog @attributes="context.Args" />
+                <Default @attributes="context.Args" />
             </DialogProvider>
         </Template>
     </Story>

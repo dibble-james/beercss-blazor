@@ -1,0 +1,7 @@
+@inherits Dialog
+@code {
+    [Parameter]
+    public Direction Direction { get; set; } = Direction.Bottom;
+
+    public override CssBuilder CssClass => base.CssClass.AddClass(Direction.ToCssClass());
+}

@@ -30,9 +30,16 @@
 
     protected async override Task OnAfterRenderAsync(bool isFirstRender)
     {
+        Console.WriteLine("Making a snack");
+
+        if (Provider is null)
+        {
+            throw new InvalidOperationException("Dialog used without a parent DialogProvider");
+        }
+
+        await (Provider?.AddSnackbar(this) ?? Task.CompletedTask);
         if (isFirstRender)
         {
-            await (Provider?.AddSnackbar(this) ?? Task.CompletedTask);
         }
     }
 }

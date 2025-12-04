@@ -5,14 +5,14 @@
     public async Task AddSnackbar(Snackbar snackbar)
     {
         Snackbars.Add(snackbar);
-        this.StateHasChanged();
+        await InvokeAsync(StateHasChanged);
         await Task.Delay(snackbar.Timeout);
         await snackbar.Close();
-        this.StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
 
     public async Task RemoveSnackbar(Snackbar snackbar)
-    => await this.InvokeAsync(() => Snackbars.Remove(snackbar));
+        => await this.InvokeAsync(() => Snackbars.Remove(snackbar));
 
     private List<Snackbar> Snackbars { get; } = new();
 }

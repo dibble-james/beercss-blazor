@@ -1,0 +1,18 @@
+@inherits Dialog
+@implements IHaveTitle
+@implements IHaveNav
+
+@code {
+    [Parameter, EditorRequired]
+    public required RenderFragment Title { get; set; }
+
+    [Parameter]
+    public bool FullScreen { get; set; }
+
+    [Parameter]
+    public RenderFragment? Nav { get; set; }
+
+    public override CssBuilder CssClass => base.CssClass
+        .AddClass("max", FullScreen)
+        .AddClass("modal");
+}

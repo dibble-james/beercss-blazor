@@ -1,0 +1,10 @@
+@inherits Dialog
+@implements IHaveTitle
+@implements IHaveNav
+@code {
+    [Parameter, EditorRequired]
+    public required RenderFragment Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? Nav { get; set; }
+}
