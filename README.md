@@ -22,3 +22,35 @@ Soak your app with beer (AKA add the namespace your your `_Imports.razor` and th
 ```
 
 Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the available components.
+
+## Components
+- [x] Appbar
+- [ ] Buttons
+  - [x] FAB
+  - [x] Standard
+  - [ ] Split
+- [x] Card
+- [x] Chip
+- [ ] Container
+- [x] Dialogs
+- [ ] Divider
+- [x] Expansion
+- [x] Grid
+- [ ] Icon
+- [x] Inputs
+- [x] Layout
+- [ ] List
+- [x] Menu
+- [ ] Navigation
+- [x] Page
+- [x] Progress
+- [x] Scroll
+- [ ] Search
+- [ ] Shapes
+- [x] Snackbar
+- [ ] Space
+- [ ] Stepper
+- [ ] Table
+- [x] Tabs
+- [x] Toolbar
+- [ ] Tooltip
