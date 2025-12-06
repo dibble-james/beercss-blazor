@@ -13,6 +13,9 @@
     [Parameter]
     public List<MenuItem> Menu { get; set; } = [];
 
+    [Parameter]
+    public bool Extend { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
@@ -51,6 +54,12 @@
                     </li>
                 }
             </menu>
+        </nav>
+    }
+    else if (Extend)
+    {
+        <nav>
+            @ChildContent
         </nav>
     }
     else

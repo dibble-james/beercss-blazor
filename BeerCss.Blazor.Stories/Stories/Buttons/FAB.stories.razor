@@ -1,0 +1,34 @@
+@using BeerCss.Blazor.Components.Buttons;
+@attribute [Stories("Components/Buttons/FAB")]
+
+<Stories TComponent="FAB">
+    <Story Name="Default">
+        <Template>
+            <FAB @attributes="context.Args">
+                <Button>FAB</Button>
+            </FAB>
+        </Template>
+    </Story>
+    <Story Name="Menu">
+        <Template>
+            <FAB @attributes="context.Args" Menu="@([
+                                                        new FAB.LinkMenuItem("Link", "/"),
+                                                        new FAB.ActionMenuItem("Action", () => { }),
+                                                    ])">
+                <Button Circle><i>more_vert</i></Button>
+            </FAB>
+        </Template>
+    </Story>
+    <Story Name="Extended">
+        <Arguments>
+            <Arg For="x => x.Extend" Value="true" />
+        </Arguments>
+        <Template>
+            <FAB @attributes="context.Args">
+                <Button @attributes="context.Args" Extend="I am big" Circle>
+                    <i>add</i>
+                </Button>
+            </FAB>
+        </Template>
+    </Story>
+</Stories>
