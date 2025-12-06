@@ -1,0 +1,26 @@
+@using BeerCss.Blazor.Components.Buttons;
+@attribute [Stories("Components/Buttons/Group")]
+
+<Stories TComponent="Group">
+    <Story Name="Default">
+        <Template>
+            <Group @attributes="context.Args">
+                <Button>Left</Button>
+                <Button>Middle</Button>
+                <Button>Right</Button>
+            </Group>
+        </Template>
+    </Story>
+    <Story Name="Connected">
+        <Arguments>
+            <Arg For="x => x.Connected" Value="true" />
+        </Arguments>
+        <Template>
+            <Group @attributes="context.Args">
+                <Button>Left</Button>
+                <Button>Middle</Button>
+                <Button>Right</Button>
+            </Group>
+        </Template>
+    </Story>
+</Stories>

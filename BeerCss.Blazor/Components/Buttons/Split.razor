@@ -1,0 +1,24 @@
+@code {
+    [Parameter, EditorRequired]
+    public required RenderFragment Button { get; set; }
+
+    [Parameter, EditorRequired]
+    public required RenderFragment Menu { get; set; }
+
+    [Parameter]
+    public Color Color { get; set; } = Color.Default;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("group")
+        .AddClass("split")
+        .AddClass(Color.ToCssClass())
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<nav class="@CssClass" @attributes="AdditionalAttributes">
+    @Button
+    @Menu
+</nav>

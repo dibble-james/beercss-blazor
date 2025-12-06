@@ -1,0 +1,26 @@
+@using BeerCss.Blazor.Components.Buttons;
+@attribute [Stories("Components/Buttons/Split")]
+
+<Stories TComponent="Split">
+    <ArgType For="_ => _.Color" Control="ControlType.Select" DefaultValue="Color.Default" />
+
+    <Story Name="Default">
+        <Template>
+            <Split @attributes="context.Args">
+                <Button>
+                    <Button class="left-round">
+                        <i>add_circle</i>
+                        Button
+                    </Button>
+                    <Menu class="right-round" MenuItems="@([
+                                    new LinkMenuItem("Link", "/"),
+                                    new LinkMenuItem("Another link", "/"),
+                                    new LinkMenuItem("Yes another link", "/"),
+                                ])">
+                        <i>keyboard_arrow_down</i>
+                    </Menu>
+                </Button>
+            </Split>
+        </Template>
+    </Story>
+</Stories>

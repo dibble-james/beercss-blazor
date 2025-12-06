@@ -7,9 +7,9 @@
         </Arguments>
         <Template>
             <Menu @attributes="context.Args" MenuItems="@([
-                                    new Menu.MenuItem("Link", "/"),
-                                    new Menu.MenuItem("Another link", "/"),
-                                    new Menu.MenuItem("Yes another link", "/"),
+                                    new LinkMenuItem("Link", "/"),
+                                    new LinkMenuItem("Another link", "/"),
+                                    new LinkMenuItem("Yes another link", "/"),
                                 ])" />
         </Template>
     </Story>

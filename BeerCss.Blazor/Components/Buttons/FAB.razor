@@ -1,4 +1,5 @@
-﻿@inject NavigationManager Navigation
+﻿@using BeerCss.Blazor.Common
+@inject NavigationManager Navigation
 
 @code {
     [Parameter]
@@ -26,10 +27,6 @@
         .AddClass("left", Horizontal == HorizontalPosition.Right)
         .AddClass("right-align", Horizontal == HorizontalPosition.Right)
         .AddClass("right", Horizontal != HorizontalPosition.Right);
-
-    public abstract record MenuItem(string Text);
-    public record LinkMenuItem(string Text, string? Href) : MenuItem(Text);
-    public record ActionMenuItem(string Text, Action OnClick) : MenuItem(Text);
 }
 
 <Position Horizontal="@Horizontal" Vertical="@Vertical" Padding Fixed @attributes="AdditionalAttributes">

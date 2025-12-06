@@ -24,41 +24,47 @@
     public bool Disabled { get; set; }
 
     [Parameter]
-    public VerticalPosition Vertical { get; set; }
+    public bool Docked { get; set; }
 
     [Parameter]
-    public HorizontalPosition Horizontal { get; set; }
-    
+    public bool FullScreen { get; set; }
+
+    [Parameter]
+    public VerticalPosition Vertical { get; set; } = VerticalPosition.Bottom;
+
+    [Parameter]
+    public HorizontalPosition Horizontal { get; set; } = HorizontalPosition.Center;
+
     [Parameter, EditorRequired]
     public required RenderFragment ChildContent { get; set; }
 
     [Parameter, EditorRequired]
     public required List<MenuItem> MenuItems { get; set; } = [];
 
-    public record MenuItem(string Text, string? Href);
-
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
     private CssBuilder CssClass => new CssBuilder()
-        .AddClass("button")
-        .AddClass("fill", Fill)
-        .AddClass("border", Border)
-        .AddClass("transparent", Transparent)
-        .AddClass(Size.ToCssClass())
-        .AddClass(Elevation.ToCssClass())
-        .AddClass(Color.ToCssClass())
-        .AddClassFromAttributes(AdditionalAttributes);
+    .AddClass("button")
+    .AddClass("fill", Fill)
+    .AddClass("border", Border)
+    .AddClass(Size.ToCssClass())
+    .AddClass(Elevation.ToCssClass())
+    .AddClass(Color.ToCssClass())
+    .AddClassFromAttributes(AdditionalAttributes);
 
     private CssBuilder MenuCssClass => new CssBuilder()
-        .AddClass("transparent no-wrap")        
-        .AddClass("top", Vertical == VerticalPosition.Top)
-        .AddClass("bottom", Vertical == VerticalPosition.Top)
-        .AddClass("left", Horizontal == HorizontalPosition.Left)
-        .AddClass("right-align", Horizontal == HorizontalPosition.Right)
-        .AddClass("right", Horizontal == HorizontalPosition.Right);
+    .AddClass("no-wrap")
+    .AddClass("transparent", Transparent)
+    .AddClass("docked", Docked)
+    .AddClass("max", FullScreen)
+    .AddClass("top", Vertical == VerticalPosition.Top)
+    .AddClass("bottom", Vertical == VerticalPosition.Top)
+    .AddClass("left", Horizontal == HorizontalPosition.Left)
+    .AddClass("right-align", Horizontal == HorizontalPosition.Right)
+    .AddClass("right", Horizontal == HorizontalPosition.Right);
 
-    private Dictionary<string, object> Attributes() 
+    private Dictionary<string, object> Attributes()
     {
         Dictionary<string, object> attributes = new(AdditionalAttributes);
 
@@ -72,15 +78,22 @@
 }
 
 <button @attributes="Attributes()" class="@CssClass">
-    <nav class="min active">
-        @ChildContent
-        <menu class="@MenuCssClass">
-            @foreach (MenuItem menuItem in MenuItems)
-            {
-                <li>
-                    <Button Fill @onclick="@(() => Navigation.NavigateTo(menuItem.Href ?? Navigation.Uri, false))">@menuItem.Text</Button>
-                </li>
-            }
-        </menu>
-    </nav>
+    @ChildContent
+    <menu class="@MenuCssClass">
+        @foreach (var menuItem in MenuItems)
+        {
+            <li>
+                @if (menuItem is LinkMenuItem link)
+                {
+                    <Button Fill
+                        @onclick="@(() => Navigation.NavigateTo(link.Href ?? Navigation.Uri, false))">@menuItem.Text</Button>
+                }
+                @if (menuItem is ActionMenuItem action)
+                {
+                    <Button Fill
+                        @onclick="@action.OnClick">@menuItem.Text</Button>
+                }
+            </li>
+        }
+    </menu>
 </button>

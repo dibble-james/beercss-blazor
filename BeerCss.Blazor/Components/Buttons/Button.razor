@@ -42,11 +42,6 @@
     [Parameter]
     public string? Href { get; set; }
 
-    [Parameter]
-    public List<MenuItem> Menu { get; set; } = [];
-
-    public record MenuItem(string Text, string? Href);
-
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
