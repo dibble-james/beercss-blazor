@@ -40,7 +40,7 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [ ] Icon
 - [x] Inputs
 - [x] Layout
-- [ ] List
+- [x] List
 - [x] Menu
 - [ ] Navigation
 - [x] Page
