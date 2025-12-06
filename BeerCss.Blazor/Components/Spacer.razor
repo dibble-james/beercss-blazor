@@ -1,0 +1,6 @@
+@code {
+    [Parameter]
+    public Space Spacing { get; set; } = Space.None;
+}
+
+<div class="@Spacing.ToCssClass()"></div>

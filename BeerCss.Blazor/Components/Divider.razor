@@ -1,0 +1,14 @@
+@code {
+    [Parameter]
+    public Space Spacing { get; set; }
+
+    private string CssClass => Spacing switch
+    {
+        Space.Small => "small",
+        Space.Medium => "medium",
+        Space.Large => "large",
+        _ => string.Empty,
+    };
+}
+
+<hr class="@CssClass" />

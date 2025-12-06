@@ -10,7 +10,7 @@
 
     private CssBuilder CssClass => new CssBuilder()
         .AddClass("grid")
-        .AddClass(Space.ToCssClass())
+        .AddClass(this.Space.ToCssClass())
         .AddClassFromAttributes(AdditionalAttributes);
 }
 

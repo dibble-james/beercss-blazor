@@ -25,15 +25,16 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 
 ## Components
 - [x] Appbar
-- [ ] Buttons
+- [x] Buttons
   - [x] FAB
   - [x] Standard
-  - [ ] Split
+  - [x] Group
+  - [x] Split
 - [x] Card
 - [x] Chip
 - [ ] Container
 - [x] Dialogs
-- [ ] Divider
+- [x] Divider
 - [x] Expansion
 - [x] Grid
 - [ ] Icon
@@ -48,7 +49,7 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [ ] Search
 - [ ] Shapes
 - [x] Snackbar
-- [ ] Space
+- [x] Space
 - [ ] Stepper
 - [ ] Table
 - [x] Tabs
