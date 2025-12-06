@@ -1,0 +1,19 @@
+@code {
+    [Parameter]
+    public Space Spacing { get; set; } = Space.None;
+    
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("list")
+        .AddClass("border", Border)
+        .AddClass(Spacing.ToCssClass());
+}
+
+<ul class="@CssClass">
+    @ChildContent
+</ul>

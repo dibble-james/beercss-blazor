@@ -1,0 +1,51 @@
+@attribute [Stories("Components/List")]
+
+<Stories TComponent="List">
+    <Story Name="Default">
+        <Template>
+            <List @attributes="context.Args">
+                <li>Item</li>
+                <li>Item</li>
+                <li>Item</li>
+                <li>Item</li>
+            </List>
+        </Template>
+    </Story>
+    <Story Name="Nested">
+        <Template>
+            <List @attributes="context.Args">
+                <li>Item</li>
+                <li>Item</li>
+                <li>Item</li>
+                <li>
+                    <List @attributes="context.Args">
+                        <li>Item</li>
+                        <li>Item</li>
+                        <li>Item</li>
+                        <li>Item</li>
+                    </List>
+                </li>
+            </List>
+        </Template>
+    </Story>
+    <Story Name="Expansion">
+        <Template>
+            <List @attributes="context.Args">
+                <li>Item</li>
+                <li>Item</li>
+                <li>Item</li>
+                <li>
+                    <Expansion @attributes="context.Args">
+                        <Title>Header item</Title>
+                        <Content>
+                            <List @attributes="context.Args">
+                                <li>Item</li>
+                                <li>Item</li>
+                            </List>
+                        </Content>
+                    </Expansion>
+                </li>
+            </List>
+        </Template>
+    </Story>
+</Stories>
