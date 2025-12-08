@@ -1,0 +1,101 @@
+@typeparam TSearchResult
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Diagnostics.CodeAnalysis
+@using BeerCss.Blazor.Common
+@using System.Timers;
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment<TSearchResult> ItemTemplate { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<string?, Task<IReadOnlyCollection<TSearchResult>>> SearchItems { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Medium;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool FullScreen { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    protected bool InProgress { get; set; }
+
+    protected string? Criteria { get; set; }
+
+    private CssBuilder RealCssClass => new CssBuilder()
+    .AddClass("field prefix round fill")
+    .AddClass(Size.ToCssClass())
+    .AddClassFromAttributes(AdditionalAttributes);
+
+    private CssBuilder MenuCss => new CssBuilder()
+    .AddClass("max", FullScreen)
+    .AddClass("min", !FullScreen);
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (this.Disabled && this.AdditionalAttributes is null)
+        {
+            this.AdditionalAttributes = new Dictionary<string, object> { { "disabled", "disabled" } };
+        }
+        else if (this.Disabled && this.AdditionalAttributes is not null && !this.AdditionalAttributes.ContainsKey("disabled"))
+        {
+            this.AdditionalAttributes = new Dictionary<string, object>(this.AdditionalAttributes!) { { "disabled", "disabled" } };
+        }
+        else if (!this.Disabled && this.AdditionalAttributes is not null && this.AdditionalAttributes.ContainsKey("disabled"))
+        {
+            var attributes = new Dictionary<string, object>(this.AdditionalAttributes!);
+            attributes.Remove("disabled");
+            this.AdditionalAttributes = attributes;
+        }
+    }
+
+    protected IReadOnlyCollection<TSearchResult> Results { get; set; } = [];
+
+    private async Task OnChange()
+    {
+        InProgress = true;
+        try
+        {
+            Results = await this.SearchItems(this.Criteria);
+        }
+        finally
+        {
+            InProgress = false;
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+}
+
+<div class="@RealCssClass">
+    @if (InProgress)
+    {
+        <Progress Circle />
+    }
+    else
+    {
+        <i class="front">search</i>
+    }
+    <input type="text" @bind="Criteria" @bind:event="oninput" @onkeyup="@OnChange" />
+    <menu class="@MenuCss">
+        <li>
+            <div class="field large prefix">
+                <i class="front">arrow_back</i>
+                <input type="text" @bind="Criteria" @bind:event="oninput" @onkeyup="@OnChange" />
+            </div>
+        </li>
+        @foreach (var result in Results)
+        {
+            <li>
+                @ItemTemplate(result)
+            </li>
+        }
+    </menu>
+</div>

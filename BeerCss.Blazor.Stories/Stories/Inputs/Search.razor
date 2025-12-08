@@ -1,0 +1,46 @@
+@using BeerCss.Blazor.Components.Inputs
+@attribute [Stories("Components/Inputs/Search")]
+
+<Stories TComponent="SearchField<Result>">
+    <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <SearchField TSearchResult="Result" @attributes="context.Args" SearchItems="ExecuteSearch" Context="result">
+                    <ItemTemplate>
+                        <div>@result.Word</div>
+                    </ItemTemplate>
+                </SearchField>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Fullscreen">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <SearchField TSearchResult="Result" @attributes="context.Args" SearchItems="ExecuteSearch" Context="result" FullScreen>
+                    <ItemTemplate>
+                        <div>@result.Word</div>
+                    </ItemTemplate>
+                </SearchField>
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    private record Result(string Word);
+
+    private string _value = "";
+
+    private async Task<IReadOnlyCollection<Result>> ExecuteSearch(string? criteria)
+    {
+        Console.WriteLine("Searching...");
+        await Task.Delay(TimeSpan.FromSeconds(3));
+
+        return criteria switch
+        {
+            null => [],
+            var val => val.Split(' ').Select(r => new Result(r)).ToArray(),
+        };
+    }
+}
