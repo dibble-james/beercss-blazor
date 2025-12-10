@@ -6,22 +6,26 @@
     <Story Name="Default">
         <Template>
             <EditForm Context="form" Model="_value">
-                <SearchField TSearchResult="Result" @attributes="context.Args" SearchItems="ExecuteSearch" Context="result">
+                <SearchField TSearchResult="Result" @attributes="context.Args" @bind-SelectedItem="_selectedResult"
+                    SearchItems="ExecuteSearch" Context="result">
                     <ItemTemplate>
                         <div>@result.Word</div>
                     </ItemTemplate>
                 </SearchField>
+                <p>Selected result: @_selectedResult?.Word</p>
             </EditForm>
         </Template>
     </Story>
     <Story Name="Fullscreen">
         <Template>
             <EditForm Context="form" Model="_value">
-                <SearchField TSearchResult="Result" @attributes="context.Args" SearchItems="ExecuteSearch" Context="result" FullScreen>
+                <SearchField TSearchResult="Result" @attributes="context.Args" @bind-SelectedItem="_selectedResult"
+                    SearchItems="ExecuteSearch" Context="result" FullScreen>
                     <ItemTemplate>
                         <div>@result.Word</div>
                     </ItemTemplate>
                 </SearchField>
+                <p>Selected result: @_selectedResult?.Word</p>
             </EditForm>
         </Template>
     </Story>
@@ -30,12 +34,13 @@
 @code {
     private record Result(string Word);
 
-    private string _value = "";
+    private string? _value = "Search me...";
 
-    private async Task<IReadOnlyCollection<Result>> ExecuteSearch(string? criteria)
+    private Result? _selectedResult;
+
+    private async Task<IReadOnlyCollection<Result>> ExecuteSearch(string? criteria, CancellationToken ct)
     {
-        Console.WriteLine("Searching...");
-        await Task.Delay(TimeSpan.FromSeconds(3));
+        await Task.Delay(TimeSpan.FromSeconds(1), ct); // Simulate API call
 
         return criteria switch
         {

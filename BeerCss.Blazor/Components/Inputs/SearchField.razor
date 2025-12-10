@@ -9,7 +9,13 @@
     public RenderFragment<TSearchResult> ItemTemplate { get; set; }
 
     [Parameter, EditorRequired]
-    public Func<string?, Task<IReadOnlyCollection<TSearchResult>>> SearchItems { get; set; }
+    public Func<string?, CancellationToken, Task<IReadOnlyCollection<TSearchResult>>> SearchItems { get; set; }
+
+    [Parameter]
+    public TSearchResult? SelectedItem { get; set; }
+
+    [Parameter]
+    public EventCallback<TSearchResult> SelectedItemChanged { get; set; }
 
     [Parameter]
     public Size Size { get; set; } = Size.Medium;
@@ -23,9 +29,10 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
-    protected bool InProgress { get; set; }
+    [Parameter]
+    public TimeSpan DebounceInterval { get; set; } = TimeSpan.FromMilliseconds(300);
 
-    protected string? Criteria { get; set; }
+    protected bool InProgress { get; set; }
 
     private CssBuilder RealCssClass => new CssBuilder()
     .AddClass("field prefix round fill")
@@ -58,12 +65,37 @@
 
     protected IReadOnlyCollection<TSearchResult> Results { get; set; } = [];
 
-    private async Task OnChange()
+    private string? criteria;
+    private CancellationTokenSource? debounce;
+
+    private async Task OnCriteriaChanged(string? newValue)
     {
-        InProgress = true;
+        criteria = newValue;
+        await (debounce?.CancelAsync() ?? Task.CompletedTask);
+        debounce = new();
+        
+        SelectedItem = default;
+        await SelectedItemChanged.InvokeAsync(SelectedItem);
+
         try
         {
-            Results = await this.SearchItems(this.Criteria);
+            await Task.Delay(DebounceInterval, debounce.Token);
+        }
+        catch (TaskCanceledException)
+        {
+            return;
+        }
+
+        InProgress = true;
+        await InvokeAsync(StateHasChanged);
+
+        try
+        {
+            Results = await this.SearchItems(newValue, debounce.Token);
+        }
+        catch (TaskCanceledException)
+        {
+            return;
         }
         finally
         {
@@ -72,6 +104,9 @@
 
         await InvokeAsync(StateHasChanged);
     }
+
+    private Func<Task> OnSelectedItemChanged(TSearchResult? selected)
+        => async () => await SelectedItemChanged.InvokeAsync(selected);
 }
 
 <div class="@RealCssClass">
@@ -83,17 +118,21 @@
     {
         <i class="front">search</i>
     }
-    <input type="text" @bind="Criteria" @bind:event="oninput" @onkeyup="@OnChange" />
+    <input type="text" value="@criteria" />
     <menu class="@MenuCss">
         <li>
             <div class="field large prefix">
                 <i class="front">arrow_back</i>
-                <input type="text" @bind="Criteria" @bind:event="oninput" @onkeyup="@OnChange" />
+                @if (InProgress)
+                {
+                    <Progress Circle />
+                }
+                <input type="text" @bind:event="oninput" @bind:get="criteria" @bind:set="@OnCriteriaChanged" />
             </div>
         </li>
         @foreach (var result in Results)
         {
-            <li>
+            <li @onmousedown="OnSelectedItemChanged(result)">
                 @ItemTemplate(result)
             </li>
         }
