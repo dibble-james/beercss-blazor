@@ -46,7 +46,7 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Page
 - [x] Progress
 - [x] Scroll
-- [ ] Search
+- [x] Search
 - [ ] Shapes
 - [x] Snackbar
 - [x] Space
