@@ -4,6 +4,9 @@
     public bool Circle { get; set; }
 
     [Parameter]
+    public bool Wavy { get; set; }
+
+    [Parameter]
     public int? ProgressPercentage { get; set; }
 
     [Parameter]
@@ -19,6 +22,7 @@
 
     private CssBuilder CssClass => new CssBuilder()
         .AddClass("circle", Circle)
+        .AddClasd("wavy", Wavy)
         .AddClass(Size.ToCssClass())
         .AddClassFromAttributes(AdditionalAttributes);
 }
