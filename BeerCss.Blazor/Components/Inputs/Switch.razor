@@ -64,11 +64,11 @@
         </nav>
         @if (!EditContext.IsValid(this.FieldIdentifier))
         {
-            <span class="error">@EditContext.GetValidationMessages(this.FieldIdentifier).FirstOrDefault()</span>
+            <output class="invalid">@EditContext.GetValidationMessages(this.FieldIdentifier).FirstOrDefault()</output>
         }
         else if (HelpText is not null)
         {
-            <span class="helper">@HelpText</span>
+            <output>@HelpText</output>
         }
     </div>
 }

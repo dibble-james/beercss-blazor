@@ -1,0 +1,36 @@
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Text { get; set; }
+
+    [Parameter]
+    public Space Space { get; set; }
+
+    [Parameter]
+    public Direction Direction { get; set; } = Direction.Top;
+
+    [Parameter]
+    public bool Max { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private CssBuilder ButtonCssClass => new CssBuilder()
+    .AddClass("chip cirlce")
+    .AddClassFromAttributes(AdditionalAttributes);
+
+    private CssBuilder ToolipCssClass => new CssBuilder()
+    .AddClass("tooltip")
+    .AddClass("max", Max)
+    .AddClass(Direction.ToCssClass())
+    .AddClass(Space.ToCssClass());
+}
+
+<button class="@ButtonCssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+    <div class="@ToolipCssClass">
+        @Text
+    </div>
+</button>

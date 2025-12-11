@@ -4,12 +4,13 @@
   "libraries": [
     {
       "provider": "jsdelivr",
-      "library": "beercss@3.12.11",
+      "library": "beercss@3.13.1",
       "destination": "wwwroot/beer",
       "files": [
         "dist/cdn/beer.scoped.min.css",
         "dist/cdn/beer.min.js",
-        "dist/cdn/material-symbols-outlined.woff2"
+        "dist/cdn/material-symbols-outlined.woff2",
+        "dist/cdn/*.svg"
       ]
     }
   ]

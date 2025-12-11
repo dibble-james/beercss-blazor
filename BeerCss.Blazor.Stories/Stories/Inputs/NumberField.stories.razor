@@ -11,8 +11,37 @@
             </EditForm>
         </Template>
     </Story>
+
+    <Story Name="Help text">
+        <Arguments>
+            <Arg For="x => x.HelpText" Value="_helpText" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <NumberField TValue="int" @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+
+    <Story Name="Invalid">
+        <Template>
+            <EditForm Context="form" EditContext="_editContext">
+                <NumberField TValue="int" @attributes="context.Args" @bind-Value="_invalidValue" />
+            </EditForm>
+        </Template>
+    </Story>
 </Stories>
 
 @code {
     int _value = 10;
+    int _invalidValue = 100;
+    string _helpText = "Help me!";
+    EditContext? _editContext;    
+
+    protected override void OnInitialized()
+    {
+        _editContext = new EditContext(_invalidValue!);
+        var messageStore = new ValidationMessageStore(_editContext);
+        messageStore.Add(() => _invalidValue!, "You ain't valid son");
+    }
 }

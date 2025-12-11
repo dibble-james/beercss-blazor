@@ -42,7 +42,7 @@
         .AddClass("fill", Fill)
         .AddClass("round", Round)
         .AddClass("border", Border)
-        .AddClass("prefix", Prefix is not null)
+        .AddClass("prefix", Prefix is not null || InProgress)
         .AddClass("suffix", Suffix is not null)
         .AddClass("label", Label is not null)
         .AddClass(Size.ToCssClass())
@@ -67,11 +67,11 @@
     }
     @if (!EditContext.IsValid(this.FieldIdentifier))
     {
-        <span class="error">@EditContext.GetValidationMessages(this.FieldIdentifier).FirstOrDefault()</span>
+        <output class="invalid">@EditContext.GetValidationMessages(this.FieldIdentifier).FirstOrDefault()</output>
     }
     else if (HelpText is not null)
     {
-        <span class="helper">@HelpText</span>
+        <output>@HelpText</output>
     }
     @if (Suffix is not null)
     {

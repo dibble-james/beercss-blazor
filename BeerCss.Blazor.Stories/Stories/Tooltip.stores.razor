@@ -1,0 +1,56 @@
+@using BeerCss.Blazor.Components.Buttons
+@attribute [Stories("Components/Tooltip")]
+
+<Stories TComponent="Tooltip">
+    <Story Name="Default">
+        <Template>
+            <Position Horizontal="HorizontalPosition.Center" Vertical="VerticalPosition.Middle">
+                <Tooltip @attributes="context.Args">
+                    <ChildContent>Plain tooltip</ChildContent>
+                    <Text>Tooltip</Text>
+                </Tooltip>
+            </Position>
+        </Template>
+    </Story>
+    <Story Name="Rich">
+        <Template>
+            <Position Horizontal="HorizontalPosition.Center" Vertical="VerticalPosition.Middle">
+                <Tooltip @attributes="context.Args" Max>
+                    <ChildContent>Rich tooltip</ChildContent>
+                    <Text>
+                        <b>Title</b>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
+                        <nav>
+                            <a class="inverse-link">Action</a>
+                        </nav>
+                    </Text>
+                </Tooltip>
+            </Position>
+        </Template>
+    </Story>
+    <Story Name="Directions">
+        <Template>
+            <Position Horizontal="HorizontalPosition.Center" Vertical="VerticalPosition.Middle">
+                <Group>
+                    <Tooltip @attributes="context.Args" Direction="Direction.Left">
+                        <ChildContent><i>arrow_back</i></ChildContent>
+                        <Text>Tooltip</Text>
+                    </Tooltip>
+                    <Tooltip @attributes="context.Args" Direction="Direction.Top">
+                        <ChildContent><i>arrow_upward</i></ChildContent>
+                        <Text>Tooltip</Text>
+                    </Tooltip>
+                    <Tooltip @attributes="context.Args" Direction="Direction.Bottom">
+                        <ChildContent><i>arrow_downward</i></ChildContent>
+                        <Text>Tooltip</Text>
+                    </Tooltip>
+                    <Tooltip @attributes="context.Args" Direction="Direction.Right">
+                        <ChildContent><i>arrow_forward</i></ChildContent>
+                        <Text>Tooltip</Text>
+                    </Tooltip>
+                </Group>
+            </Position>
+        </Template>
+    </Story>
+</Stories>
