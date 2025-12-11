@@ -9,11 +9,11 @@
     public Orientation Orientation { get; set; } = Orientation.Horizontal;
 
     [Parameter]
-    public bool Disabled { get; set;}
+    public bool Disabled { get; set; }
 
     [Parameter, EditorRequired]
     public required T Step { get; set; }
-    
+
     [Parameter, EditorRequired]
     public required T Min { get; set; }
 
@@ -27,11 +27,11 @@
     public string? HelpText { get; set; }
 
     private CssBuilder RealCssClass => new CssBuilder()
-        .AddClass("slider")
-        .AddClass(CssClass)
-        .AddClass(Size.ToCssClass())
-        .AddClass(Orientation.ToCssClass())
-        .AddClassFromAttributes(AdditionalAttributes);
+    .AddClass("slider")
+    .AddClass(CssClass)
+    .AddClass(Size.ToCssClass())
+    .AddClass(Orientation.ToCssClass())
+    .AddClassFromAttributes(AdditionalAttributes);
 
     private RenderFragment RenderInput() => (builder) => base.BuildRenderTree(builder);
 
@@ -39,12 +39,13 @@
     {
         base.OnParametersSet();
 
-        var attributes = this.AdditionalAttributes is not null ? new Dictionary<string, object>(this.AdditionalAttributes) : new();
+        var attributes = this.AdditionalAttributes is not null ? new Dictionary<string, object>(this.AdditionalAttributes) :
+        new();
         attributes["type"] = "range";
         attributes["step"] = Step!;
-        attributes["min"] = Min!; 
+        attributes["min"] = Min!;
         attributes["max"] = Max!;
-        
+
         if (this.Disabled && attributes.ContainsKey("disabled"))
         {
             attributes.Add("disabled", "disabled");
@@ -59,16 +60,20 @@
 }
 
 <div class="field middle-align">
-<label class="@RealCssClass">
-  @RenderInput()
-  <span></span>
-  @if (ShowIndicator)
-  {
-    <div class="tooltip"></div>
-  }
-</label>
-@if(HelpText is not null)
-{
-    <span class="helper">@HelpText</span>
-}
+    <label class="@RealCssClass">
+        @RenderInput()
+        <span></span>
+        @if (ShowIndicator)
+        {
+            <div class="tooltip"></div>
+        }
+    </label>
+    @if (!EditContext.IsValid(this.FieldIdentifier))
+    {
+        <output class="invalid">@EditContext.GetValidationMessages(this.FieldIdentifier).FirstOrDefault()</output>
+    }
+    else if (HelpText is not null)
+    {
+        <output>@HelpText</output>
+    }
 </div>

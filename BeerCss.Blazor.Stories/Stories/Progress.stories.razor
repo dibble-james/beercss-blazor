@@ -9,13 +9,13 @@
 
     <Story Name="Circle">
         <Template>
-            <Progress Circle />
+            <Progress @attributes="context.Args" Circle />
         </Template>
     </Story>
 
     <Story Name="30%">
         <Template>
-            <Progress ProgressPercentage="30" />
+            <Progress @attributes="context.Args" ProgressPercentage="30" />
         </Template>
     </Story>
 </Stories>

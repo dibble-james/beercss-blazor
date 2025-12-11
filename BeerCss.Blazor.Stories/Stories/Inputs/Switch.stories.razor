@@ -49,9 +49,30 @@
             </EditForm>
         </Template>
     </Story>
+    <Story Name="Invalid">
+        <Template>
+            <EditForm Context="form" EditContext="_editContext">
+                <Switch @attributes="context.Args" @bind-Value="_value">
+                    <ToggleIcon><i>dark_mode</i></ToggleIcon>
+                    <Label>
+                        <h6>Title</h6>
+                        <div>Some text here</div>
+                    </Label>
+                </Switch>
+            </EditForm>
+        </Template>
+    </Story>
 </Stories>
 
 @code {
     bool _value = false;
     string _helpText = "Help me!";
+    EditContext? _editContext;
+
+    protected override void OnInitialized()
+    {
+        _editContext = new EditContext(_value!);
+        var messageStore = new ValidationMessageStore(_editContext);
+        messageStore.Add(() => _value!, "You ain't valid son");
+    }
 }

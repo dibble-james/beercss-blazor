@@ -11,8 +11,19 @@
             </EditForm>
         </Template>
     </Story>
+    <Story Name="Help text">
+        <Arguments>
+            <Arg For="x => x.HelpText" Value="_helpText" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <FileField TValue="int" @attributes="context.Args" @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
 </Stories>
 
 @code {
-    string? _value = null;
+    string? _value = "file.txt";
+    string _helpText = "Help me!";
 }
