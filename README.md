@@ -54,4 +54,4 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [ ] Table
 - [x] Tabs
 - [x] Toolbar
-- [ ] Tooltip
+- [x] Tooltip
