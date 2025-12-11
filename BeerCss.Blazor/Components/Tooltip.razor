@@ -18,7 +18,7 @@
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
 
     private CssBuilder ButtonCssClass => new CssBuilder()
-    .AddClass("chip cirlce")
+    .AddClass("chip circle")
     .AddClassFromAttributes(AdditionalAttributes);
 
     private CssBuilder ToolipCssClass => new CssBuilder()
