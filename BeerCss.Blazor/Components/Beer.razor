@@ -15,10 +15,14 @@
     public bool NoPadding { get; set; }
 
     [Parameter]
+    public bool Max { get; set; }
+
+    [Parameter]
     public BeerTheme Theme { get; set; } = BeerTheme.Light;
 
     private CssBuilder CssClass => new CssBuilder()
         .AddClass("responsive", Responsive)
+        .AddClass("max", Max)
         .AddClass("no-padding", NoPadding);
 }
 

@@ -1,0 +1,33 @@
+@attribute [Stories("Components/SideContent")]
+
+<Stories TComponent="SideContent">
+    <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.Padding" Value="true" />
+        </Arguments>
+        <Template>
+            <Grid>
+                <div class="s6">
+                    <SideContent @attributes="context.Args" class="small-width small-height" Direction="Direction.Left">
+                        <img class="responsive" src="https://www.beercss.com/beer-and-woman.jpg">
+                    </SideContent>
+                    <h5>Title</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                </div>
+                <div class="s6">
+                    <SideContent @attributes="context.Args" class="small-width small-height"  Direction="Direction.Right">
+                        <img class="responsive" src="https://www.beercss.com/beer-and-woman.jpg">
+                    </SideContent>
+                    <h5>Title</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                </div>
+            </Grid>
+        </Template>
+    </Story>
+</Stories>

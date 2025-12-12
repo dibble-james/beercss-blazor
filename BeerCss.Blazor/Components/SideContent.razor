@@ -1,0 +1,22 @@
+@code {
+    [Parameter]
+    public bool Padding { get; set; }
+
+    [Parameter]
+    public Direction Direction { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("padding", Padding)
+        .AddClass(Direction.ToCssClass())
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<aside class="@CssClass">
+    @ChildContent
+</aside>

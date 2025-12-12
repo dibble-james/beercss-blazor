@@ -32,7 +32,7 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
   - [x] Split
 - [x] Card
 - [x] Chip
-- [ ] Container
+- [x] Container
 - [x] Dialogs
 - [x] Divider
 - [x] Expansion
