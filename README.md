@@ -51,7 +51,7 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Snackbar
 - [x] Space
 - [ ] Stepper
-- [ ] Table
+- [x] Table
 - [x] Tabs
 - [x] Toolbar
 - [x] Tooltip

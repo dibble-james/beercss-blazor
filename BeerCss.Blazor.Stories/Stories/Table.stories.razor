@@ -1,0 +1,94 @@
+@attribute [Stories("Components/Table")]
+
+<Stories TComponent="Table<object>">
+    <Story Name="Default">
+        <Template>
+            <Table @attributes="context.Args" Rows="_rows" KeyExpression="(x => x.Index)">
+                <Header>
+                    <th>Header</th>
+                    <th>Header</th>
+                    <th>Header</th>
+                </Header>
+                <ItemTemplate Context="row">
+                    <td>@row.Col1</td>
+                    <td>@row.Col2</td>
+                    <td>@row.Col3</td>
+                </ItemTemplate>
+                <Footer>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                </Footer>
+            </Table>
+        </Template>
+    </Story>
+    <Story Name="Stripes">
+        <Template>
+            <Table @attributes="context.Args" Stripes Rows="_rows" KeyExpression="(x => x.Index)">
+                <Header>
+                    <th>Header</th>
+                    <th>Header</th>
+                    <th>Header</th>
+                </Header>
+                <ItemTemplate Context="row">
+                    <td>@row.Col1</td>
+                    <td>@row.Col2</td>
+                    <td>@row.Col3</td>
+                </ItemTemplate>
+                <Footer>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                </Footer>
+            </Table>
+        </Template>
+    </Story>
+    <Story Name="Border">
+        <Template>
+            <Table @attributes="context.Args" Border Rows="_rows" KeyExpression="(x => x.Index)">
+                <Header>
+                    <th>Header</th>
+                    <th>Header</th>
+                    <th>Header</th>
+                </Header>
+                <ItemTemplate Context="row">
+                    <td>@row.Col1</td>
+                    <td>@row.Col2</td>
+                    <td>@row.Col3</td>
+                </ItemTemplate>
+                <Footer>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                </Footer>
+            </Table>
+        </Template>
+    </Story>
+    <Story Name="Scroll">
+        <Template>
+            <Table @attributes="context.Args" Scroll ScrollCssClass="small-height surface" VisibleItems="10" Rows="_lotsOfRows" KeyExpression="(x => x.Index)">
+                <Header>
+                    <th>Header</th>
+                    <th>Header</th>
+                    <th>Header</th>
+                </Header>
+                <ItemTemplate Context="row">
+                    <td>@row.Col1</td>
+                    <td>@row.Col2</td>
+                    <td>@row.Col3</td>
+                </ItemTemplate>
+                <Footer>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                    <th>Footer</th>
+                </Footer>
+            </Table>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    private ICollection<(int Index, string Col1, string Col2, string Col3)> _rows = Enumerable.Range(1, 3).Select(x => (x, "Cell", "Cell", "Cell")).ToList();
+
+    private ICollection<(int Index, string Col1, string Col2, string Col3)> _lotsOfRows = Enumerable.Range(1, 30).Select(x => (x, "Cell", "Cell", "Cell")).ToList();
+}

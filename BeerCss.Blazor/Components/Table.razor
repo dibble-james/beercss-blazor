@@ -1,0 +1,106 @@
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@typeparam TRow
+
+@code {
+    [Parameter, EditorRequired]
+    public ICollection<TRow> Rows { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<TRow> ItemTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    [Parameter]
+    public Space Spacing { get; set; }
+
+    [Parameter]
+    public bool Stripes { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; }
+
+    [Parameter]
+    public bool Scroll { get; set; }
+
+    [Parameter]
+    public string? ScrollCssClass { get; set; }
+
+    [Parameter]
+    public int VisibleItems { get; set; }
+
+    [Parameter, EditorRequired]
+    public Expression<Func<TRow, object>> KeyExpression { get; set; }
+
+    private Lazy<Func<TRow, object>>? keyExpression;
+
+    private CssBuilder CssClass => new CssBuilder()
+    .AddClass(Spacing.ToCssClass())
+    .AddClass("stripes", Stripes)
+    .AddClass("border", Border)
+    .AddClassFromAttributes(AdditionalAttributes);
+
+    protected override void OnParametersSet()
+    {
+        keyExpression = new Lazy<Func<TRow, object>>(() => KeyExpression.Compile());
+    }
+}
+
+@if (Scroll)
+{
+    <div class="scroll @ScrollCssClass">
+        <table class="@CssClass" @attributes="@AdditionalAttributes">
+            @if (Header is not null)
+            {
+                <thead class="fixed">
+                    @Header
+                </thead>
+            }
+            <tbody>
+                <Virtualize TItem="TRow" Items="Rows" ItemSize="VisibleItems" SpacerElement="tr">
+                    <tr @key="keyExpression?.Value.Invoke(context)">
+                        @ItemTemplate(context)
+                    </tr>
+                </Virtualize>
+            </tbody>
+            @if (Footer is not null)
+            {
+                <tfoot class="fixed">
+                    @Footer
+                </tfoot>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <table class="@CssClass" @attributes="@AdditionalAttributes">
+        @if (Header is not null)
+        {
+            <thead>
+                @Header
+            </thead>
+        }
+        <tbody>
+            @foreach (var row in Rows)
+            {
+                <tr @key="keyExpression?.Value.Invoke(row)">
+                    @ItemTemplate(row)
+                </tr>
+            }
+        </tbody>
+        @if (Footer is not null)
+        {
+            <tfoot>
+                @Footer
+            </tfoot>
+        }
+    </table>
+}
