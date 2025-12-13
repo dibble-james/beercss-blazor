@@ -1,0 +1,21 @@
+@code {
+    [Parameter]
+    public Color Color { get; set; }
+
+    [Parameter, EditorRequired]
+    public required Stepper.Step Step { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<Stepper.Step> OnStepSelect { get; set; }
+}
+
+<button class="circle small @Color.ToCssClass()" disabled="@Step.Disabled" @onclick="() => OnStepSelect.InvokeAsync(Step)">
+    @if (Step.Complete)
+    {
+        <i>done</i>
+    }
+    else
+    {
+        @Step.Index
+    }
+</button>

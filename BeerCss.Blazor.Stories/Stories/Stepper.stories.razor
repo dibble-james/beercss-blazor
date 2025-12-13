@@ -1,0 +1,67 @@
+@attribute [Stories("Components/Stepper")]
+
+<Stories TComponent="Stepper">
+    <Story Name="Simple">
+        <Template>
+            @{
+                Stepper.Step[] steps = 
+                {
+                    new(1, null, false, true),
+                    new(2, null, false, false),
+                    new(3, null, true, false),
+                };
+            }
+
+            <Stepper @attributes="context.Args" OnStepSelected="StepSelected" Steps="steps" />
+            <div>
+                Selected: @_selectedStep?.Index
+            </div>
+        </Template>
+    </Story>
+    <Story Name="Horizontal">
+        <Arguments>
+            <Arg For="x => x.Orientation" Value="Orientation.Horizontal" />
+        </Arguments>
+        <Template>
+            @{
+                Stepper.Step[] steps = 
+                {
+                    new(1, "Previous", false, true),
+                    new(2, "Current", false, false),
+                    new(3, "Next", true, false),
+                };
+            }
+
+            <Stepper @attributes="context.Args" OnStepSelected="StepSelected" Steps="steps" />
+            <div>
+                Selected: @_selectedStep?.Index
+            </div>
+        </Template>
+    </Story>
+    <Story Name="Vertical">
+        <Arguments>
+            <Arg For="x => x.Orientation" Value="Orientation.Vertical" />
+        </Arguments>
+        <Template>
+            @{
+                Stepper.Step[] steps = 
+                {
+                    new(1, "Previous", false, true),
+                    new(2, "Current", false, false),
+                    new(3, "Next", true, false),
+                };
+            }
+
+            <Stepper @attributes="context.Args" OnStepSelected="StepSelected" Steps="steps" />
+            <div>
+                Selected: @_selectedStep?.Index
+            </div>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    private Stepper.Step? _selectedStep;
+
+    private void StepSelected(Stepper.Step step) => _selectedStep = step;
+}

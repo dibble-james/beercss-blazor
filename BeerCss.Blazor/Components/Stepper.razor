@@ -1,0 +1,42 @@
+@code {
+    [Parameter]
+    public Color Color { get; set; }
+
+    [Parameter]
+    public Orientation Orientation { get; set; }
+
+    [Parameter, EditorRequired]
+    public required Step[] Steps { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<Step> OnStepSelected { get; set; }
+
+    public record Step(int Index, string? Title, bool Disabled, bool Complete);
+}
+
+<nav>
+    @foreach (var step in Steps.OrderBy(x => x.Index))
+    {
+        if (step.Title is not null && Orientation == Orientation.Horizontal)
+        {
+            <StepperButton Color="Color" Step="step" OnStepSelect="OnStepSelected" />
+            <div>@step.Title</div>
+        }
+        else if (step.Title is not null && Orientation == Orientation.Vertical)
+        {
+            <div class="center-align">
+                <StepperButton Color="Color" Step="step" OnStepSelect="OnStepSelected" />
+                <div class="small-margin">@step.Title</div>
+            </div>
+        }
+        else
+        {
+            <StepperButton Color="Color" Step="step" OnStepSelect="OnStepSelected" />
+        }
+
+        if (step != Steps[^1])
+        {
+            <hr class="max">
+        }
+    }
+</nav>

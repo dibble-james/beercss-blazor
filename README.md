@@ -50,8 +50,9 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [ ] Shapes
 - [x] Snackbar
 - [x] Space
-- [ ] Stepper
+- [x] Stepper
 - [x] Table
 - [x] Tabs
 - [x] Toolbar
 - [x] Tooltip
+- [ ] Waves
