@@ -1,0 +1,28 @@
+@attribute [Stories("Components/Row")]
+
+<Stories TComponent="Row">
+    <Story Name="Default">
+        <Template>
+            <Row @attributes="context.Args">
+                <div>min</div>
+                <div>min</div>
+                <div>min</div>
+            </Row>
+            <Row @attributes="context.Args">
+                <div>min</div>
+                <div>min</div>
+                <div class="max">max</div>
+            </Row>
+            <Row @attributes="context.Args">
+                <div>min</div>
+                <div class="max">max</div>
+                <div>min</div>
+            </Row>
+            <Row @attributes="context.Args">
+                <div class="max">max</div>
+                <div>min</div>
+                <div>min</div>
+            </Row>
+        </Template>
+    </Story>
+</Stories>

@@ -42,7 +42,7 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Layout
 - [x] List
 - [x] Menu
-- [ ] Navigation
+- [x] Navigation
 - [x] Page
 - [x] Progress
 - [x] Scroll
