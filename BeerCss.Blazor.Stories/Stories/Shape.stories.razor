@@ -1,0 +1,22 @@
+@attribute [Stories("Components/Shapes")]
+
+<Stories TComponent="Shape">
+    <Story Name="Default">
+        <Arguments>
+            <Arg For="x => x.ShapeType" Value="@("loading-indicator")" />
+        </Arguments>
+        <Template>
+            <nav class="wrap">
+                <Shape @attributes="context.Args"><div id="hello" class="tiny" data-id="hello"></div></Shape>
+                <Shape @attributes="context.Args"><div></div></Shape>
+                <Shape @attributes="context.Args"><div class="medium"></div></Shape>
+                <Shape @attributes="context.Args"><div class="large"></div></Shape>
+                <Shape @attributes="context.Args"><div class="extra"></div></Shape>
+                <Shape @attributes="context.Args"><div class="extra"><img class="responsive" src="/favicon.png"></div></Shape>
+                <Shape @attributes="context.Args"><div class="extra"><video class="responsive" autoplay="" loop="" playsinline=""><source src="/dance.mp4" type="video/mp4"></video></div></Shape>
+                <Shape @attributes="context.Args"><div class="extra"><button class="responsive"><i>search</i></button></div></Shape>
+                <Shape @attributes="context.Args"><div class="extra transparent"><button class="responsive"><i>search</i></button></div></Shape>
+            </nav>
+        </Template>
+    </Story>
+</Stories>

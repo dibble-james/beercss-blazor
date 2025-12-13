@@ -37,7 +37,6 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Divider
 - [x] Expansion
 - [x] Grid
-- [ ] Icon
 - [x] Inputs
 - [x] Layout
 - [x] List
@@ -47,7 +46,8 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Progress
 - [x] Scroll
 - [x] Search
-- [ ] Shapes
+- [x] Shapes
+  - [ ] Shape components
 - [x] Snackbar
 - [x] Space
 - [x] Stepper
@@ -55,4 +55,5 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Tabs
 - [x] Toolbar
 - [x] Tooltip
-- [ ] Waves
+- [x] Waves
+  - [ ] Wave components

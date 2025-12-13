@@ -1,0 +1,12 @@
+@attribute [Stories("Components/Wave")]
+
+<Stories TComponent="Wave">
+    <Story Name="Default">
+        <Template>
+            <nav class="wrap">
+                <Wave @attributes="context.Args"><button>Wave</button></Wave> 
+                <Wave @attributes="context.Args"><button class="chip">Wave</button></Wave> 
+            </nav>
+        </Template>
+    </Story>
+</Stories>

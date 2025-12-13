@@ -1,0 +1,12 @@
+@attribute [Stories("Components/Ripple")]
+
+<Stories TComponent="Ripple">
+    <Story Name="Default">
+        <Template>
+            <nav class="wrap">
+                <Ripple @attributes="context.Args"><button>Ripple</button></Ripple>
+                <Ripple @attributes="context.Args"><button class="chip">Ripple</button></Ripple>
+            </nav>
+        </Template>
+    </Story>
+</Stories>
