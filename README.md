@@ -1,6 +1,8 @@
 # BeerCss.Blazor
 
-Here we have a Blazor wrapper for the amazing [BeerCSS](https://www.beercss.com/) Material UI CSS library
+Here we have a Blazor wrapper for the amazing [BeerCSS](https://www.beercss.com/) Material UI CSS library.
+
+Source is available on [Github](https://github.com/dibble-james/beercss-blazor)
 
 ## Installation
 Grab the package from Nuget [![NuGet Version](https://img.shields.io/nuget/v/BeerCss.Blazor)](https://www.nuget.org/packages/BeerCss.Blazor)
