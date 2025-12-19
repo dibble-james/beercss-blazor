@@ -34,12 +34,12 @@
 
         if (Provider is null)
         {
-            throw new InvalidOperationException("Dialog used without a parent DialogProvider");
+            throw new InvalidOperationException("Snackbar used without a parent SnackbarProvider");
         }
 
-        await (Provider?.AddSnackbar(this) ?? Task.CompletedTask);
         if (isFirstRender)
         {
+            await (Provider?.AddSnackbar(this) ?? Task.CompletedTask);
         }
     }
 }
