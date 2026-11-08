@@ -12,6 +12,7 @@ public static class SpaceExtensions
 {
     public static string ToCssClass(this Space elevation) => elevation switch
     {
+        Space.Small => "space",
         Space.None => "no-space",
         Space.Medium => "medium-space",
         Space.Large => "large-space",
