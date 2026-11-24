@@ -4,8 +4,5 @@
     "rollForward": "latestFeature",
     "paths": [".dotnet", "$host$"],
     "errorMessage": "Required .NET 10 SDK not found. Run ./install-dotnet.sh to install it into .dotnet/."
-  },
-  "test": {
-    "runner": "Microsoft.Testing.Platform"
   }
 }

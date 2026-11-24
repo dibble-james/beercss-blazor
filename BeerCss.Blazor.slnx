@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="BeerCss.Blazor.Stories/BeerCss.Blazor.Stories.csproj" />
   <Project Path="BeerCss.Blazor/BeerCss.Blazor.csproj" />
-  <Project Path="BeerCss.Blazor.VisualTests/BeerCss.Blazor.VisualTests.csproj" />
 </Solution>

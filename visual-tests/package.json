@@ -1,0 +1,17 @@
+{
+  "name": "beercss-blazor-visual-tests",
+  "private": true,
+  "description": "Screenshots every BlazingStory story and compares it with a baseline",
+  "scripts": {
+    "test": "playwright test",
+    "test:update": "playwright test --update-snapshots",
+    "install-browser": "playwright install chromium",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "^24.10.1",
+    "http-server": "^14.1.1",
+    "typescript": "^5.9.3"
+  }
+}
