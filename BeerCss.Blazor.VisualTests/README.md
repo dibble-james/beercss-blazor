@@ -62,17 +62,18 @@ naming the story rather than capturing an empty image: every story renders insid
 
 ## Baselines
 
-`baselines/<story id>.verified.png`. A mismatch writes `<story id>.received.png` next to it, plus
-`<story id>.diff.png` marking the changed pixels.
+`baselines/<story id>.verified.png`. A mismatch writes `<story id>.received.png` next to it.
 
-Comparison is done by `PngComparer`, registered for `.png` with `VerifierSettings.RegisterStreamComparer`:
+Comparison is Verify's own PNG comparer, enabled in `VerifySetup.cs` with
+`VerifierSettings.UseSsimForPng(threshold: 0.995)`. It scores the two images with the structural
+similarity index (1.0 is identical), so antialiasing noise does not fail a run:
 
-- a pixel counts as different only when a colour channel differs by more than 10% (25/255);
-- a story fails when more than **0.5%** of its pixels differ;
-- the failure message reports the percentage and the changed region.
+- identical renders score 1.0;
+- +-2 per-channel noise on 1% of the canvas scores ~0.9999 and passes;
+- a 4px band recoloured across the full width scores ~0.990 and fails;
+- a 300x60 component recoloured scores ~0.988 and fails.
 
-That budget absorbs antialiasing noise (a Material Symbols glyph can shift a couple of pixels between
-runs) while a real spacing, colour or size change is far above it. To accept a change, replace the
+A changed image size always fails, whatever the score. To accept a change, replace the
 `*.verified.png` with the `*.received.png` Verify wrote for it, and explain in the pull request why the
 rendering changed.
 

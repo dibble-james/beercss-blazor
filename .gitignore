@@ -420,5 +420,3 @@ FodyWeavers.xsd
 # Project-local .NET SDK (install-dotnet.sh)
 .dotnet/
 
-# Verify diff images from visual tests
-*.diff.png

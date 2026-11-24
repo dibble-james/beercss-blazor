@@ -139,15 +139,7 @@ public class VisualTests
             settings.UseFileName(story.Id);
             settings.DisableDiff();
 
-            PngComparer.CurrentStory.Value = story.Id;
-            try
-            {
-                await Verify(bytes, "png", settings);
-            }
-            finally
-            {
-                PngComparer.CurrentStory.Value = null;
-            }
+            await Verify(bytes, "png", settings);
         }
         finally
         {
