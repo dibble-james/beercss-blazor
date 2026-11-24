@@ -1,20 +1,25 @@
 using System.Diagnostics;
-using System.Net;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using Xunit;
 
 namespace BeerCss.Blazor.VisualTests;
 
 /// <summary>
-/// Starts the story demo and Chromium once for the whole run. Everything that makes a
-/// screenshot reproducible lives here: the browser flags, the viewport and the colour
-/// scheme, so no individual test can drift away from the rest.
+/// Publishes the story demo, serves it and starts Chromium once for the whole run. Everything
+/// that makes a screenshot reproducible lives here: how the app is served, the browser flags, the
+/// viewport and the colour scheme, so no individual test can drift away from the rest.
 /// </summary>
 public sealed class DemoFixture : IAsyncLifetime
 {
-    public const int Port = 5080;
-
-    private Process? _demo;
+    private WebApplication? _host;
     private IPlaywright? _playwright;
 
     public string Origin { get; private set; } = "";
@@ -24,14 +29,9 @@ public sealed class DemoFixture : IAsyncLifetime
     public async ValueTask InitializeAsync()
     {
         var configured = Environment.GetEnvironmentVariable("BEERCSS_DEMO_URL");
-        if (string.IsNullOrWhiteSpace(configured))
-        {
-            (Origin, _demo) = await StartDemoAsync();
-        }
-        else
-        {
-            Origin = configured.TrimEnd('/');
-        }
+        Origin = string.IsNullOrWhiteSpace(configured)
+            ? await StartDemoAsync()
+            : configured.TrimEnd('/');
 
         _playwright = await Playwright.CreateAsync();
         Browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
@@ -55,13 +55,8 @@ public sealed class DemoFixture : IAsyncLifetime
 
         _playwright?.Dispose();
 
-        if (_demo is { HasExited: false })
-        {
-            _demo.Kill(entireProcessTree: true);
-            await _demo.WaitForExitAsync();
-        }
-
-        _demo?.Dispose();
+        if (_host is not null)
+            await _host.DisposeAsync();
     }
 
     /// <summary>A fresh, identically configured page for one story.</summary>
@@ -81,9 +76,62 @@ public sealed class DemoFixture : IAsyncLifetime
         return await context.NewPageAsync();
     }
 
-    private static async Task<(string Origin, Process Process)> StartDemoAsync()
+    /// <summary>
+    /// Publishes the story demo and serves the published <c>wwwroot</c> from an in-process Kestrel
+    /// on an ephemeral port. The app is a Blazor WebAssembly project, so its published output is a
+    /// folder of static files, but Chromium still needs a real http origin: it cannot run the
+    /// runtime from <c>file://</c>. Serving the publish output means the screenshots come from the
+    /// asset graph a static host would serve, not from the dev server's runtime-pack wiring.
+    /// </summary>
+    private async Task<string> StartDemoAsync()
     {
-        var origin = $"http://127.0.0.1:{Port}";
+        var publishDir = Path.Combine(RepoRoot.Path, "BeerCss.Blazor.VisualTests", "bin", "demo-publish");
+        if (Directory.Exists(publishDir))
+            Directory.Delete(publishDir, recursive: true);
+
+        await PublishAsync(publishDir);
+
+        var webRoot = Path.Combine(publishDir, "wwwroot");
+        if (!Directory.Exists(webRoot))
+            throw new InvalidOperationException($"The published story demo has no wwwroot at '{webRoot}'.");
+
+        var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions
+        {
+            ContentRootPath = publishDir,
+            WebRootPath = webRoot,
+            // A production environment keeps dev-only UI (the error bar, detailed errors) out of the baselines.
+            EnvironmentName = Environments.Production,
+        });
+        builder.Logging.ClearProviders();
+        builder.WebHost.UseUrls("http://127.0.0.1:0");
+
+        // Streaming compilation needs the wasm MIME type, and webcil is served as opaque bytes.
+        var contentTypes = new FileExtensionContentTypeProvider();
+        contentTypes.Mappings[".wasm"] = "application/wasm";
+        contentTypes.Mappings[".webcil"] = "application/octet-stream";
+
+        var app = builder.Build();
+        app.UseDefaultFiles();
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            ContentTypeProvider = contentTypes,
+            // The runtime ships payloads ASP.NET has no mapping for (.dat for ICU, .blat, ...).
+            // Without this they 404 and the app fails to boot with "Failed to fetch icudt...dat".
+            ServeUnknownFileTypes = true,
+            DefaultContentType = "application/octet-stream",
+        });
+        await app.StartAsync();
+
+        var address = app.Services.GetRequiredService<IServer>()
+                          .Features.Get<IServerAddressesFeature>()?.Addresses.FirstOrDefault()
+                      ?? throw new InvalidOperationException("The static host reported no listening address.");
+
+        _host = app;
+        return address;
+    }
+
+    private static async Task PublishAsync(string publishDir)
+    {
         var startInfo = new ProcessStartInfo(ResolveDotnet())
         {
             WorkingDirectory = RepoRoot.Path,
@@ -94,9 +142,10 @@ public sealed class DemoFixture : IAsyncLifetime
 
         foreach (var arg in new[]
                  {
-                     "run", "--project", RepoRoot.DemoProject, "--urls", origin,
-                     // A production environment keeps dev-only UI (the error bar, detailed errors) out of the baselines.
-                     "--environment", "Production",
+                     "publish", RepoRoot.DemoProject,
+                     "--configuration", "Release",
+                     "--output", publishDir,
+                     "--nologo",
                  })
         {
             startInfo.ArgumentList.Add(arg);
@@ -105,8 +154,8 @@ public sealed class DemoFixture : IAsyncLifetime
         startInfo.Environment["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1";
         startInfo.Environment["DOTNET_NOLOGO"] = "1";
 
-        var process = Process.Start(startInfo)
-                      ?? throw new InvalidOperationException("Could not start the story demo.");
+        using var process = Process.Start(startInfo)
+                            ?? throw new InvalidOperationException("Could not start dotnet publish for the story demo.");
 
         var log = new List<string>();
         process.OutputDataReceived += (_, e) => { if (e.Data is not null) lock (log) log.Add(e.Data); };
@@ -114,34 +163,21 @@ public sealed class DemoFixture : IAsyncLifetime
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
 
-        using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(5) };
-        var deadline = DateTime.UtcNow.AddSeconds(180);
-        while (DateTime.UtcNow < deadline)
+        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(10));
+        try
         {
-            if (process.HasExited)
-                throw new InvalidOperationException($"The story demo exited with code {process.ExitCode}:{Environment.NewLine}{string.Join(Environment.NewLine, LogSnapshot(log))}");
-
-            try
-            {
-                var response = await client.GetAsync(origin + "/");
-                if (response.StatusCode == HttpStatusCode.OK)
-                    return (origin, process);
-            }
-            catch (HttpRequestException)
-            {
-                // Not listening yet.
-            }
-            catch (TaskCanceledException)
-            {
-                // Not answering yet.
-            }
-
-            await Task.Delay(500);
+            await process.WaitForExitAsync(timeout.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            process.Kill(entireProcessTree: true);
+            throw new TimeoutException(
+                $"dotnet publish of the story demo did not finish within 10 minutes:{Environment.NewLine}{string.Join(Environment.NewLine, LogSnapshot(log))}");
         }
 
-        process.Kill(entireProcessTree: true);
-        throw new TimeoutException(
-            $"The story demo did not answer on {origin} within 180 seconds:{Environment.NewLine}{string.Join(Environment.NewLine, LogSnapshot(log))}");
+        if (process.ExitCode != 0)
+            throw new InvalidOperationException(
+                $"dotnet publish of the story demo failed with exit code {process.ExitCode}:{Environment.NewLine}{string.Join(Environment.NewLine, LogSnapshot(log))}");
     }
 
     private static string[] LogSnapshot(List<string> log)

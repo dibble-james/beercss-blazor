@@ -32,8 +32,12 @@ BEERCSS_STORY=components-card--default dotnet test --project BeerCss.Blazor.Visu
 BEERCSS_DEMO_URL=http://127.0.0.1:5080 dotnet test --project BeerCss.Blazor.VisualTests
 ```
 
-Without it, the test run starts `BeerCss.Blazor.Stories` itself on port 5080 (environment
-`Production`, so dev-only UI stays out of the images) and stops it afterwards.
+Without it, the test run publishes `BeerCss.Blazor.Stories` (`dotnet publish -c Release`) and serves the
+published `wwwroot` as static files from an in-process Kestrel on an ephemeral port, then stops it
+afterwards. The published app is a plain folder of static files, but Chromium still needs a real http
+origin: a Blazor WebAssembly build cannot boot from `file://`, because the runtime is fetched and
+streamed-compiled over http. Serving the publish output keeps the baselines tied to the assets that
+get deployed rather than to the dev server's runtime-pack wiring.
 
 ## How a story is captured
 

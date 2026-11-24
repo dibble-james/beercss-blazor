@@ -20,6 +20,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Serves the published story demo from an in-process Kestrel on an ephemeral port. -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Playwright" Version="1.64.1" />
     <PackageReference Include="Verify.Playwright" Version="3.3.0" />
     <PackageReference Include="Verify.XunitV3" Version="33.7.2" />
