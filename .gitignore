@@ -416,3 +416,12 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Visual test harness (visual-tests)
+visual-tests/node_modules/
+visual-tests/test-results/
+visual-tests/playwright-report/
+# visual-tests/baselines/ is committed: it is what the CI run compares every story against.
+# Published story demo served by the visual tests
+.demo-publish/
+

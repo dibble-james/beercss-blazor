@@ -6,12 +6,15 @@ on:
     branches: [main]
     tags: "*"
     paths: BeerCss.Blazor/**
+  # No paths filter: the Main ruleset requires this check, and a workflow that does not start leaves
+  # the check "Expected" forever, blocking every PR that does not touch BeerCss.Blazor/**.
   pull_request:
     branches: [main]
-    paths: BeerCss.Blazor/**
 
 jobs:
   build:
+    # The ruleset requires a check named "Nuget"; a job without a name reports as "build".
+    name: Nuget
     runs-on: ubuntu-latest
     permissions:
       contents: read
