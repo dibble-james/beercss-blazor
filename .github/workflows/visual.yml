@@ -1,0 +1,49 @@
+name: Visual tests
+
+# Every story is screenshotted in headless Chromium and compared with the committed baselines, so an
+# appearance change has to be acknowledged before it reaches the published demo.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  visual-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: visual-tests
+    steps:
+      - uses: actions/checkout@v7
+      # The suite publishes the story app itself, so the .NET SDK has to be here before it starts.
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: visual-tests/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      # --with-deps installs the browser's system libraries too: without fonts every story renders
+      # with zero-height text and the baselines would be blank.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run the visual tests
+        run: npx playwright test
+      # A failure leaves the actual, expected and diff image of every failing story in test-results,
+      # and the HTML report shows them side by side.
+      - name: Upload the visual diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-tests-failure
+          path: |
+            visual-tests/test-results
+            visual-tests/playwright-report
+          retention-days: 30
