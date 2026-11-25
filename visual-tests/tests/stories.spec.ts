@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { freezeAnimatedImages, freezeMedia, freezeStyles, storyReady } from '../support/freeze';
 import { stories } from '../support/stories';
 
@@ -12,6 +12,22 @@ const selected = only.length > 0 ? stories.filter((story) => only.includes(story
 
 if (only.length > 0 && selected.length === 0) {
   throw new Error(`BEERCSS_STORY matched no story: ${only.join(', ')}.`);
+}
+
+/**
+ * Blazor replaces a component that throws with its error banner, and the layout's <Beer> root
+ * survives, so the guard above would not notice: the capture would quietly become a picture of the
+ * error. Two select baselines were exactly that before those stories stopped passing a null model
+ * to EditForm.
+ */
+async function failOnErrorBanner(page: Page, storyId: string): Promise<void> {
+  const banner = page.locator('#blazor-error-ui');
+  if (!(await banner.isVisible())) return;
+
+  const shown = ((await banner.textContent()) ?? '').replace(/\s+/g, ' ').trim();
+  throw new Error(
+    `Story '${storyId}' rendered Blazor's error banner instead of the story: '${shown}'`,
+  );
 }
 
 for (const story of selected) {
@@ -50,6 +66,9 @@ for (const story of selected) {
     await page.addStyleTag({ content: freezeStyles });
     await page.evaluate(freezeMedia);
     await page.evaluate(freezeAnimatedImages);
+
+    // Last thing before the capture: a crashed render must fail the story, never become a baseline.
+    await failOnErrorBanner(page, story.id);
 
     // Playwright retries the screenshot until two consecutive captures match, so a frame taken
     // mid-render can never become a baseline.

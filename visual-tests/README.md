@@ -61,7 +61,9 @@ mid-render can never become a baseline.
 
 If a story id does not resolve, the canvas shows "Couldn't find story matching …" and the test fails
 naming the story rather than capturing an empty image: every story renders inside the layout's
-`<Beer>` root, and its absence is treated as a catalog bug.
+`<Beer>` root, and its absence is treated as a catalog bug. The same goes for a component that
+throws — Blazor's error banner (`#blazor-error-ui`) replaces it while the root survives — so a
+visible banner fails the test naming the story, and a crash can never be captured as a baseline.
 
 ## Baselines
 
