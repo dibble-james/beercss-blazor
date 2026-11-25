@@ -2,7 +2,11 @@ name: Visual tests
 
 # Every story is screenshotted in headless Chromium and compared with the committed baselines, so an
 # appearance change has to be acknowledged before it reaches the published demo.
+#
+# A manual run captures the baselines instead of comparing them: Chromium's rendering depends on the
+# image, so this is the only way to produce a set that the pull request run will accept.
 on:
+  workflow_dispatch:
   pull_request:
     branches: [main]
 
@@ -34,16 +38,28 @@ jobs:
       # with zero-height text and the baselines would be blank.
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
+      - name: Update the baselines
+        if: github.event_name == 'workflow_dispatch'
+        run: npx playwright test --update-snapshots
       - name: Run the visual tests
+        if: github.event_name == 'pull_request'
         run: npx playwright test
       # A failure leaves the actual, expected and diff image of every failing story in test-results,
       # and the HTML report shows them side by side.
       - name: Upload the visual diffs
-        if: failure()
+        if: failure() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: visual-tests-failure
           path: |
             visual-tests/test-results
             visual-tests/playwright-report
+          retention-days: 30
+      # Download these, review them, and commit them: the runner has no way to push them itself.
+      - name: Upload the baselines
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: baselines
+          path: visual-tests/baselines
           retention-days: 30
