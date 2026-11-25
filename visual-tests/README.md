@@ -73,13 +73,23 @@ YIQ space, and at most `maxDiffPixelRatio: 0.001` of the canvas may differ — a
 1280×800 page. Faint antialiasing drift passes; a recoloured component, or any change to the image
 size, fails.
 
-To accept a change, run `npx playwright test --update-snapshots`, review the images, and explain in
-the pull request why the rendering changed.
+**The canonical baselines come from a manual run of the `Visual tests` workflow**, not from
+`--update-snapshots` on your machine. Chromium's rendering depends on the OS, the font stack and the
+browser build, so a capture from a developer machine (macOS, Windows, or a Linux box with different
+fonts) is not a valid baseline and will fail the pull request run.
 
-**Baselines must be generated on the CI Linux image.** Chromium's rendering depends on the OS, the
-font stack and the browser build, so a capture from a developer machine (macOS, Windows, or a Linux
-box with different fonts) is not a valid baseline and will fail in CI. New stories must arrive with
-their baselines for the same reason.
+To accept a change, or to seed a new story:
+
+1. Run the `Visual tests` workflow by hand (Actions → Visual tests → Run workflow). It executes
+   `npx playwright test --update-snapshots` and uploads the resulting PNGs as the `baselines`
+   artifact. The workflow has to exist on `main` before it can be dispatched at all; a dispatch runs
+   the default branch, so pass a branch (`gh workflow run visual.yml --ref <branch>`) to capture
+   stories that are not merged yet.
+2. Download the artifact, review the images, and commit them under `visual-tests/baselines/`.
+3. Explain in the pull request why the rendering changed.
+
+A dispatch rewrites the baselines it captures but does not delete anything, so an orphaned PNG comes
+along in the artifact — see below.
 
 ### Renamed or deleted stories
 
