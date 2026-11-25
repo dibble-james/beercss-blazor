@@ -9,6 +9,17 @@
     [Parameter]
     public bool Fill { get; set; }
 
+    /// <summary>
+    /// Corner rounding. Takes precedence over <see cref="Round"/> whenever it is not
+    /// <see cref="Rounding.Default"/>.
+    /// </summary>
+    [Parameter]
+    public Rounding Rounding { get; set; } = Rounding.Default;
+
+    /// <summary>
+    /// Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+    /// <see cref="Rounding"/> is set.
+    /// </summary>
     [Parameter]
     public bool Round { get; set; }
 
@@ -37,7 +48,7 @@
     .AddClass("field")
     .AddClass(CssClass)
     .AddClass("fill", Fill)
-    .AddClass("round", Round)
+    .AddClass(RoundingExtensions.Resolve(Rounding, Round).ToCssClass())
     .AddClass("border", Border)
     .AddClass("prefix", Prefix is not null || InProgress)
     .AddClass("suffix", Suffix is not null)

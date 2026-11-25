@@ -23,6 +23,17 @@
         </Template>
     </Story>
 
+    <Story Name="Rounding">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <div class="row">
+                    <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.Round" Label="Round" />
+                    <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.NoRoundLeft" Label="No round left" />
+                </div>
+            </EditForm>
+        </Template>
+    </Story>
+
     <Story Name="Invalid">
         <Template>
             <EditForm Context="form" EditContext="_editContext">
