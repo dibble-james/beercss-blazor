@@ -424,8 +424,7 @@ FodyWeavers.xsd
 visual-tests/node_modules/
 visual-tests/test-results/
 visual-tests/playwright-report/
-# Baselines are generated on the CI image (see visual-tests/README.md) and are not committed yet.
-visual-tests/baselines/
+# visual-tests/baselines/ is committed: it is what the CI run compares every story against.
 # Published story demo served by the visual tests
 .demo-publish/
 
