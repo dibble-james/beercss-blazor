@@ -80,11 +80,11 @@ fonts) is not a valid baseline and will fail the pull request run.
 
 To accept a change, or to seed a new story:
 
-1. Run the `Visual tests` workflow by hand (Actions → Visual tests → Run workflow). It executes
-   `npx playwright test --update-snapshots` and uploads the resulting PNGs as the `baselines`
-   artifact. The workflow has to exist on `main` before it can be dispatched at all; a dispatch runs
-   the default branch, so pass a branch (`gh workflow run visual.yml --ref <branch>`) to capture
-   stories that are not merged yet.
+1. Run the `Visual tests` workflow. It executes `npx playwright test --update-snapshots` and uploads
+   the resulting PNGs as the `baselines` artifact. A dispatch runs the version of the workflow on the
+   ref you give it, so point it at the branch that has your stories
+   (`gh workflow run visual.yml --ref <branch>`); the Actions "Run workflow" button only appears once
+   the workflow is on `main`.
 2. Download the artifact, review the images, and commit them under `visual-tests/baselines/`.
 3. Explain in the pull request why the rendering changed.
 
