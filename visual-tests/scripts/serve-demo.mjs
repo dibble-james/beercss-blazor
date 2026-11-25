@@ -17,8 +17,7 @@ function resolveDotnet() {
   const host = process.env.DOTNET_HOST_PATH;
   if (host && existsSync(host)) return host;
 
-  const local = path.join(repoRoot, '.dotnet', process.platform === 'win32' ? 'dotnet.exe' : 'dotnet');
-  return existsSync(local) ? local : 'dotnet';
+  return 'dotnet';
 }
 
 const published = await new Promise((resolve, reject) => {

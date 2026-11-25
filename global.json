@@ -1,8 +1,6 @@
 {
   "sdk": {
     "version": "10.0.100",
-    "rollForward": "latestFeature",
-    "paths": [".dotnet", "$host$"],
-    "errorMessage": "Required .NET 10 SDK not found. Run ./install-dotnet.sh to install it into .dotnet/."
+    "rollForward": "latestFeature"
   }
 }

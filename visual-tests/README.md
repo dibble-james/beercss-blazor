@@ -21,8 +21,8 @@ fonts, text renders with zero height and every story looks empty.
 The run publishes the app itself: `scripts/serve-demo.mjs` runs
 `dotnet publish BeerCss.Blazor.Stories -c Release -o ../.demo-publish` and serves the published
 `wwwroot` with `http-server` on `127.0.0.1:4173`, which Playwright starts and stops around the suite.
-Use `./install-dotnet.sh` from the repository root for the pinned SDK; the script prefers `./.dotnet`
-and `DOTNET_HOST_PATH` before falling back to `dotnet` on the `PATH`.
+It shells out to `dotnet` on the `PATH` (or `DOTNET_HOST_PATH` when set), so a .NET 10 SDK has to be
+available.
 
 ### Just one component
 

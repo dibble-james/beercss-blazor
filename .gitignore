@@ -417,9 +417,6 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# Project-local .NET SDK (install-dotnet.sh)
-.dotnet/
-
 # Visual test harness (visual-tests)
 visual-tests/node_modules/
 visual-tests/test-results/
