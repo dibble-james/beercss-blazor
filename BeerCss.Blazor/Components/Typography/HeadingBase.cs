@@ -2,12 +2,13 @@ namespace BeerCss.Blazor.Components.Typography;
 
 using BlazorComponentUtilities;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
 
 /// <summary>
-/// The parameters and the class building shared by <see cref="Heading"/> and the <c>H1</c>–<c>H6</c>
-/// wrappers. A subclass owns its markup and says which scale it renders; this type owns the
-/// surface and the <c>h{level}</c>/<c>small</c> classes, so a wrapper never has to reach into
-/// <see cref="Heading"/> to get them.
+/// The parameters, the class building and the element rendering shared by <see cref="Heading"/> and
+/// the <c>H1</c>–<c>H6</c> wrappers. A subclass only says which scale it renders and, if it can
+/// change element, which element is being rendered; this type owns the surface and the
+/// <c>h{level}</c>/<c>small</c> classes, so no subclass reaches into another to get them.
 /// </summary>
 public abstract class HeadingBase : ComponentBase
 {
@@ -43,4 +44,16 @@ public abstract class HeadingBase : ComponentBase
         .AddClass($"h{HeadingLevel}", Element != $"h{HeadingLevel}")
         .AddClass("small", Small)
         .AddClassFromAttributes(AdditionalAttributes);
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "BL0006:Do not use RenderTree types", Justification = "The heading components render the element their subclass chooses.")]
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+        base.BuildRenderTree(builder);
+
+        builder.OpenElement(0, Element);
+        builder.AddMultipleAttributes(1, AdditionalAttributes);
+        builder.AddAttribute(2, "class", CssClass);
+        builder.AddContent(3, ChildContent);
+        builder.CloseElement();
+    }
 }

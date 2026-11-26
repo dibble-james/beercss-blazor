@@ -1,6 +1,13 @@
-@inherits HeadingBase
+namespace BeerCss.Blazor.Components.Typography;
 
-@code {
+using Microsoft.AspNetCore.Components;
+
+/// <summary>
+/// A heading whose element is chosen at the call site, so the heading scale can be used on
+/// something that is not a heading tag. Use <see cref="H1"/>–<see cref="H6"/> when it is.
+/// </summary>
+public class Heading : HeadingBase
+{
     private static readonly string[] HeadingTags = ["h1", "h2", "h3", "h4", "h5", "h6"];
     private static readonly string[] OtherTags = ["div", "span", "p"];
 
@@ -45,35 +52,4 @@
 
         _element = element;
     }
-}
-
-@switch (_element)
-{
-    case "h1":
-        <h1 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h1>
-        break;
-    case "h2":
-        <h2 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h2>
-        break;
-    case "h3":
-        <h3 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h3>
-        break;
-    case "h4":
-        <h4 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h4>
-        break;
-    case "h5":
-        <h5 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h5>
-        break;
-    case "h6":
-        <h6 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h6>
-        break;
-    case "div":
-        <div @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</div>
-        break;
-    case "span":
-        <span @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</span>
-        break;
-    case "p":
-        <p @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</p>
-        break;
 }
