@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeerCSS modules &mdash; BeerCss.Blazor</title>
+    <!--
+    beer.loader.js reads the query string off its own URL and fetches the named modules from the
+    directories next to itself, so every path here is relative to this page: it works at "/" and
+    under the Pages base path without a rewrite, and no other BeerCSS asset is requested.
+    -->
+    <script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&helpers=form&elements=button,field,typography"></script>
+    <style>
+        /* Page chrome, so the demo needs no helper module it does not load. */
+        body { padding: 1rem 1.5rem; }
+        form { max-inline-size: 22rem; }
+        .actions { display: flex; gap: 0.5rem; margin-block-start: 1.5rem; }
+    </style>
+</head>
+
+<body>
+    <h5>Create an account</h5>
+    <p>Settings, the form helper, and the button, field and typography elements.</p>
+
+    <form onsubmit="return false">
+        <div class="field label border">
+            <input type="text" />
+            <label>Full name</label>
+        </div>
+        <div class="field label border">
+            <input type="email" />
+            <label>Email</label>
+        </div>
+        <div class="field label border">
+            <select>
+                <option value="" disabled selected>Choose a plan</option>
+                <option>Free</option>
+                <option>Team</option>
+            </select>
+            <label>Plan</label>
+        </div>
+        <div class="field label border round">
+            <textarea></textarea>
+            <label>Notes</label>
+        </div>
+
+        <div class="actions">
+            <button type="button">Create account</button>
+            <button type="button" class="border round">Cancel</button>
+        </div>
+    </form>
+</body>
+
+</html>

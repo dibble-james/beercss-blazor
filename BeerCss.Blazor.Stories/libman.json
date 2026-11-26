@@ -11,7 +11,15 @@
         "dist/cdn/beer.min.js",
         "dist/cdn/beer.loader.js",
         "dist/cdn/material-symbols-outlined.woff2",
-        "dist/cdn/*.svg"
+        "dist/cdn/*.svg",
+        "dist/cdn/settings/global.min.css",
+        "dist/cdn/settings/light.min.css",
+        "dist/cdn/settings/reset.min.css",
+        "dist/cdn/helpers/form.min.css",
+        "dist/cdn/elements/button.min.css",
+        "dist/cdn/elements/field.min.css",
+        "dist/cdn/elements/field.min.js",
+        "dist/cdn/elements/typography.min.css"
       ]
     }
   ]
