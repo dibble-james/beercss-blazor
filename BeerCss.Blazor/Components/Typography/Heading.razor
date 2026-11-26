@@ -1,3 +1,5 @@
+@inherits HeadingBase
+
 @code {
     private static readonly string[] HeadingTags = ["h1", "h2", "h3", "h4", "h5", "h6"];
     private static readonly string[] OtherTags = ["div", "span", "p"];
@@ -11,12 +13,6 @@
     public int Level { get; set; }
 
     /// <summary>
-    /// Renders the <c>small</c> variant of the heading scale.
-    /// </summary>
-    [Parameter]
-    public bool Small { get; set; }
-
-    /// <summary>
     /// The element to render: a heading tag (<c>h1</c>–<c>h6</c>), <c>div</c>, <c>span</c> or
     /// <c>p</c>. Defaults to the heading tag for <see cref="Level"/>. Every value except that same
     /// heading tag also gets the <c>h{level}</c> class, because only the native tag is sized by the
@@ -25,18 +21,11 @@
     [Parameter]
     public string? As { get; set; }
 
-    [Parameter, EditorRequired]
-    public required RenderFragment ChildContent { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
-
     private string _element = string.Empty;
 
-    private CssBuilder CssClass => new CssBuilder()
-        .AddClass($"h{Level}", _element != $"h{Level}")
-        .AddClass("small", Small)
-        .AddClassFromAttributes(AdditionalAttributes);
+    protected override int HeadingLevel => Level;
+
+    protected override string Element => _element;
 
     protected override void OnParametersSet()
     {

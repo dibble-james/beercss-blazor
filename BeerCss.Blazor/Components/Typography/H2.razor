@@ -1,15 +1,7 @@
+@inherits HeadingBase
+
 @code {
-    /// <summary>
-    /// Renders the <c>small</c> variant of the heading scale.
-    /// </summary>
-    [Parameter]
-    public bool Small { get; set; }
-
-    [Parameter, EditorRequired]
-    public required RenderFragment ChildContent { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+    protected override int HeadingLevel => 2;
 }
 
-<Heading Level="2" Small="@Small" @attributes="AdditionalAttributes">@ChildContent</Heading>
+<h2 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h2>
