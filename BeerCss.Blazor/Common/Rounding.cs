@@ -21,11 +21,8 @@ public static class RoundingExtensions
         Rounding.NoRound => "no-round",
         Rounding.LeftRound => "left-round",
         Rounding.RightRound => "right-round",
-        // v5 moved `no-round` to `border-radius: 0 !important`, emitted after the shared `.5rem`
-        // shorthand of the side classes but before their per-side longhands. So the side class has to
-        // name the side that keeps its radius; the other side stays square. The old pairing rounded
-        // exactly the side these members say is square, and v5's `.field[class*=round]` then gave the
-        // field rounded-field padding as well.
+        // v5's `border-radius: 0 !important` for `no-round` comes after the side classes' shared
+        // `.5rem` shorthand but before their per-side longhands, so the side class names the rounded side.
         Rounding.NoRoundLeft => "no-round right-round",
         Rounding.NoRoundRight => "no-round left-round",
         _ => string.Empty,
