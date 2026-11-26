@@ -11,6 +11,17 @@
             </Group>
         </Template>
     </Story>
+    <Story Name="Edge rounding">
+        <Template>
+            @* v5 handles the interior corners itself, so interior buttons no longer need
+               no-round; only the outer edges are rounded. *@
+            <Group Connected>
+                <Button Rounding="Rounding.LeftRound">Left</Button>
+                <Button>Middle</Button>
+                <Button Rounding="Rounding.RightRound">Right</Button>
+            </Group>
+        </Template>
+    </Story>
     <Story Name="Connected">
         <Arguments>
             <Arg For="x => x.Connected" Value="true" />

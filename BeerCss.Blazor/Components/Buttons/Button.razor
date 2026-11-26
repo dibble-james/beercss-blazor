@@ -18,6 +18,13 @@
     [Parameter]
     public bool Circle { get; set; }
 
+    /// <summary>
+    /// Corner rounding, covering every v5 combination. <see cref="Rounding.LeftRound"/> and
+    /// <see cref="Rounding.RightRound"/> are for the edge buttons of a <c>Group</c>.
+    /// </summary>
+    [Parameter]
+    public Rounding Rounding { get; set; } = Rounding.Default;
+
     [Parameter]
     public Size Size { get; set; } = Size.Medium;
 
@@ -52,6 +59,7 @@
         .AddClass("border", Border)
         .AddClass("transparent", Transparent)
         .AddClass("circle", Circle)
+        .AddClass(Rounding.ToCssClass())
         .AddClass("extend", () => Extend is not null)
         .AddClass("inverse-link", InverseLink)
         .AddClass(Size.ToCssClass())

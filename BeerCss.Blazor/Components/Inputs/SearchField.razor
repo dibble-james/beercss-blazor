@@ -20,6 +20,13 @@
     [Parameter]
     public Size Size { get; set; } = Size.Medium;
 
+    /// <summary>
+    /// Corner rounding. Defaults to <see cref="Rounding.Round"/> because this field has always
+    /// been fully rounded; there is no legacy <c>Round</c> bool to defer to.
+    /// </summary>
+    [Parameter]
+    public Rounding Rounding { get; set; } = Rounding.Round;
+
     [Parameter]
     public bool Disabled { get; set; }
 
@@ -35,7 +42,8 @@
     protected bool InProgress { get; set; }
 
     private CssBuilder RealCssClass => new CssBuilder()
-    .AddClass("field prefix round fill")
+    .AddClass("field prefix fill")
+    .AddClass(Rounding.ToCssClass())
     .AddClass(Size.ToCssClass())
     .AddClassFromAttributes(AdditionalAttributes);
 

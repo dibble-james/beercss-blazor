@@ -5,6 +5,7 @@
     <ArgType For="_ => _.Size" Control="ControlType.Select" DefaultValue="Size.Medium" />
     <ArgType For="_ => _.Elevation" Control="ControlType.Select" DefaultValue="Elevation.NoElevate" />
     <ArgType For="_ => _.Color" Control="ControlType.Select" DefaultValue="Color.Default" />
+    <ArgType For="_ => _.Rounding" Control="ControlType.Select" DefaultValue="Rounding.Default" />
 
     <Story Name="Default">
         <Arguments>
@@ -12,6 +13,19 @@
         </Arguments>
         <Template>
             <Button @attributes="context.Args"></Button>
+        </Template>
+    </Story>
+    <Story Name="Rounding">
+        <Template>
+            <div class="row wrap">
+                <Button>Default</Button>
+                <Button Rounding="Rounding.Round">Round</Button>
+                <Button Rounding="Rounding.NoRound">No round</Button>
+                <Button Rounding="Rounding.LeftRound">Left round</Button>
+                <Button Rounding="Rounding.RightRound">Right round</Button>
+                <Button Rounding="Rounding.NoRoundLeft">No round left</Button>
+                <Button Rounding="Rounding.NoRoundRight">No round right</Button>
+            </div>
         </Template>
     </Story>
     <Story Name="Responsive">
