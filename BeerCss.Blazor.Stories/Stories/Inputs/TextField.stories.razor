@@ -26,10 +26,29 @@
     <Story Name="Rounding">
         <Template>
             <EditForm Context="form" Model="_value">
-                <div class="row">
-                    <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.Round" Label="Round" />
-                    <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.NoRoundLeft" Label="No round left" />
-                </div>
+                <Grid>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Label="Default" />
+                    </div>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.Round" Label="Round" />
+                    </div>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.NoRound" Label="No round" />
+                    </div>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.LeftRound" Label="Left round" />
+                    </div>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.RightRound" Label="Right round" />
+                    </div>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.NoRoundLeft" Label="No round left" />
+                    </div>
+                    <div class="s6">
+                        <TextField TValue="int" @bind-Value="_value" Rounding="Rounding.NoRoundRight" Label="No round right" />
+                    </div>
+                </Grid>
             </EditForm>
         </Template>
     </Story>
