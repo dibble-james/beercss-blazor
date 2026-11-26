@@ -1,0 +1,90 @@
+@code {
+    private static readonly string[] HeadingTags = ["h1", "h2", "h3", "h4", "h5", "h6"];
+    private static readonly string[] OtherTags = ["div", "span", "p"];
+
+    /// <summary>
+    /// The heading scale, 1 to 6. It picks the element to render when <see cref="As"/> is unset,
+    /// and always picks the <c>h{level}</c> size class when the rendered element is not that
+    /// level's own heading tag.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public int Level { get; set; }
+
+    /// <summary>
+    /// Renders the <c>small</c> variant of the heading scale.
+    /// </summary>
+    [Parameter]
+    public bool Small { get; set; }
+
+    /// <summary>
+    /// The element to render: a heading tag (<c>h1</c>–<c>h6</c>), <c>div</c>, <c>span</c> or
+    /// <c>p</c>. Defaults to the heading tag for <see cref="Level"/>. Every value except that same
+    /// heading tag also gets the <c>h{level}</c> class, because only the native tag is sized by the
+    /// tag itself.
+    /// </summary>
+    [Parameter]
+    public string? As { get; set; }
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private string _element = string.Empty;
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass($"h{Level}", _element != $"h{Level}")
+        .AddClass("small", Small)
+        .AddClassFromAttributes(AdditionalAttributes);
+
+    protected override void OnParametersSet()
+    {
+        if (Level is < 1 or > 6)
+        {
+            throw new ArgumentOutOfRangeException(nameof(Level), Level, "Heading.Level must be between 1 and 6.");
+        }
+
+        var element = As ?? $"h{Level}";
+
+        if (!HeadingTags.Contains(element) && !OtherTags.Contains(element))
+        {
+            throw new ArgumentException(
+                $"'{element}' is not a supported element. Use one of {string.Join(", ", HeadingTags.Concat(OtherTags))}, or leave As unset to follow Level.",
+                nameof(As));
+        }
+
+        _element = element;
+    }
+}
+
+@switch (_element)
+{
+    case "h1":
+        <h1 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h1>
+        break;
+    case "h2":
+        <h2 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h2>
+        break;
+    case "h3":
+        <h3 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h3>
+        break;
+    case "h4":
+        <h4 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h4>
+        break;
+    case "h5":
+        <h5 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h5>
+        break;
+    case "h6":
+        <h6 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h6>
+        break;
+    case "div":
+        <div @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</div>
+        break;
+    case "span":
+        <span @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</span>
+        break;
+    case "p":
+        <p @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</p>
+        break;
+}

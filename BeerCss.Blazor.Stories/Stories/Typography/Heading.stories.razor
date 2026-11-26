@@ -1,0 +1,30 @@
+@using BeerCss.Blazor.Components.Typography
+@attribute [Stories("Components/Typography/Heading")]
+
+<Stories TComponent="Heading">
+    <Story Name="Default">
+        <Template>
+            <Heading Level="1">Heading 1</Heading>
+            <Heading Level="2">Heading 2</Heading>
+            <Heading Level="3">Heading 3</Heading>
+            <Heading Level="4">Heading 4</Heading>
+            <Heading Level="5">Heading 5</Heading>
+            <Heading Level="6">Heading 6</Heading>
+        </Template>
+    </Story>
+
+    <Story Name="As">
+        <Template>
+            <Heading Level="2" As="div">Level 2 as a div</Heading>
+            <Heading Level="2" As="span">Level 2 as a span</Heading>
+            <Heading Level="2" As="p">Level 2 as a paragraph</Heading>
+        </Template>
+    </Story>
+
+    <Story Name="Small">
+        <Template>
+            <Heading Level="2" Small>Heading 2, small</Heading>
+            <H2 Small>H2, small</H2>
+        </Template>
+    </Story>
+</Stories>

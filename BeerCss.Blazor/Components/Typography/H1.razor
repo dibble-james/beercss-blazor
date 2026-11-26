@@ -1,0 +1,19 @@
+@code {
+    /// <summary>
+    /// Renders the <c>small</c> variant of the heading scale.
+    /// </summary>
+    [Parameter]
+    public bool Small { get; set; }
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("small", Small)
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<h1 @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</h1>
