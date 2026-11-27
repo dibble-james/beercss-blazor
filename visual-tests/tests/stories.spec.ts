@@ -58,12 +58,9 @@ for (const story of selected) {
 
     await page.waitForLoadState('networkidle', { timeout: 60_000 });
 
-    // A story may embed another page (the modules demo), whose own assets and fonts settle after
-    // the outer page is idle: its module styles are fetched and injected at runtime.
-    for (const frame of page.frames()) {
-      if (frame === page.mainFrame()) continue;
+    // A story may embed another page (the modules demo) that fetches and injects its own styles.
+    for (const frame of page.frames().filter((frame) => frame !== page.mainFrame())) {
       await frame.waitForLoadState('networkidle', { timeout: 60_000 });
-      await frame.evaluate(() => document.fonts.ready);
     }
 
     await page.evaluate(() => document.fonts.ready);

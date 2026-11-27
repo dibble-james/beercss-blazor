@@ -15,7 +15,6 @@
         "dist/cdn/settings/global.min.css",
         "dist/cdn/settings/light.min.css",
         "dist/cdn/settings/reset.min.css",
-        "dist/cdn/helpers/form.min.css",
         "dist/cdn/elements/button.min.css",
         "dist/cdn/elements/field.min.css",
         "dist/cdn/elements/field.min.js",
