@@ -1,0 +1,20 @@
+@attribute [Stories("Components/Margin")]
+
+@*
+    Provenance: the module is published as helpers/margin.min.css (636 B) and vendored from there.
+    Only the elements/ path is a 404, so nothing here is hand-extracted from the bundle; a modular
+    page that uses Margin loads it with &helpers=margin.
+*@
+<Stories TComponent="Margin">
+    <Story Name="Sizes">
+        <Template>
+            <div class="border padding">
+                <Margin Size="MarginSize.None"><span class="chip">none</span></Margin>
+                <Margin Size="MarginSize.Tiny"><span class="chip">tiny, 0.25rem</span></Margin>
+                <Margin Size="MarginSize.Small"><span class="chip">small, 0.5rem</span></Margin>
+                <Margin><span class="chip">default, 1rem</span></Margin>
+                <Margin Size="MarginSize.Large"><span class="chip">large, 1.5rem</span></Margin>
+            </div>
+        </Template>
+    </Story>
+</Stories>

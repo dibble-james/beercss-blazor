@@ -1,0 +1,23 @@
+@code {
+    /// <summary>
+    /// Spacing around the element. <see cref="MarginSize.Default"/> is the 1rem a bare
+    /// <c>.margin</c> already applies.
+    /// </summary>
+    [Parameter]
+    public MarginSize Size { get; set; } = MarginSize.Default;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
+
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("margin")
+        .AddClass(Size.ToCssClass())
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<div @attributes="AdditionalAttributes" class="@CssClass">
+    @ChildContent
+</div>
