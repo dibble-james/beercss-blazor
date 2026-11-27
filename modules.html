@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeerCSS modules &mdash; BeerCss.Blazor</title>
+    <!-- beer.loader.js fetches the modules named in its own query string from the folders next to
+         itself, so these paths stay relative and work at "/" and under the Pages base path. -->
+    <script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&elements=button,field,typography"></script>
+    <style>
+        body { padding: 1rem 1.5rem; }
+        form { max-inline-size: 22rem; }
+        .actions { display: flex; gap: 0.5rem; margin-block-start: 1.5rem; }
+    </style>
+</head>
+
+<body>
+    <h5>Create an account</h5>
+    <p>Settings, and the button, field and typography elements.</p>
+
+    <form onsubmit="return false">
+        <div class="field label border">
+            <input type="text" />
+            <label>Full name</label>
+        </div>
+        <div class="field label border">
+            <input type="email" />
+            <label>Email</label>
+        </div>
+        <div class="field label border">
+            <select>
+                <option value="" disabled selected>Choose a plan</option>
+                <option>Free</option>
+                <option>Team</option>
+            </select>
+            <label>Plan</label>
+        </div>
+        <div class="field label border round">
+            <textarea></textarea>
+            <label>Notes</label>
+        </div>
+
+        <div class="actions">
+            <button type="button">Create account</button>
+            <button type="button" class="fill">Cancel</button>
+        </div>
+    </form>
+</body>
+
+</html>

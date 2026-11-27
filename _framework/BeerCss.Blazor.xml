@@ -4,5 +4,182 @@
         <name>BeerCss.Blazor</name>
     </assembly>
     <members>
+        <member name="F:BeerCss.Blazor.Common.Rounding.NoRoundLeft">
+            <summary>Square on the left, rounded on the right.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.Rounding.NoRoundRight">
+            <summary>Rounded on the left, square on the right.</summary>
+        </member>
+        <member name="M:BeerCss.Blazor.Common.RoundingExtensions.Resolve(BeerCss.Blazor.Common.Rounding,System.Boolean)">
+            <summary>Resolves the shared precedence between a component's <c>Rounding</c> parameter
+            and its legacy <c>Round</c> bool: an explicit rounding wins, otherwise <c>true</c> means
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Round"/>.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.Heading">
+            <summary>
+            A heading whose element is chosen at the call site, so the heading scale can be used on
+            something that is not a heading tag. Use <see cref="T:BeerCss.Blazor.Components.Typography.H1"/>–<see cref="T:BeerCss.Blazor.Components.Typography.H6"/> when it is.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Typography.Heading.Level">
+            <summary>
+            The heading scale, 1 to 6. It picks the element to render when <see cref="P:BeerCss.Blazor.Components.Typography.Heading.As"/> is unset,
+            and always picks the <c>h{level}</c> size class when the rendered element is not that
+            level's own heading tag.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Typography.Heading.As">
+            <summary>
+            The element to render: a heading tag (<c>h1</c>–<c>h6</c>), <c>div</c>, <c>span</c> or
+            <c>p</c>. Defaults to the heading tag for <see cref="P:BeerCss.Blazor.Components.Typography.Heading.Level"/>. Every value except that same
+            heading tag also gets the <c>h{level}</c> class, because only the native tag is sized by the
+            tag itself.
+            </summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.HeadingBase">
+            <summary>
+            The parameters, the class building and the element rendering shared by <see cref="T:BeerCss.Blazor.Components.Typography.Heading"/> and
+            the <c>H1</c>–<c>H6</c> wrappers. A subclass only says which scale it renders and, if it can
+            change element, which element is being rendered; this type owns the surface and the
+            <c>h{level}</c>/<c>small</c> classes, so no subclass reaches into another to get them.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Typography.HeadingBase.HeadingLevel">
+            <summary>
+            The heading scale this component renders, 1 to 6.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Typography.HeadingBase.Element">
+            <summary>
+            The element being rendered. The <c>h{level}</c> size class is only added when this is not the
+            native heading for <see cref="P:BeerCss.Blazor.Components.Typography.HeadingBase.HeadingLevel"/>, because the native tag is already sized by the
+            tag itself. Defaults to that native tag.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Typography.HeadingBase.Small">
+            <summary>
+            Renders the <c>small</c> variant of the heading scale.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Typography.HeadingBase.CssClass">
+            <summary>
+            The class for the element named by <see cref="P:BeerCss.Blazor.Components.Typography.HeadingBase.Element"/>, including any <c>class</c> the
+            caller passed.
+            </summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.H1">
+            <summary>The <c>h1</c> element, at the level 1 heading scale.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.H2">
+            <summary>The <c>h2</c> element, at the level 2 heading scale.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.H3">
+            <summary>The <c>h3</c> element, at the level 3 heading scale.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.H4">
+            <summary>The <c>h4</c> element, at the level 4 heading scale.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.H5">
+            <summary>The <c>h5</c> element, at the level 5 heading scale.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.Typography.H6">
+            <summary>The <c>h6</c> element, at the level 6 heading scale.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Buttons.Button.Rounding">
+            <summary>
+            Corner rounding, covering every v5 combination. <see cref="F:BeerCss.Blazor.Common.Rounding.LeftRound"/> and
+            <see cref="F:BeerCss.Blazor.Common.Rounding.RightRound"/> are for the edge buttons of a <c>Group</c>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Card.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Card.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Card.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Card.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.DateField`1.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Inputs.DateField`1.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.DateField`1.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Inputs.DateField`1.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.FileField.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Inputs.FileField.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.FileField.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Inputs.FileField.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.NumberField`1.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Inputs.NumberField`1.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.NumberField`1.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Inputs.NumberField`1.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.SearchField`1.Rounding">
+            <summary>
+            Corner rounding. Defaults to <see cref="F:BeerCss.Blazor.Common.Rounding.Round"/> because this field has always
+            been fully rounded; there is no legacy <c>Round</c> bool to defer to.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.SelectField`1.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Inputs.SelectField`1.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.SelectField`1.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Inputs.SelectField`1.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.TextArea.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Inputs.TextArea.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.TextArea.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Inputs.TextArea.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.TextField.Rounding">
+            <summary>
+            Corner rounding. Takes precedence over <see cref="P:BeerCss.Blazor.Components.Inputs.TextField.Round"/> whenever it is not
+            <see cref="F:BeerCss.Blazor.Common.Rounding.Default"/>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.TextField.Round">
+            <summary>
+            Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
+            <see cref="P:BeerCss.Blazor.Components.Inputs.TextField.Rounding"/> is set.
+            </summary>
+        </member>
     </members>
 </doc>
