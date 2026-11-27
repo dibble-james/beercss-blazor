@@ -1,0 +1,55 @@
+@using BeerCss.Blazor.Components.Inputs
+@attribute [Stories("Components/Inputs/Checkbox")]
+
+<Stories TComponent="Checkbox">
+    <Story Name="Default">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Checkbox @bind-Value="_value" />
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Checked">
+        <Template>
+            <EditForm Context="form" Model="_checked">
+                <Checkbox @bind-Value="_checked" />
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Label">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Checkbox @bind-Value="_value">
+                    <Label>Remember me</Label>
+                </Checkbox>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Help text">
+        <Arguments>
+            <Arg For="_ => _.HelpText" Value="_helpText" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Checkbox @attributes="context.Args" @bind-Value="_value">
+                    <Label>Remember me</Label>
+                </Checkbox>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Disabled">
+        <Template>
+            <EditForm Context="form" Model="_value">
+                <Checkbox @bind-Value="_value" Disabled="true">
+                    <Label>Remember me</Label>
+                </Checkbox>
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    bool _value = false;
+    bool _checked = true;
+    string _helpText = "Help me!";
+}
