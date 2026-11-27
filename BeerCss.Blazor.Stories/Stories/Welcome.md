@@ -31,4 +31,6 @@ This storybook runs on **BeerCSS 5.0.3**, the same version the wrapper targets a
 
 5.0.3 can also load only the modules a page uses. The `Modules` story ([canvas](iframe.html?id=modules--loading&viewMode=story)) loads three settings modules plus the button, field, typography and media elements and the form helper — 23,876 B with a 10,429 B loader, against 106,949 B for the all-in-one bundle. That bundle is still the default; modules only win for a page that needs a few elements, since every module together is 110,356 B.
 
-Media is the one element with no wrapper type: `media.min.css` sizes plain `<img>`, `<svg>` and `<video>` elements, so those stay plain markup, and its `round`, `circle` and `square` modifiers need the form helper loaded alongside.
+Media is the one element with no wrapper type: `media.min.css` sizes plain `<img>`, `<svg>` and `<video>` elements, so those stay plain markup, and its `round`, `circle` and `square` modifiers need the form helper loaded alongside. Those elements have their own canvas too — the `Media` story ([canvas](iframe.html?id=media--elements&viewMode=story)).
+
+Icons come either as a Material Symbols ligature inside `Icon`, or from another font through a class on the same element: `<Icon class="fa-solid fa-user">person</Icon>`. Both forms are on the `Components/Icon` stories.

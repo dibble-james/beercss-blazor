@@ -23,7 +23,7 @@ Soak your app with beer (AKA add the namespace your your `_Imports.razor` and th
 </Beer>
 ```
 
-Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the available components.
+Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the available components, and [the changelog](CHANGELOG.md) for what each release adds.
 
 ## BeerCSS version
 
@@ -73,9 +73,33 @@ The demo's [`modules.html`](BeerCss.Blazor.Stories/wwwroot/modules.html) is a fo
 
 The last row is the caveat: loading everything is larger than the bundle, so modules only pay off for a page that needs a few elements. **The all-in-one bundle stays the default** — link `beer.scoped.min.css` and load `beer.min.js`, as the demo's `iframe.html` does. Reach for the loader when a page needs a small subset.
 
-Media is the one element with no wrapper type: `media.min.css` sizes plain `<img>`, `<svg>` and `<video>` elements through the `tiny`–`extra`, `responsive` and `empty-state` classes, so those are written as plain markup in your own components. Its `round`, `circle` and `square` modifiers only take effect with the form helper loaded, which is where those border-radius rules are.
+Media is the one element with no wrapper type: `media.min.css` sizes plain `<img>`, `<svg>` and `<video>` elements through the `tiny`–`extra`, `responsive` and `empty-state` classes, so those are written as plain markup in your own components. Its `round`, `circle` and `square` modifiers only take effect with the form helper loaded, which is where those border-radius rules are. The `Media` story renders those elements on their own canvas, so the visual suite covers them.
 
 `libman.json` vendors those nine files plus `helpers/margin.min.css`, which `<Margin>` needs, so a module added to the query string needs its files added there too. The margin module is published under `helpers/`, not `elements/` — `elements/margin.min.css` is a 404.
+
+## Icons
+
+`Icon` renders the Material Symbols ligature you put inside it, optionally filled or sized:
+
+```razor
+<Icon>home</Icon>
+<Icon Fill Size="Size.Large">home</Icon>
+```
+
+Icons from another font, such as Font Awesome, are given by class instead — the class has to land on the `i`, so the ligature inside is only a fallback:
+
+```razor
+<Icon class="fa-solid fa-user">person</Icon>
+```
+
+A `Badge` goes inside the icon and takes the corner, which needs `position: relative` on the icon:
+
+```razor
+<Icon style="position: relative">
+    notifications
+    <Badge>3</Badge>
+</Icon>
+```
 
 ## Components
 
