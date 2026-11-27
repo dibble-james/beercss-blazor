@@ -4,6 +4,39 @@
         <name>BeerCss.Blazor</name>
     </assembly>
     <members>
+        <member name="T:BeerCss.Blazor.Common.MarginSize">
+            <summary>
+            Spacing a <c>Margin</c> applies. BeerCSS 5.0.3 has no <c>medium-margin</c> and no
+            <c>extra-margin</c>: a bare <c>.margin</c> is already 1rem.
+            </summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.MarginSize.Default">
+            <summary>1rem, the value a bare <c>.margin</c> carries.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.MarginSize.None">
+            <summary>No margin at all.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.MarginSize.Tiny">
+            <summary>0.25rem.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.MarginSize.Small">
+            <summary>0.5rem.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.MarginSize.Large">
+            <summary>1.5rem.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.Rotation.Default">
+            <summary>The shape sits still.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.Rotation.Rotate">
+            <summary>One turn every 12 seconds.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.Rotation.Fast">
+            <summary>One turn every 6 seconds.</summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Common.Rotation.Slow">
+            <summary>One turn every 24 seconds.</summary>
+        </member>
         <member name="F:BeerCss.Blazor.Common.Rounding.NoRoundLeft">
             <summary>Square on the left, rounded on the right.</summary>
         </member>
@@ -14,6 +47,28 @@
             <summary>Resolves the shared precedence between a component's <c>Rounding</c> parameter
             and its legacy <c>Round</c> bool: an explicit rounding wins, otherwise <c>true</c> means
             <see cref="F:BeerCss.Blazor.Common.Rounding.Round"/>.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Shape.Size">
+            <summary>
+            Shape size. <see cref="F:BeerCss.Blazor.Common.Size.Medium"/> adds no class: the module's bare <c>.shape</c> rule is
+            already 3.5rem, and there is no <c>.shape.small</c> for <see cref="F:BeerCss.Blazor.Common.Size.Small"/> to reach.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Shape.Rotate">
+            <summary>Spins the shape. Still by default.</summary>
+        </member>
+        <member name="T:BeerCss.Blazor.Components.ShapeTypes">
+            <summary>
+            The mask class names BeerCSS 5.0.3 ships, for <see cref="P:BeerCss.Blazor.Components.Shape.ShapeType"/>. Each one loads its
+            own SVG from the same folder as the stylesheet.
+            </summary>
+        </member>
+        <member name="F:BeerCss.Blazor.Components.ShapeTypes.LeafClover8">
+            <summary>
+            Upstream spells the selector <c>.shape.leaft-clover8</c> — "leaft", not "leaf" — and its rule
+            loads <c>leaf-clover8.svg</c>. The value keeps the typo because the class has to match the
+            selector; only this constant's name is spelled correctly.
+            </summary>
         </member>
         <member name="T:BeerCss.Blazor.Components.Typography.Heading">
             <summary>
@@ -85,6 +140,27 @@
         <member name="T:BeerCss.Blazor.Components.Typography.H6">
             <summary>The <c>h6</c> element, at the level 6 heading scale.</summary>
         </member>
+        <member name="P:BeerCss.Blazor.Components.Badge.Position">
+            <summary>
+            Which corner of the parent the badge sits in. <see cref="F:BeerCss.Blazor.Common.Direction.Top"/> is the default;
+            BeerCSS styles <c>.badge.top</c> exactly like a bare <c>.badge</c>.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Badge.Border">
+            <summary>Outlines the badge instead of filling it.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Badge.Circle">
+            <summary>Fully rounds a badge whose content is wider than it is tall, such as "99+".</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Badge.Square">
+            <summary>Squares the corners of a badge whose content is wider than it is tall.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Badge.Min">
+            <summary>Renders a small dot and hides the content.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Badge.None">
+            <summary>Renders in the flow of the parent instead of in one of its corners.</summary>
+        </member>
         <member name="P:BeerCss.Blazor.Components.Buttons.Button.Rounding">
             <summary>
             Corner rounding, covering every v5 combination. <see cref="F:BeerCss.Blazor.Common.Rounding.LeftRound"/> and
@@ -101,6 +177,23 @@
             <summary>
             Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
             <see cref="P:BeerCss.Blazor.Components.Card.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Icon.Size">
+            <summary>
+            Icon size. <see cref="F:BeerCss.Blazor.Common.Size.Medium"/> is the 1.5rem default the <c>i</c> rule already applies,
+            so it adds no class; the other four sizes add theirs.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Icon.Fill">
+            <summary>Switches the Material Symbols font to its filled variant.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Icon.ChildContent">
+            <summary>The icon's ligature name, or a <see cref="T:BeerCss.Blazor.Components.Badge"/> to sit on the icon.</summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.Checkbox.Label">
+            <summary>
+            Caption rendered in the <c>span</c> next to the box.
             </summary>
         </member>
         <member name="P:BeerCss.Blazor.Components.Inputs.DateField`1.Rounding">
@@ -137,6 +230,17 @@
             <summary>
             Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
             <see cref="P:BeerCss.Blazor.Components.Inputs.NumberField`1.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.Radio`1.Label">
+            <summary>
+            Caption rendered in the <c>span</c> next to the button.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Inputs.Radio`1.CssClass">
+            <summary>
+            Extra classes for the label. Unlike the other inputs, <see cref="T:Microsoft.AspNetCore.Components.Forms.InputRadio`1"/>
+            does not inherit from <c>InputBase</c>, so there is no <c>CssClass</c> to reuse.
             </summary>
         </member>
         <member name="P:BeerCss.Blazor.Components.Inputs.SearchField`1.Rounding">
@@ -179,6 +283,18 @@
             <summary>
             Shorthand for <c>Rounding.Round</c>, kept for compatibility. Ignored when
             <see cref="P:BeerCss.Blazor.Components.Inputs.TextField.Rounding"/> is set.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Margin.Size">
+            <summary>
+            Spacing around the element. <see cref="F:BeerCss.Blazor.Common.MarginSize.Default"/> is the 1rem a bare
+            <c>.margin</c> already applies.
+            </summary>
+        </member>
+        <member name="P:BeerCss.Blazor.Components.Overlay.Active">
+            <summary>
+            Shows the overlay. An inactive overlay is still in the document but has no opacity and no
+            visibility, so it never catches a click.
             </summary>
         </member>
     </members>
