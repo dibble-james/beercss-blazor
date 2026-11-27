@@ -1,0 +1,8 @@
+/*
+ * Probe only. A deliberate visual change so the visual gate has something to catch, and to prove a
+ * dispatch can refresh exactly the baseline it affects. Removed before this branch is finished.
+ */
+.beer {
+    outline: 6px solid #ff00ff;
+    outline-offset: -6px;
+}
