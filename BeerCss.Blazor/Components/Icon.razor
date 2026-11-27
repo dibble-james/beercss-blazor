@@ -1,0 +1,26 @@
+@code {
+    /// <summary>
+    /// Icon size. <see cref="Size.Medium"/> is the 1.5rem default the <c>i</c> rule already applies,
+    /// so it adds no class; the other four sizes add theirs.
+    /// </summary>
+    [Parameter]
+    public Size Size { get; set; } = Size.Medium;
+
+    /// <summary>Switches the Material Symbols font to its filled variant.</summary>
+    [Parameter]
+    public bool Fill { get; set; }
+
+    /// <summary>The icon's ligature name, or a <see cref="Badge"/> to sit on the icon.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass(Size.ToCssClass())
+        .AddClass("fill", Fill)
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<i @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</i>

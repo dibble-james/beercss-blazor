@@ -1,0 +1,41 @@
+@attribute [Stories("Components/Icon")]
+
+<Stories TComponent="Icon">
+    <Story Name="Default">
+        <Template>
+            <Icon>home</Icon>
+        </Template>
+    </Story>
+    <Story Name="Sizes">
+        <Template>
+            <div class="row wrap">
+                <Icon Size="Size.Tiny">home</Icon>
+                <Icon Size="Size.Small">home</Icon>
+                <Icon Size="Size.Medium">home</Icon>
+                <Icon Size="Size.Large">home</Icon>
+                <Icon Size="Size.Extra">home</Icon>
+            </div>
+        </Template>
+    </Story>
+    <Story Name="Fill">
+        <Template>
+            <Icon Fill>home</Icon>
+        </Template>
+    </Story>
+    <Story Name="Font Awesome class">
+        <Template>
+            <div class="row wrap">
+                <Icon>person</Icon>
+                <Icon class="fa-solid fa-user">person</Icon>
+            </div>
+        </Template>
+    </Story>
+    <Story Name="With a badge">
+        <Template>
+            <Icon style="position: relative">
+                notifications
+                <Badge>3</Badge>
+            </Icon>
+        </Template>
+    </Story>
+</Stories>

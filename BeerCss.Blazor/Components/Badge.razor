@@ -1,0 +1,46 @@
+@code {
+    /// <summary>
+    /// Which corner of the parent the badge sits in. <see cref="Direction.Top"/> is the default;
+    /// BeerCSS styles <c>.badge.top</c> exactly like a bare <c>.badge</c>.
+    /// </summary>
+    [Parameter]
+    public Direction Position { get; set; } = Direction.Top;
+
+    /// <summary>Outlines the badge instead of filling it.</summary>
+    [Parameter]
+    public bool Border { get; set; }
+
+    /// <summary>Fully rounds a badge whose content is wider than it is tall, such as "99+".</summary>
+    [Parameter]
+    public bool Circle { get; set; }
+
+    /// <summary>Squares the corners of a badge whose content is wider than it is tall.</summary>
+    [Parameter]
+    public bool Square { get; set; }
+
+    /// <summary>Renders a small dot and hides the content.</summary>
+    [Parameter]
+    public bool Min { get; set; }
+
+    /// <summary>Renders in the flow of the parent instead of in one of its corners.</summary>
+    [Parameter]
+    public bool None { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
+
+    private CssBuilder CssClass => new CssBuilder()
+        .AddClass("badge")
+        .AddClass(Position.ToCssClass())
+        .AddClass("border", Border)
+        .AddClass("circle", Circle)
+        .AddClass("square", Square)
+        .AddClass("min", Min)
+        .AddClass("none", None)
+        .AddClassFromAttributes(AdditionalAttributes);
+}
+
+<div @attributes="AdditionalAttributes" class="@CssClass">@ChildContent</div>
