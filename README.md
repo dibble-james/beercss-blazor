@@ -93,6 +93,8 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
 - [x] Expansion
 - [x] Grid
 - [x] Inputs
+  - [x] Checkbox
+  - [x] Radio
 - [x] List
 - [x] Menu
 - [x] NavBar

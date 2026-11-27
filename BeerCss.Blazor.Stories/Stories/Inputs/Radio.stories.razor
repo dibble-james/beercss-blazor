@@ -1,0 +1,55 @@
+@using BeerCss.Blazor.Components.Inputs
+@attribute [Stories("Components/Inputs/Radio")]
+
+<Stories TComponent="Radio<string>">
+    <Story Name="Group">
+        <Template>
+            <EditForm Context="form" Model="_choice">
+                <InputRadioGroup TValue="string" @bind-Value="_choice">
+                    <Radio TValue="string" Value="@("one")">
+                        <Label>One</Label>
+                    </Radio>
+                    <Radio TValue="string" Value="@("two")">
+                        <Label>Two</Label>
+                    </Radio>
+                    <Radio TValue="string" Value="@("three")">
+                        <Label>Three</Label>
+                    </Radio>
+                </InputRadioGroup>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="With help text">
+        <Arguments>
+            <Arg For="_ => _.HelpText" Value="_helpText" />
+        </Arguments>
+        <Template>
+            <EditForm Context="form" Model="_choice">
+                <InputRadioGroup TValue="string" @bind-Value="_choice">
+                    <Radio TValue="string" Value="@("one")" @attributes="context.Args">
+                        <Label>One</Label>
+                    </Radio>
+                </InputRadioGroup>
+            </EditForm>
+        </Template>
+    </Story>
+    <Story Name="Disabled item">
+        <Template>
+            <EditForm Context="form" Model="_choice">
+                <InputRadioGroup TValue="string" @bind-Value="_choice">
+                    <Radio TValue="string" Value="@("one")">
+                        <Label>Enabled</Label>
+                    </Radio>
+                    <Radio TValue="string" Value="@("two")" Disabled="true">
+                        <Label>Disabled</Label>
+                    </Radio>
+                </InputRadioGroup>
+            </EditForm>
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    string _choice = "two";
+    string _helpText = "Help me!";
+}
