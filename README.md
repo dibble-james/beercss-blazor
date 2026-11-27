@@ -88,13 +88,11 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
   - [x] Split
 - [x] Card
 - [x] Chip
-- [x] Container
 - [x] Dialogs
 - [x] Divider
 - [x] Expansion
 - [x] Grid
 - [x] Inputs
-- [x] Layout
 - [x] List
 - [x] Menu
 - [x] NavBar
@@ -105,12 +103,10 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
 - [x] Progress
 - [x] Row
 - [x] Scroll
-- [x] Search
 - [x] Shapes
-  - [ ] Shape components
+  - [x] Shape components
 - [x] SideContent
 - [x] Snackbar
-- [x] Space
 - [x] Spacer
 - [x] Stepper
 - [x] Table
@@ -121,4 +117,4 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
   - [x] Heading
   - [x] H1–H6
 - [x] Waves
-  - [ ] Wave components
+  - [x] Wave components
