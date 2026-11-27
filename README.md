@@ -101,6 +101,7 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
 - [x] Menu
 - [x] NavBar
 - [x] Navigation
+- [x] Overlay
 - [x] Padding
 - [x] Page
 - [x] Position

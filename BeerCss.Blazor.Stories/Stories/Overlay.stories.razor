@@ -1,0 +1,21 @@
+@attribute [Stories("Components/Overlay")]
+
+<Stories TComponent="Overlay">
+    <Story Name="Toggle">
+        <Template>
+            <button class="button" @onclick="ToggleActive">Toggle overlay</button>
+            <Overlay Active="_active" />
+        </Template>
+    </Story>
+    <Story Name="Active">
+        <Template>
+            <Overlay Active="true" />
+        </Template>
+    </Story>
+</Stories>
+
+@code {
+    bool _active;
+
+    void ToggleActive() => _active = !_active;
+}
