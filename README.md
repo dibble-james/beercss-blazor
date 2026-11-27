@@ -107,7 +107,6 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
   - [x] Shape components
 - [x] SideContent
 - [x] Snackbar
-- [x] Space
 - [x] Spacer
 - [x] Stepper
 - [x] Table
