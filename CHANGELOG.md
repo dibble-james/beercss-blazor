@@ -3,6 +3,20 @@
 Additive releases only: nothing is removed or renamed between minor versions, and existing shorthand
 parameters keep working.
 
+## 0.3.1 — 2026-11-27
+
+A patch release: two components stop writing to the consumer's output. No public API is added,
+removed or renamed, and nothing renders differently.
+
+### Fixes
+
+- **`Shape`**, **`Wave`** and **`Ripple`** — `CssClassInjector` printed the first opening tag of its
+  child content on every render, so an application using any of the three wrote markup such as
+  `<div class="medium">` into its own stdout, or its browser console under WebAssembly. The call is
+  gone; the injected markup is built from the same values afterwards.
+- **`Snackbar`** — `OnAfterRenderAsync` printed `Making a snack` on every render rather than only the
+  first. The line is gone; the provider check and the first-render registration are unchanged.
+
 ## 0.3.0 — 2026-11-27
 
 Six components, full `Shape` coverage, the media loader option and corrected documentation.
