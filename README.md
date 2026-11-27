@@ -25,7 +25,61 @@ Soak your app with beer (AKA add the namespace your your `_Imports.razor` and th
 
 Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the available components.
 
+## BeerCSS version
+
+The wrapper targets **BeerCSS 5.0.3**, the version the demo vendors under `wwwroot/beer/dist/cdn`. Use the 5.0.3 assets: the `Rounding` side values (`NoRoundLeft`, `NoRoundRight`) rely on the order v5 emits its rounding classes in.
+
+### Nav-group markup
+
+v5 rounds the buttons inside a `nav.group` itself, so the ones in the middle no longer carry `no-round`:
+
+```html
+<nav class="group">
+  <button class="left-round">Button</button>
+  <button>Button</button>
+  <button>Button</button>
+  <button class="right-round">Button</button>
+</nav>
+```
+
+`Group` renders the `nav.group` already, so only the buttons change: round the outer edges and leave the middle ones alone.
+
+```razor
+<Group Connected>
+    <Button Rounding="Rounding.LeftRound">Left</Button>
+    <Button>Middle</Button>
+    <Button Rounding="Rounding.RightRound">Right</Button>
+</Group>
+```
+
+For fully square corners, every button takes `no-round`, and the outer two keep the side that stays rounded — `Rounding.NoRoundLeft` and `Rounding.NoRoundRight` do exactly that.
+
+## Modules
+
+BeerCSS 5.0.3 can load only the modules a page uses. `beer.loader.js` fetches the modules named in its own query string, from the folders next to itself:
+
+```html
+<script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&elements=button,field,typography"></script>
+```
+
+The demo's [`modules.html`](BeerCss.Blazor.Stories/wwwroot/modules.html) is a form built that way, and the storybook shows it as the `Modules` story. It asks for three settings modules and the button, field and typography elements, which comes to:
+
+| What | Size |
+|---|---|
+| The 7 module files that page asks for | 20,911 B |
+| `beer.loader.js` | 10,429 B |
+| All-in-one: `beer.scoped.min.css` + `beer.min.js` | 106,949 B |
+| Every module, `.min.css` and `.min.js` | 110,356 B |
+
+The last row is the caveat: loading everything is larger than the bundle, so modules only pay off for a page that needs a few elements. **The all-in-one bundle stays the default** — link `beer.scoped.min.css` and load `beer.min.js`, as the demo's `iframe.html` does. Reach for the loader when a page needs a small subset.
+
+`libman.json` vendors exactly the seven files that page asks for, so a module added to the query string needs its files added there too.
+
 ## Components
+
+Corner rounding on buttons, cards and the fields is a `Rounding` value — `Round`, `NoRound`, `LeftRound`, `RightRound`, `NoRoundLeft`, `NoRoundRight` — with the older `Round` bool kept as a shorthand for `Rounding.Round`.
+
+- [x] Align
 - [x] Appbar
 - [x] Buttons
   - [x] FAB
@@ -43,19 +97,28 @@ Check out [the docs](https://dibble-james.github.io/beercss-blazor/) for the ava
 - [x] Layout
 - [x] List
 - [x] Menu
+- [x] NavBar
 - [x] Navigation
+- [x] Padding
 - [x] Page
+- [x] Position
 - [x] Progress
+- [x] Row
 - [x] Scroll
 - [x] Search
 - [x] Shapes
   - [ ] Shape components
+- [x] SideContent
 - [x] Snackbar
 - [x] Space
+- [x] Spacer
 - [x] Stepper
 - [x] Table
 - [x] Tabs
 - [x] Toolbar
 - [x] Tooltip
+- [x] Typography
+  - [x] Heading
+  - [x] H1–H6
 - [x] Waves
   - [ ] Wave components
