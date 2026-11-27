@@ -57,6 +57,12 @@ for (const story of selected) {
     }
 
     await page.waitForLoadState('networkidle', { timeout: 60_000 });
+
+    // A story may embed another page (the modules demo) that fetches and injects its own styles.
+    for (const frame of page.frames().filter((frame) => frame !== page.mainFrame())) {
+      await frame.waitForLoadState('networkidle', { timeout: 60_000 });
+    }
+
     await page.evaluate(() => document.fonts.ready);
     await page.waitForFunction(storyReady, null, { timeout: 60_000 });
 
