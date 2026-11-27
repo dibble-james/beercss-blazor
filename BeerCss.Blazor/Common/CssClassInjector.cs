@@ -30,8 +30,6 @@ public abstract class CssClassInjector : ComponentBase
 
         var classStart = elementDefinition.IndexOf("class", StringComparison.InvariantCultureIgnoreCase);
 
-        Console.WriteLine(elementDefinition);
-
         var newMarkup = new StringBuilder();
 
         if (classStart == -1)
