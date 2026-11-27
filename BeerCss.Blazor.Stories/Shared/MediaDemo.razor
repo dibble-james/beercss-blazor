@@ -1,0 +1,26 @@
+@*
+    Media has no component: the module sizes plain img, svg and video elements, so this story shows
+    that markup itself on the canvas, where the capture can see it. The empty-state rule only fixes
+    the inline size, so its placeholder illustration keeps its own wide aspect; modules.html shows
+    the same class on a video instead.
+*@
+<div class="padding">
+    <p class="row">
+        <img class="tiny" src="favicon.png" alt="Tiny" />
+        <img class="small" src="favicon.png" alt="Small" />
+        <img class="medium" src="favicon.png" alt="Medium" />
+        <img class="large" src="favicon.png" alt="Large" />
+        <img class="extra" src="favicon.png" alt="Extra" />
+    </p>
+    <p class="row">
+        <img class="medium round" src="favicon.png" alt="Round" />
+        <img class="medium circle" src="favicon.png" alt="Circle" />
+        <img class="medium square" src="favicon.png" alt="Square" />
+        <svg class="medium" viewBox="0 0 24 24" role="img" aria-label="Triangle">
+            <path d="M12 2 2 22h20z" />
+        </svg>
+        <video class="medium" poster="favicon.png"></video>
+    </p>
+    <img class="empty-state" src="empty-state.svg" alt="Empty state" />
+    <img class="responsive small" src="favicon.png" alt="Responsive small" />
+</div>
