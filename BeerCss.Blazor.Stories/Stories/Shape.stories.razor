@@ -62,10 +62,7 @@
         </Template>
     </Story>
     <Story Name="Sizes">
-        @*
-            BeerCSS 5 has no .shape.small rule: Size.Small and the Size.Medium default both land on
-            the bare .shape size, so only tiny, large and extra change it.
-        *@
+        @* BeerCSS has no .shape.small rule, so Size.Small and the Medium default share a size. *@
         <Template>
             <nav class="wrap">
                 <Shape ShapeType="@ShapeTypes.Puffy" Size="Size.Tiny"><div></div></Shape>

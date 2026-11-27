@@ -3,11 +3,7 @@
 <Stories TComponent="Overlay">
     <Story Name="Toggle">
         <Template>
-            <div class="padding">
-                <h5>Overlay</h5>
-                <p>The overlay is fixed over the whole viewport while it is active.</p>
-                <button class="button" @onclick="ToggleActive">Toggle overlay</button>
-            </div>
+            <button class="button" @onclick="ToggleActive">Toggle overlay</button>
             <Overlay Active="_active" />
         </Template>
     </Story>
