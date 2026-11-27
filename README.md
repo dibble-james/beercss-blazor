@@ -79,6 +79,7 @@ The last row is the caveat: loading everything is larger than the bundle, so mod
 
 Corner rounding on buttons, cards and the fields is a `Rounding` value — `Round`, `NoRound`, `LeftRound`, `RightRound`, `NoRoundLeft`, `NoRoundRight` — with the older `Round` bool kept as a shorthand for `Rounding.Round`.
 
+- [x] Align
 - [x] Appbar
 - [x] Buttons
   - [x] FAB
@@ -96,15 +97,21 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
 - [x] Layout
 - [x] List
 - [x] Menu
+- [x] NavBar
 - [x] Navigation
+- [x] Padding
 - [x] Page
+- [x] Position
 - [x] Progress
+- [x] Row
 - [x] Scroll
 - [x] Search
 - [x] Shapes
   - [ ] Shape components
+- [x] SideContent
 - [x] Snackbar
 - [x] Space
+- [x] Spacer
 - [x] Stepper
 - [x] Table
 - [x] Tabs
