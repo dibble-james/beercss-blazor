@@ -59,32 +59,39 @@
     </Story>
     <Story Name="On a chip">
         <Template>
-            <Chip style="position: relative">
-                <i>inbox</i>
+            <Chip>
+                <i style="position: relative">
+                    inbox
+                    <Badge>3</Badge>
+                </i>
                 Inbox
-                <Badge>3</Badge>
             </Chip>
         </Template>
     </Story>
     <Story Name="On a tab">
         <Template>
-            <Navigation Class="tabs">
-                <a class="active" style="position: relative">
+            <div class="tabs">
+                <a class="active">
+                    <i style="position: relative">
+                        inbox
+                        <Badge>7</Badge>
+                    </i>
                     Inbox
-                    <Badge>7</Badge>
                 </a>
                 <a>Drafts</a>
                 <a>Spam</a>
-            </Navigation>
+            </div>
         </Template>
     </Story>
     <Story Name="On a nav item">
         <Template>
             <Navigation>
-                <a style="position: relative">
-                    <i>inbox</i>
+                <a>
+                    <i style="position: relative">
+                        inbox
+                        <Badge>9</Badge>
+                    </i>
                     Inbox
-                    <Badge>9</Badge>
                 </a>
                 <a>
                     <i>send</i>
