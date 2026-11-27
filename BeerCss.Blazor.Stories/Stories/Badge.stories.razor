@@ -1,0 +1,104 @@
+@attribute [Stories("Components/Badge")]
+
+<Stories TComponent="Badge">
+    <Story Name="On a button">
+        <Template>
+            <Button Circle style="position: relative">
+                <i>notifications</i>
+                <Badge>5</Badge>
+            </Button>
+        </Template>
+    </Story>
+    <Story Name="Positions">
+        <Template>
+            <div class="row wrap">
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Position="Direction.Top">1</Badge>
+                </Button>
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Position="Direction.Bottom">2</Badge>
+                </Button>
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Position="Direction.Left">3</Badge>
+                </Button>
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Position="Direction.Right">4</Badge>
+                </Button>
+            </div>
+        </Template>
+    </Story>
+    <Story Name="Variants">
+        <Template>
+            <div class="row wrap">
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Border>1</Badge>
+                </Button>
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Circle>99+</Badge>
+                </Button>
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Square>99+</Badge>
+                </Button>
+                <Button Circle style="position: relative">
+                    <i>notifications</i>
+                    <Badge Min />
+                </Button>
+                <Button style="position: relative">
+                    <i>notifications</i>
+                    <Badge None>1</Badge>
+                </Button>
+            </div>
+        </Template>
+    </Story>
+    <Story Name="On a chip">
+        <Template>
+            <Chip style="position: relative">
+                <i>inbox</i>
+                Inbox
+                <Badge>3</Badge>
+            </Chip>
+        </Template>
+    </Story>
+    <Story Name="On a tab">
+        <Template>
+            <Navigation Class="tabs">
+                <a class="active" style="position: relative">
+                    Inbox
+                    <Badge>7</Badge>
+                </a>
+                <a>Drafts</a>
+                <a>Spam</a>
+            </Navigation>
+        </Template>
+    </Story>
+    <Story Name="On a nav item">
+        <Template>
+            <Navigation>
+                <a style="position: relative">
+                    <i>inbox</i>
+                    Inbox
+                    <Badge>9</Badge>
+                </a>
+                <a>
+                    <i>send</i>
+                    Sent
+                </a>
+            </Navigation>
+        </Template>
+    </Story>
+    <Story Name="Standalone">
+        <Template>
+            <i style="position: relative">
+                home
+                <Badge>1</Badge>
+            </i>
+        </Template>
+    </Story>
+</Stories>
