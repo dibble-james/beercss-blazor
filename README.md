@@ -59,21 +59,23 @@ For fully square corners, every button takes `no-round`, and the outer two keep 
 BeerCSS 5.0.3 can load only the modules a page uses. `beer.loader.js` fetches the modules named in its own query string, from the folders next to itself:
 
 ```html
-<script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&elements=button,field,typography"></script>
+<script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&elements=button,field,typography,media&helpers=form"></script>
 ```
 
-The demo's [`modules.html`](BeerCss.Blazor.Stories/wwwroot/modules.html) is a form built that way, and the storybook shows it as the `Modules` story. It asks for three settings modules and the button, field and typography elements, which comes to:
+The demo's [`modules.html`](BeerCss.Blazor.Stories/wwwroot/modules.html) is a form built that way, and the storybook shows it as the `Modules` story. It asks for three settings modules, the button, field, typography and media elements, and the form helper — which is where `round`, `circle`, `square` and `border` live — so:
 
 | What | Size |
 |---|---|
-| The 7 module files that page asks for | 20,911 B |
+| The 9 module files that page asks for | 23,876 B |
 | `beer.loader.js` | 10,429 B |
 | All-in-one: `beer.scoped.min.css` + `beer.min.js` | 106,949 B |
 | Every module, `.min.css` and `.min.js` | 110,356 B |
 
 The last row is the caveat: loading everything is larger than the bundle, so modules only pay off for a page that needs a few elements. **The all-in-one bundle stays the default** — link `beer.scoped.min.css` and load `beer.min.js`, as the demo's `iframe.html` does. Reach for the loader when a page needs a small subset.
 
-`libman.json` vendors exactly the seven files that page asks for, so a module added to the query string needs its files added there too.
+Media is the one element with no wrapper type: `media.min.css` sizes plain `<img>`, `<svg>` and `<video>` elements through the `tiny`–`extra`, `responsive` and `empty-state` classes, so those are written as plain markup in your own components. Its `round`, `circle` and `square` modifiers only take effect with the form helper loaded, which is where those border-radius rules are.
+
+`libman.json` vendors those nine files plus `helpers/margin.min.css`, which `<Margin>` needs, so a module added to the query string needs its files added there too. The margin module is published under `helpers/`, not `elements/` — `elements/margin.min.css` is a 404.
 
 ## Components
 
@@ -98,6 +100,7 @@ Corner rounding on buttons, cards and the fields is a `Rounding` value — `Roun
   - [x] Checkbox
   - [x] Radio
 - [x] List
+- [x] Margin
 - [x] Menu
 - [x] NavBar
 - [x] Navigation

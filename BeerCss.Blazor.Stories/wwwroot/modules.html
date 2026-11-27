@@ -7,17 +7,18 @@
     <title>BeerCSS modules &mdash; BeerCss.Blazor</title>
     <!-- beer.loader.js fetches the modules named in its own query string from the folders next to
          itself, so these paths stay relative and work at "/" and under the Pages base path. -->
-    <script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&elements=button,field,typography"></script>
+    <script type="module" src="beer/dist/cdn/beer.loader.js?settings=global,light,reset&elements=button,field,typography,media&helpers=form"></script>
     <style>
         body { padding: 1rem 1.5rem; }
         form { max-inline-size: 22rem; }
         .actions { display: flex; gap: 0.5rem; margin-block-start: 1.5rem; }
+        video.empty-state { border: 1px dashed currentColor; }
     </style>
 </head>
 
 <body>
     <h5>Create an account</h5>
-    <p>Settings, and the button, field and typography elements.</p>
+    <p>Settings, and the button, field, typography and media elements.</p>
 
     <form onsubmit="return false">
         <div class="field label border">
@@ -46,6 +47,29 @@
             <button type="button" class="fill">Cancel</button>
         </div>
     </form>
+
+    <h5>Media</h5>
+    <p>Sizing applies to a plain <code>img</code>, <code>svg</code> or <code>video</code>: the media module has no class to wrap.</p>
+
+    <p class="row">
+        <img class="tiny" src="favicon.png" alt="Tiny" />
+        <img class="small" src="favicon.png" alt="Small" />
+        <img class="medium" src="favicon.png" alt="Medium" />
+        <img class="large" src="favicon.png" alt="Large" />
+        <img class="extra" src="favicon.png" alt="Extra" />
+    </p>
+
+    <p class="row">
+        <img class="medium round" src="favicon.png" alt="Round" />
+        <img class="medium circle" src="favicon.png" alt="Circle" />
+        <img class="medium square" src="favicon.png" alt="Square" />
+        <svg class="medium" viewBox="0 0 24 24" role="img" aria-label="Triangle">
+            <path d="M12 2 2 22h20z" />
+        </svg>
+    </p>
+
+    <img class="responsive small" src="favicon.png" alt="Responsive small" />
+    <video class="empty-state" title="Empty state"></video>
 </body>
 
 </html>
