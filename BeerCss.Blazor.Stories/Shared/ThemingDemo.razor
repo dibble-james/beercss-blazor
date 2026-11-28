@@ -1,0 +1,61 @@
+@* Host for the story: a palette the library does not ship. BeerCSS sets the same token names at
+   element scope, which outranks :root, so a mode class that does not carry the palette with it would
+   hand the built-in one back — and this canvas would stop looking teal. *@
+<Beer Theme="_brand">
+    <main class="responsive">
+        <Card>
+            <Title>Brand palette</Title>
+            <Content>
+                Every token here comes from a <code>BeerTheme</code> this story supplies, not from the
+                palette the library ships.
+            </Content>
+        </Card>
+        <nav>
+            <Button>Primary</Button>
+            <Button class="secondary">Secondary</Button>
+            <Button class="tertiary">Tertiary</Button>
+        </nav>
+    </main>
+</Beer>
+
+@code {
+    static readonly BeerTheme _brand = new()
+    {
+        Primary = "#00696d",
+        OnPrimary = "#ffffff",
+        PrimaryContainer = "#9cf1f5",
+        OnPrimaryContainer = "#002021",
+        Secondary = "#4a6363",
+        OnSecondary = "#ffffff",
+        SecondaryContainer = "#cce8e7",
+        OnSecondaryContainer = "#051f20",
+        Tertiary = "#4b607c",
+        OnTertiary = "#ffffff",
+        TertiaryContainer = "#d3e4ff",
+        OnTertiaryContainer = "#041c35",
+        Error = "#ba1a1a",
+        OnError = "#ffffff",
+        ErrorContainer = "#ffdad6",
+        OnErrorContainer = "#410002",
+        Background = "#f5fbfb",
+        OnBackground = "#191c1c",
+        Surface = "#fafdfc",
+        OnSurface = "#191c1c",
+        SurfaceVariant = "#dae4e4",
+        OnSurfaceVariant = "#3f4949",
+        Outline = "#6f7979",
+        OutlineVariant = "#bec9c8",
+        Shadow = "#000000",
+        Scrim = "#000000",
+        InverseSurface = "#2d3131",
+        InverseOnSurface = "#eff1f0",
+        InversePrimary = "#4fd8e0",
+        SurfaceDim = "#dae4e4",
+        SurfaceBright = "#fafdfc",
+        SurfaceContainerLowest = "#ffffff",
+        SurfaceContainerLow = "#f4fbfa",
+        SurfaceContainer = "#eef5f4",
+        SurfaceContainerHigh = "#e8efee",
+        SurfaceContainerHighest = "#e2e9e8",
+    };
+}
