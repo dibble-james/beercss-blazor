@@ -1,4 +1,5 @@
 import { defineConfig } from '@playwright/test';
+import { defaultViewport } from './support/captures';
 
 const port = 4173;
 const localURL = `http://127.0.0.1:${port}`;
@@ -15,8 +16,10 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
 
-  // Baselines live in visual-tests/baselines/<story id>.png. No platform suffix: the canonical
-  // set is generated on the CI image, and a per-OS suffix would quietly accept a second one.
+  // Baselines live in visual-tests/baselines/<story id>.png, or <story id>--<profile>.png for a
+  // capture profile other than the canonical one: the name is built in support/captures.ts and only
+  // the extension is added here. No platform suffix: the canonical set is generated on the CI image,
+  // and a per-OS suffix would quietly accept a second one.
   snapshotPathTemplate: '{testDir}/../baselines/{arg}{ext}',
   outputDir: './test-results',
 
@@ -35,7 +38,7 @@ export default defineConfig({
 
   use: {
     baseURL: demoURL ?? localURL,
-    viewport: { width: 1280, height: 800 },
+    viewport: defaultViewport,
     deviceScaleFactor: 1,
     colorScheme: 'light',
     reducedMotion: 'reduce',
