@@ -20,6 +20,21 @@
     [Parameter]
     public BeerTheme Theme { get; set; } = BeerTheme.Light;
 
+    /// <summary>The dark counterpart of <see cref="Theme"/>. Left out, <see cref="BeerTheme.Dark"/> is used.</summary>
+    [Parameter]
+    public BeerTheme? DarkTheme { get; set; }
+
+    [Parameter]
+    public BeerMode Mode { get; set; } = BeerMode.Light;
+
+    /// <summary>
+    /// The palette in effect. One property decides it, so the tokens written to the page, the class on
+    /// the root and the cascaded value can never disagree about which mode is being rendered.
+    /// </summary>
+    private BeerTheme Palette => Mode == BeerMode.Dark ? DarkTheme ?? BeerTheme.Dark : Theme;
+
+    private string ModeClass => Mode == BeerMode.Dark ? "dark" : "light";
+
     private CssBuilder CssClass => new CssBuilder()
         .AddClass("responsive", Responsive)
         .AddClass("max", Max)
@@ -28,12 +43,12 @@
 
 <HeadContent>
     <style>
-        @Theme.GetTheme()
+        @Palette.GetTheme(Mode)
     </style>
 </HeadContent>
 
-<CascadingValue Value="Theme">
-    <div class="beer light" style="overflow: clip">
+<CascadingValue Value="Palette">
+    <div class="beer @ModeClass" style="overflow: clip">
         @NavBar
         @AppBar
         <main class="@CssClass">

@@ -1,13 +1,14 @@
-@* Host for the story: a palette the library does not ship. BeerCSS sets the same token names at
-   element scope, which outranks :root, so a mode class that does not carry the palette with it would
-   hand the built-in one back — and this canvas would stop looking teal. *@
-<Beer Theme="_brand">
+@inject NavigationManager Navigation
+@* Host for the story: a palette the library does not ship, and its dark counterpart. BeerCSS sets the
+   same token names at element scope, which outranks :root, so a mode class that did not carry the
+   palette with it would hand the built-in one back — and this canvas would stop looking teal. *@
+<Beer Theme="_brandLight" DarkTheme="_brandDark" Mode="@StoryQuery.ReadMode(Navigation)">
     <main class="responsive">
         <Card>
             <Title>Brand palette</Title>
             <Content>
                 Every token here comes from a <code>BeerTheme</code> this story supplies, not from the
-                palette the library ships.
+                palette the library ships, in both modes.
             </Content>
         </Card>
         <nav>
@@ -19,7 +20,7 @@
 </Beer>
 
 @code {
-    static readonly BeerTheme _brand = new()
+    static readonly BeerTheme _brandLight = new()
     {
         Primary = "#00696d",
         OnPrimary = "#ffffff",
@@ -57,5 +58,45 @@
         SurfaceContainer = "#eef5f4",
         SurfaceContainerHigh = "#e8efee",
         SurfaceContainerHighest = "#e2e9e8",
+    };
+
+    static readonly BeerTheme _brandDark = new()
+    {
+        Primary = "#4fd8e0",
+        OnPrimary = "#003739",
+        PrimaryContainer = "#004f51",
+        OnPrimaryContainer = "#9cf1f5",
+        Secondary = "#b0cccb",
+        OnSecondary = "#1c3535",
+        SecondaryContainer = "#334b4b",
+        OnSecondaryContainer = "#cce8e7",
+        Tertiary = "#b3c8ea",
+        OnTertiary = "#1d3049",
+        TertiaryContainer = "#344863",
+        OnTertiaryContainer = "#d3e4ff",
+        Error = "#ffb4ab",
+        OnError = "#690005",
+        ErrorContainer = "#93000a",
+        OnErrorContainer = "#ffb4ab",
+        Background = "#0e1514",
+        OnBackground = "#dde4e3",
+        Surface = "#0e1514",
+        OnSurface = "#dde4e3",
+        SurfaceVariant = "#3f4949",
+        OnSurfaceVariant = "#bec9c8",
+        Outline = "#899392",
+        OutlineVariant = "#3f4949",
+        Shadow = "#000000",
+        Scrim = "#000000",
+        InverseSurface = "#dde4e3",
+        InverseOnSurface = "#2b3131",
+        InversePrimary = "#00696d",
+        SurfaceDim = "#0e1514",
+        SurfaceBright = "#343b3a",
+        SurfaceContainerLowest = "#090f0f",
+        SurfaceContainerLow = "#171e1d",
+        SurfaceContainer = "#1b2221",
+        SurfaceContainerHigh = "#252c2b",
+        SurfaceContainerHighest = "#303837",
     };
 }

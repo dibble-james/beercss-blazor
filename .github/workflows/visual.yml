@@ -16,6 +16,16 @@ permissions:
 jobs:
   visual-tests:
     runs-on: ubuntu-latest
+    strategy:
+      # One mode failing says nothing about the other, so both halves still report.
+      fail-fast: false
+      matrix:
+        # Light and dark run as separate jobs so a dark-only regression cannot hide behind a green
+        # light run, and so the wall clock stays where it was: the halves run in parallel and it is
+        # machine minutes that double, not time. A dispatch captures every mode in the light job
+        # instead, because it uploads a single `baselines` artifact.
+        mode: [light, dark]
+    if: github.event_name == 'pull_request' || matrix.mode == 'light'
     defaults:
       run:
         working-directory: visual-tests
@@ -41,16 +51,19 @@ jobs:
       - name: Update the baselines
         if: github.event_name == 'workflow_dispatch'
         run: npx playwright test --update-snapshots
+      # The tag is declared in support/captures.ts beside the capture that owns the mode, so this
+      # selection cannot drift from the matrix.
       - name: Run the visual tests
         if: github.event_name == 'pull_request'
-        run: npx playwright test
+        run: npx playwright test ${{ matrix.mode == 'dark' && '--grep @dark' || '--grep-invert @dark' }}
       # A failure leaves the actual, expected and diff image of every failing story in test-results,
-      # and the HTML report shows them side by side.
+      # and the HTML report shows them side by side. The name carries the mode because both jobs
+      # upload their own.
       - name: Upload the visual diffs
         if: failure() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
-          name: visual-tests-failure
+          name: visual-tests-failure-${{ matrix.mode }}
           path: |
             visual-tests/test-results
             visual-tests/playwright-report
