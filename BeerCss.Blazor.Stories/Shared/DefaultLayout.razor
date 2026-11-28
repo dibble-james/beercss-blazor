@@ -1,5 +1,6 @@
 @inherits LayoutComponentBase
+@inject NavigationManager Navigation
 @* See also: https://github.com/jsakamoto/BlazingStory#%EF%B8%8F-configure-layouts *@
-<Beer>
+<Beer Mode="@StoryQuery.ReadMode(Navigation)">
     @Body
 </Beer>

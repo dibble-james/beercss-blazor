@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { baselineName, captureTitle, capturesFor } from '../support/captures';
+import { baselineName, captureTag, captureTitle, capturesFor, type Capture } from '../support/captures';
 import { freezeAnimatedImages, freezeMedia, freezeStyles, storyReady } from '../support/freeze';
 import { stories } from '../support/stories';
 
@@ -32,8 +32,12 @@ async function failOnErrorBanner(page: Page, storyId: string): Promise<void> {
 }
 
 /** Opens a story's canvas and settles everything a capture depends on, leaving only the screenshot. */
-async function openStory(page: Page, storyId: string): Promise<void> {
-  await page.goto(`/iframe.html?id=${encodeURIComponent(storyId)}&viewMode=story`, {
+async function openStory(page: Page, storyId: string, capture: Capture): Promise<void> {
+  // The canvas reads `theme` back out of its own URL and hands it to <Beer>; a light capture keeps the
+  // URL it always had, so nothing about the existing baselines depends on this parameter.
+  const theme = capture.mode === 'dark' ? '&theme=dark' : '';
+
+  await page.goto(`/iframe.html?id=${encodeURIComponent(storyId)}&viewMode=story${theme}`, {
     waitUntil: 'load',
     timeout: 60_000,
   });
@@ -80,10 +84,10 @@ async function openStory(page: Page, storyId: string): Promise<void> {
 
 for (const story of selected) {
   for (const capture of capturesFor(story)) {
-    test(captureTitle(story, capture), async ({ page }) => {
+    test(captureTitle(story, capture), { tag: captureTag(capture) }, async ({ page }) => {
       // The viewport belongs to the profile, so it is set before the first render rather than after.
       await page.setViewportSize(capture.viewport);
-      await openStory(page, story.id);
+      await openStory(page, story.id, capture);
 
       // Playwright retries the screenshot until two consecutive captures match, so a frame taken
       // mid-render can never become a baseline.

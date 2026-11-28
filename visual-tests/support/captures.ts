@@ -9,6 +9,11 @@ export interface Capture {
   id: string;
   viewport: { width: number; height: number };
   fullPage: boolean;
+  /**
+   * The mode the canvas renders in, passed to the story as `theme=`. Left out for light, which is every
+   * capture except the `dark` profile, so a light URL keeps the shape it has always had.
+   */
+  mode?: 'light' | 'dark';
   /** The `[Stories("Kind")]` groups this profile covers. Left out for the profile every story gets. */
   kinds?: ReadonlySet<string>;
 }
@@ -34,6 +39,14 @@ export const captures: readonly Capture[] = [
     // start, because a field that is comfortable at 1280 wide is where a phone width shows up.
     kinds: new Set<string>(['Components/Inputs/Text']),
   },
+  {
+    // Every story, in the other mode. Unlike the viewport axis the palette reaches each component
+    // through the same tokens, so a dark bug can be anywhere and nothing gets opted in.
+    id: 'dark',
+    viewport: defaultViewport,
+    fullPage: false,
+    mode: 'dark',
+  },
 ];
 
 /** The captures a story is run for: the canonical one always, the rest only for their kinds. */
@@ -52,4 +65,12 @@ export function baselineName(story: Story, capture: Capture): string {
 /** The test title for a capture: the canonical profile keeps the bare story id. */
 export function captureTitle(story: Story, capture: Capture): string {
   return capture.id === 'default' ? `story ${story.id}` : `story ${story.id} (${capture.id})`;
+}
+
+/**
+ * The Playwright tag the workflow matrix selects on. The token is declared here, beside the capture
+ * that owns the mode, so the job's `--grep` cannot drift from the matrix it is splitting.
+ */
+export function captureTag(capture: Capture): string {
+  return capture.mode === 'dark' ? '@dark' : '@light';
 }

@@ -24,7 +24,25 @@ the same token names at element scope, which outranks `:root`, so a consumer pal
 replaced by the built-in one for everything inside the component. The signature is unchanged and the
 output is a superset of what it wrote before.
 
-The theme's mode becomes selectable in a following change; nothing here exposes a dark mode yet.
+### Theming
+
+- **`BeerMode`** — `Light` (the default) or `Dark`. There is deliberately no automatic mode: BeerCSS's
+dark mode is the `dark` class and the styleheet it ships has no `prefers-color-scheme` rules, so
+following the operating system would mean this library reimplementing them. The README shows the query
+to write if you want it now.
+- **`<Beer>`** — `Mode` and an optional `DarkTheme`. The component renders `light` or `dark` on its root
+and writes the matching `color-scheme`, so the scrollbar and the native controls Blazor does not draw
+follow the mode. `DarkTheme` left out falls back to the built-in `BeerTheme.Dark`: `<Beer Mode="Dark">`
+works on its own, and a branded light palette never gets the dark class over light tokens.
+- **`BeerTheme.GetTheme()`** — takes an optional `BeerMode` so it writes `.beer.dark` and
+`color-scheme: dark` for a dark palette. Existing calls compile and render unchanged.
+
+A `BeerTheme` is one palette, not a mode: a branded dark mode means supplying both.
+
+### Visual tests
+
+Every story is now captured in dark as well as light — `--dark` beside the existing `--narrow`
+suffix — and the two modes run as separate jobs, so a dark-only regression fails its own check.
 
 ## 0.3.1 — 2026-11-27
 

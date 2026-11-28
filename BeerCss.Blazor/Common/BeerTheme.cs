@@ -43,7 +43,7 @@ public class BeerTheme
     public required string SurfaceContainerHighest { get; init; }
     public string Font { get; init; } = @"Inter, Roboto, ""Helvetica Neue"", ""Arial Nova"", ""Nimbus Sans"", Noto Sans, Arial, sans-serif";
 
-    public string GetTheme()
+    public string GetTheme(BeerMode mode = BeerMode.Light)
     {
         var theme = new StringBuilder();
 
@@ -52,13 +52,13 @@ public class BeerTheme
         // the tokens on the root element's mode class, because BeerCSS sets the same names at element
         // scope, where it outranks :root (0,2,0 against 0,1,0). Both blocks have the same specificity
         // as BeerCSS's and this one is injected after its stylesheet, so it wins on document order.
-        AppendPalette(theme, ":root", painted: true);
-        AppendPalette(theme, ".beer.light", painted: false);
+        AppendPalette(theme, ":root", mode, painted: true);
+        AppendPalette(theme, mode == BeerMode.Dark ? ".beer.dark" : ".beer.light", mode, painted: false);
 
         return theme.ToString();
     }
 
-    private void AppendPalette(StringBuilder theme, string selector, bool painted)
+    private void AppendPalette(StringBuilder theme, string selector, BeerMode mode, bool painted)
     {
         theme.AppendLine(CultureInfo.InvariantCulture, $"{selector} {{");
         theme.AppendLine(CultureInfo.InvariantCulture, $"--primary: {this.Primary};");
@@ -101,7 +101,7 @@ public class BeerTheme
         if (painted)
         {
             theme.AppendLine("background: var(--background);");
-            theme.AppendLine("color-scheme: light;");
+            theme.AppendLine(mode == BeerMode.Dark ? "color-scheme: dark;" : "color-scheme: light;");
         }
 
         theme.AppendLine("}");

@@ -101,6 +101,60 @@ A `Badge` goes inside the icon and takes the corner, which needs `position: rela
 </Icon>
 ```
 
+## Modes and theming
+
+`<Beer>` takes a palette and says which variant of it to render:
+
+```razor
+<Beer Mode="BeerMode.Dark">
+    @Body
+</Beer>
+```
+
+`Mode` defaults to `Light`. The component renders `light` or `dark` on its root element, paints the page
+background from the palette and writes the matching `color-scheme`, so the page scrollbar and the native
+controls Blazor does not draw follow the mode too.
+
+A `BeerTheme` is one palette, not a mode. For a branded dark mode, supply both; leaving `DarkTheme` out
+falls back to the built-in `BeerTheme.Dark`, so `Mode="Dark"` alone always renders something coherent:
+
+```razor
+<Beer Mode="_mode" Theme="Brand.Light" DarkTheme="Brand.Dark">
+    @Body
+</Beer>
+```
+
+### Following the operating system
+
+There is no automatic mode, on purpose. BeerCSS's dark mode is the `dark` class, and the stylesheet it
+ships has no `prefers-color-scheme` rules at all — supporting them here would mean reimplementing
+them. Read the preference yourself and set `Mode`:
+
+```razor
+@inject IJSRuntime JS
+
+<Beer Mode="_mode">@Body</Beer>
+
+@code {
+    private BeerMode _mode = BeerMode.Light;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var dark = await JS.InvokeAsync<bool>(
+            "matchMedia", "(prefers-color-scheme: dark)");
+
+        _mode = dark ? BeerMode.Dark : BeerMode.Light;
+        StateHasChanged();
+    }
+}
+```
+
+`matchMedia` above is the browser's own call, so a one-line wrapper that invokes
+`window.matchMedia(media).matches` is enough; rerender when you want to react to the preference
+changing.
+
 ## Components
 
 Corner rounding on buttons, cards and the fields is a `Rounding` value — `Round`, `NoRound`, `LeftRound`, `RightRound`, `NoRoundLeft`, `NoRoundRight` — with the older `Round` bool kept as a shorthand for `Rounding.Round`.
