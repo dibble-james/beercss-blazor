@@ -14,18 +14,18 @@ permissions:
   contents: read
 
 jobs:
+  # Light and dark run as separate jobs so a dark-only regression cannot hide behind a green light run,
+  # and so the wall clock stays where it was: the halves run in parallel and it is machine minutes that
+  # double, not time. The tag is declared in support/captures.ts beside the capture that owns the mode,
+  # so this selection cannot drift from the matrix.
   visual-tests:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
       # One mode failing says nothing about the other, so both halves still report.
       fail-fast: false
       matrix:
-        # Light and dark run as separate jobs so a dark-only regression cannot hide behind a green
-        # light run, and so the wall clock stays where it was: the halves run in parallel and it is
-        # machine minutes that double, not time. A dispatch captures every mode in the light job
-        # instead, because it uploads a single `baselines` artifact.
         mode: [light, dark]
-    if: github.event_name == 'pull_request' || matrix.mode == 'light'
     defaults:
       run:
         working-directory: visual-tests
@@ -48,19 +48,13 @@ jobs:
       # with zero-height text and the baselines would be blank.
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Update the baselines
-        if: github.event_name == 'workflow_dispatch'
-        run: npx playwright test --update-snapshots
-      # The tag is declared in support/captures.ts beside the capture that owns the mode, so this
-      # selection cannot drift from the matrix.
       - name: Run the visual tests
-        if: github.event_name == 'pull_request'
         run: npx playwright test ${{ matrix.mode == 'dark' && '--grep @dark' || '--grep-invert @dark' }}
       # A failure leaves the actual, expected and diff image of every failing story in test-results,
       # and the HTML report shows them side by side. The name carries the mode because both jobs
       # upload their own.
       - name: Upload the visual diffs
-        if: failure() && github.event_name == 'pull_request'
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: visual-tests-failure-${{ matrix.mode }}
@@ -68,9 +62,35 @@ jobs:
             visual-tests/test-results
             visual-tests/playwright-report
           retention-days: 30
+
+  # Deliberately not the matrix above: this captures every mode in one run, because the baselines land
+  # in one directory and are committed as one change.
+  capture-baselines:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: visual-tests
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: visual-tests/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Update the baselines
+        run: npx playwright test --update-snapshots
       # Download these, review them, and commit them: the runner has no way to push them itself.
       - name: Upload the baselines
-        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: baselines
