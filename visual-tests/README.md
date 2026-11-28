@@ -48,6 +48,12 @@ fresh browser context: viewport 1280×800, `deviceScaleFactor: 1`, light colour 
 `--disable-lcd-text --force-color-profile=srgb --font-render-hinting=none --hide-scrollbars` so text is
 antialiased in grayscale and colour is not subject to a display profile.
 
+Each story is captured once per profile in the matrix in `support/captures.ts`. The canonical
+`default` profile covers every story at 1280×800. A further profile names the `[Stories("Kind")]`
+groups it covers, so a story is captured once per profile that covers it: `narrow` (390×844, whole
+scrollable page) exists for layout-critical kinds and covers none yet, so it adds no captures and no
+baselines until a kind opts in.
+
 Before the capture the test waits for the Blazor app to render, for `document.fonts.ready`, for
 BlazingStory to finish its canvas preparation (`html._blazing_story_ready_for_visible` once the
 `.default-background` backdrop is gone), and then freezes what a stylesheet cannot: animations and
@@ -67,8 +73,10 @@ visible banner fails the test naming the story, and a crash can never be capture
 
 ## Baselines
 
-`baselines/<story id>.png` (see `snapshotPathTemplate` in `playwright.config.ts`). A failure writes
-the actual, expected and diff images under `test-results/`.
+`baselines/<story id>.png` for the canonical profile, and `baselines/<story id>--<profile>.png` for
+any other: `support/captures.ts` builds the name and `snapshotPathTemplate` in
+`playwright.config.ts` only adds the extension. A failure writes the actual, expected and diff images
+under `test-results/`.
 
 Comparison uses Playwright's own image comparison: per-pixel colour tolerance `threshold: 0.2` in
 YIQ space, and at most `maxDiffPixelRatio: 0.001` of the canvas may differ — about 1000 pixels on a
