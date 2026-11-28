@@ -3,6 +3,29 @@
 Additive releases only: nothing is removed or renamed between minor versions, and existing shorthand
 parameters keep working.
 
+## 0.4.0 — unreleased
+
+### Rendering change
+
+- **`<Beer>`** now renders `light` on its root element, and **`BeerTheme.GetTheme()`** also writes the
+document background from `--background` and `color-scheme: light`. BeerCSS paints its surface from a
+base rule that a `:not(.light,.dark)` rule cancels, so the page behind the component was never painted:
+the area around and below the content was the browser's canvas. It is now `--surface`, which for the
+built-in light palette is `#fdf8fd` rather than white.
+
+  No API changed. The shift is small enough to sit below the visual gate's per-pixel tolerance, so no
+  committed baseline moved: the comparison cannot demonstrate this one, and the change shows up on a
+  page whose own background differs from the surface. `color-scheme` also brings the native pieces
+  Blazor does not draw — the page scrollbar, the `Switch` checkbox, range inputs — into the light
+  scheme explicitly instead of leaving it unset.
+
+- **`BeerTheme.GetTheme()`** writes its tokens twice, at `:root` and at `.beer.light`. BeerCSS defines
+the same token names at element scope, which outranks `:root`, so a consumer palette would otherwise be
+replaced by the built-in one for everything inside the component. The signature is unchanged and the
+output is a superset of what it wrote before.
+
+The theme's mode becomes selectable in a following change; nothing here exposes a dark mode yet.
+
 ## 0.3.1 — 2026-11-27
 
 A patch release: two components stop writing to the consumer's output. No public API is added,

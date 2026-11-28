@@ -47,7 +47,20 @@ public class BeerTheme
     {
         var theme = new StringBuilder();
 
-        theme.AppendLine(":root {");
+        // Written twice on purpose. The first block carries the document surface, so the page behind
+        // the component is painted instead of being left as the browser's canvas. The second repeats
+        // the tokens on the root element's mode class, because BeerCSS sets the same names at element
+        // scope, where it outranks :root (0,2,0 against 0,1,0). Both blocks have the same specificity
+        // as BeerCSS's and this one is injected after its stylesheet, so it wins on document order.
+        AppendPalette(theme, ":root", painted: true);
+        AppendPalette(theme, ".beer.light", painted: false);
+
+        return theme.ToString();
+    }
+
+    private void AppendPalette(StringBuilder theme, string selector, bool painted)
+    {
+        theme.AppendLine(CultureInfo.InvariantCulture, $"{selector} {{");
         theme.AppendLine(CultureInfo.InvariantCulture, $"--primary: {this.Primary};");
         theme.AppendLine(CultureInfo.InvariantCulture, $"--on-primary: {this.OnPrimary};");
         theme.AppendLine(CultureInfo.InvariantCulture, $"--primary-container: {this.PrimaryContainer};");
@@ -85,9 +98,13 @@ public class BeerTheme
         theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container-high: {this.SurfaceContainerHigh};");
         theme.AppendLine(CultureInfo.InvariantCulture, $"--surface-container-highest: {this.SurfaceContainerHighest};");
         theme.AppendLine(CultureInfo.InvariantCulture, $"--font: {this.Font};");
-        theme.AppendLine("}");
+        if (painted)
+        {
+            theme.AppendLine("background: var(--background);");
+            theme.AppendLine("color-scheme: light;");
+        }
 
-        return theme.ToString();
+        theme.AppendLine("}");
     }
 
     public static readonly BeerTheme Dark = new()
