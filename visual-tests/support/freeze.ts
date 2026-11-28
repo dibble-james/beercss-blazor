@@ -78,10 +78,15 @@ export async function freezeAnimatedImages(): Promise<void> {
 
 /**
  * BlazingStory fades a full-page backdrop out and only then marks the document ready; capturing
- * before that yields a blank or half-faded canvas.
+ * before that yields a blank or half-faded canvas. Newer versions fade it with an opacity transition
+ * (`.default-background.init-level-1` → `opacity: 0`) instead of hiding it with `display: none`, so
+ * either end state counts as gone.
  */
 export function storyReady(): boolean {
   if (!document.documentElement.classList.contains('_blazing_story_ready_for_visible')) return false;
   const backdrop = document.querySelector('.default-background');
-  return !backdrop || getComputedStyle(backdrop).display === 'none';
+  if (!backdrop) return true;
+
+  const style = getComputedStyle(backdrop);
+  return style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0';
 }
