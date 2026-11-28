@@ -74,8 +74,12 @@
         </Template>
     </Story>
     <Story Name="Baseline probe">
+        @* Probe: deliberately different from the captured baseline, so the gate has to ask for a refresh. *@
         <Template>
-            <Shape ShapeType="@ShapeTypes.Puffy"><div class="medium"></div></Shape>
+            <nav class="wrap">
+                <Shape ShapeType="@ShapeTypes.Heart"><div class="medium"></div></Shape>
+                <Shape ShapeType="@ShapeTypes.Puffy"><div class="medium"></div></Shape>
+            </nav>
         </Template>
     </Story>
     <Story Name="Rotations">
