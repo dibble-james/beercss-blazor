@@ -13,10 +13,11 @@ base rule that a `:not(.light,.dark)` rule cancels, so the page behind the compo
 the area around and below the content was the browser's canvas. It is now `--surface`, which for the
 built-in light palette is `#fdf8fd` rather than white.
 
-  No API changed, but every page looks slightly different, and every committed visual baseline changed
-  for that one reason. `color-scheme` also brings the native pieces Blazor does not draw — the page
-  scrollbar, the `Switch` checkbox, range inputs — into the light scheme explicitly instead of leaving
-  it unset.
+  No API changed. The shift is small enough to sit below the visual gate's per-pixel tolerance, so no
+  committed baseline moved: the comparison cannot demonstrate this one, and the change shows up on a
+  page whose own background differs from the surface. `color-scheme` also brings the native pieces
+  Blazor does not draw — the page scrollbar, the `Switch` checkbox, range inputs — into the light
+  scheme explicitly instead of leaving it unset.
 
 - **`BeerTheme.GetTheme()`** writes its tokens twice, at `:root` and at `.beer.light`. BeerCSS defines
 the same token names at element scope, which outranks `:root`, so a consumer palette would otherwise be
