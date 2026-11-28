@@ -29,9 +29,10 @@ export const captures: readonly Capture[] = [
     id: 'narrow',
     viewport: { width: 390, height: 844 },
     fullPage: true,
-    // Opt a kind in by adding its `[Stories("Kind")]` name, e.g. 'Components/Inputs', and capture the
-    // new baselines from a dispatch: that kind's stories then get a second capture.
-    kinds: new Set<string>(),
+    // Opt a kind in by adding its `[Stories("Kind")]` name, and capture the new baselines from a
+    // dispatch: that kind's stories then get a second capture. Text inputs are the layout-critical
+    // start, because a field that is comfortable at 1280 wide is where a phone width shows up.
+    kinds: new Set<string>(['Components/Inputs/Text']),
   },
 ];
 
